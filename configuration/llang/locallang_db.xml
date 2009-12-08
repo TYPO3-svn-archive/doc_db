@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>tca db fields</description>
+        <type></type>
+        <csh_table></csh_table>
+        <labelContext type="array">
+        </labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index="tx_docdb_readonly_field">Read only value (required by doc_db ext.)</label>
+            <label index="tx_docdb_type">Document Type</label>
+            <label index="tx_docdb_type.type">Document Type</label>
+            <label index="tx_docdb_status">Document Status</label>
+            <label index="tx_docdb_status.status">Status</label>
+            <label index="tx_docdb_owner">Document Owner</label>
+            <label index="tx_docdb_owner.owner">Document Owner</label>
+            <label index="tx_docdb_descriptor">Document Descriptor</label>
+            <label index="tx_docdb_descriptor.title">Descriptor Name</label>
+            <label index="tx_docdb_descriptor.dscr_id">Descriptor external ID</label>
+            <label index="tx_docdb_descriptor.dscr_cat">Descriptor Category</label>
+            <label index="tx_docdb_descriptor.dscr_pid">Parent descriptor</label>
+            <label index="tx_docdb_descriptor.dscr_cat_id">Descriptor Category ID</label>
+            <label index="tx_docdb_descriptor.dscr_related">Related Descriptor-s</label>
+            <label index="pages.tx_docdb_doc_type">Document Type</label>
+            <label index="pages.tx_docdb_doc_status">Document Status</label>
+            <label index="pages.tx_docdb_doc_owner">Document Owner</label>
+            <label index="pages.tx_docdb_doc_key">Document Key</label>
+            <label index="pages.tx_docdb_doc_descriptor">Document Descriptor-s</label>
+            <label index="pages.tx_docdb_doc_related_pages">Related Pages</label>
+            <label index="tt_content.list_type_pi1">Document DB</label>
+        </languageKey>
+        <languageKey index="fr" type="array">
+            <label index="tx_docdb_readonly_field">Valeur en lecture seule (requise par l'ext. doc_db)</label>
+            <label index="tx_docdb_type">Type de document</label>
+            <label index="tx_docdb_type.type">Type</label>
+            <label index="tx_docdb_status">Status du document</label>
+            <label index="tx_docdb_status.status">Status</label>
+            <label index="tx_docdb_owner">Propriétaire du Document</label>
+            <label index="tx_docdb_owner.owner">Propriétaire</label>
+            <label index="tx_docdb_descriptor">Descripteur de document</label>
+            <label index="tx_docdb_descriptor.title">Nom de descripteur</label>
+            <label index="tx_docdb_descriptor.dscr_id">Descriptor external ID</label>
+            <label index="tx_docdb_descriptor.dscr_cat">Descriptor Category</label>
+            <label index="tx_docdb_descriptor.dscr_pid">Descripteur parent</label>
+            <label index="tx_docdb_descriptor.dscr_cat_id">Descriptor Category ID</label>
+            <label index="tx_docdb_descriptor.dscr_related">Descripteur-s relatif-s</label>
+            <label index="pages.tx_docdb_doc_type">Type de document</label>
+            <label index="pages.tx_docdb_doc_status">Status du document</label>
+            <label index="pages.tx_docdb_doc_owner">Propriétaire</label>
+            <label index="pages.tx_docdb_doc_key">Clé de document</label>
+            <label index="pages.tx_docdb_doc_descriptor">Déscripteur-s</label>
+            <label index="pages.tx_docdb_doc_related_pages">Page-s relative-s</label>
+            <label index="tt_content.list_type_pi1">Document DB</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="tx_docdb_readonly_field">Lesen Sie nur Wert (von doc_db ext erforderlich.)</label>
+            <label index="tx_docdb_type">Dokument Type</label>
+            <label index="tx_docdb_type.type">Type</label>
+            <label index="tx_docdb_status">Dokument Status</label>
+            <label index="tx_docdb_status.status">Status</label>
+            <label index="tx_docdb_owner">Dokument Besitzer</label>
+            <label index="tx_docdb_owner.owner">Besitzer</label>
+            <label index="tx_docdb_descriptor">Descriptor Dokument</label>
+            <label index="tx_docdb_descriptor.title">Name des Schlagwort</label>
+            <label index="tx_docdb_descriptor.dscr_id">Schlagwort Externe ID</label>
+            <label index="tx_docdb_descriptor.dscr_cat">Descriptor Category</label>
+            <label index="tx_docdb_descriptor.dscr_pid">Descriptor Eltern</label>
+            <label index="tx_docdb_descriptor.dscr_cat_id">Descriptor Category ID</label>
+            <label index="tx_docdb_descriptor.dscr_related">In Verbindung stehende Descriptor</label>
+            <label index="pages.tx_docdb_doc_type">Dokument type</label>
+            <label index="pages.tx_docdb_doc_status">Dokument Status</label>
+            <label index="pages.tx_docdb_doc_owner">Besitzer</label>
+            <label index="pages.tx_docdb_doc_key">Key-Dokument</label>
+            <label index="pages.tx_docdb_doc_descriptor">Descriptor</label>
+            <label index="pages.tx_docdb_doc_related_pages">Verwandte Seiten</label>
+            <label index="tt_content.list_type_pi1">Dokument DB</label>
+        </languageKey>
+        <languageKey index="es" type="array">
+            <label index="tx_docdb_readonly_field">De sólo lectura de valores (requerido por la ext. Doc_db)</label>
+            <label index="tx_docdb_type">Tipo de documento</label>
+            <label index="tx_docdb_type.type">Typo</label>
+            <label index="tx_docdb_status">Situación del documento</label>
+            <label index="tx_docdb_status.status">Situación</label>
+            <label index="tx_docdb_owner">Dueño del documento</label>
+            <label index="tx_docdb_owner.owner">Propietario</label>
+            <label index="tx_docdb_descriptor">Documento Descriptor</label>
+            <label index="tx_docdb_descriptor.title">Nombre del descriptor</label>
+            <label index="tx_docdb_descriptor.dscr_id">Descriptor ID externo</label>
+            <label index="tx_docdb_descriptor.dscr_cat">Descriptor Category</label>
+            <label index="tx_docdb_descriptor.dscr_pid">Descripteur parent</label>
+            <label index="tx_docdb_descriptor.dscr_cat_id">Descriptor Category ID</label>
+            <label index="tx_docdb_descriptor.dscr_related">Descriptore relacionados</label>
+            <label index="pages.tx_docdb_doc_type">Tipo de documento</label>
+            <label index="pages.tx_docdb_doc_status">Situación del documento</label>
+            <label index="pages.tx_docdb_doc_owner">Propietario</label>
+            <label index="pages.tx_docdb_doc_key">Documento clave</label>
+            <label index="pages.tx_docdb_doc_descriptor">Descriptor</label>
+            <label index="pages.tx_docdb_doc_related_pages">Page relacionados</label>
+            <label index="tt_content.list_type_pi1">Document DB</label>
+        </languageKey>
+    </data>
+</T3locallang>

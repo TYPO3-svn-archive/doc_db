@@ -1,0 +1,442 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>General</sheetTitle>
+                    <cshFile>LLL:EXT:doc_db/configuration/llang/locallang_csh_tx_docdb.xml</cshFile>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<mode>
+						<TCEforms>
+							<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:mode</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>radio</type>
+								<items>
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:mode_fe</numIndex>
+										<numIndex index="1">FE</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:mode_pi</numIndex>
+										<numIndex index="1">PI</numIndex>
+									</numIndex>
+								</items>
+								<default>FE</default>
+							</config>
+						</TCEforms>
+					</mode>
+					<owner>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:owner</label>
+						<displayCond>FIELD:mode:=:PI</displayCond>
+						<config>
+							<type>select</type>
+							<foreign_table>tx_docdb_owner</foreign_table>
+							<foreign_table_where>
+                                AND tx_docdb_owner.owner!='zzz_none' AND tx_docdb_owner.deleted=0 AND tx_docdb_owner.hidden=0
+                                AND tx_docdb_owner.uid IN(SELECT tx_docdb_doc_owner FROM pages WHERE pages.doktype=198 AND (pages.deleted=0 AND pages.hidden=0))
+                                ORDER BY tx_docdb_owner.owner ASC
+                            </foreign_table_where>
+							<minitems>0</minitems>
+							<maxitems>40</maxitems>
+							<size>3</size>
+							<default>0</default>
+						</config>
+						</TCEforms>
+					</owner>	
+					<docType>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:type</label>
+						<displayCond>FIELD:mode:=:PI</displayCond>
+						<config>
+							<type>select</type>
+							<foreign_table>tx_docdb_type</foreign_table>
+							<foreign_table_where>
+                                AND tx_docdb_type.type !='zzz_none' AND tx_docdb_type.deleted=0 AND tx_docdb_type.hidden=0
+                                AND tx_docdb_type.uid IN(SELECT tx_docdb_doc_type FROM pages WHERE pages.doktype=198 AND (pages.deleted=0 AND pages.hidden=0))
+                                ORDER BY tx_docdb_type.type ASC
+                            </foreign_table_where>
+							<minitems>0</minitems>
+							<maxitems>40</maxitems>
+							<size>3</size>
+							<default>0</default>
+						</config>
+						</TCEforms>
+					</docType>
+					<docStatus>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:status</label>
+						<displayCond>FIELD:mode:=:PI</displayCond>
+						<config>
+							<type>select</type>
+							<foreign_table>tx_docdb_status</foreign_table>
+							<foreign_table_where>
+                                AND tx_docdb_status.status !='zzz_none' AND tx_docdb_status.deleted=0 AND tx_docdb_status.hidden=0
+                                AND tx_docdb_status.uid IN(SELECT tx_docdb_doc_status FROM pages WHERE pages.doktype=198 AND (pages.deleted=0 AND pages.hidden=0))
+                                ORDER BY tx_docdb_status.status ASC
+                            </foreign_table_where>
+							<minitems>0</minitems>
+							<maxitems>40</maxitems>
+							<size>3</size>
+							<default>0</default>
+						</config>
+						</TCEforms>
+					</docStatus>
+                    <grouping>
+					<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:grouping</label>
+                        <onChange>reload</onChange>
+						<!--displayCond>FIELD:mode:=:PI</displayCond-->
+						<config>
+							<type>select</type>
+							<items>
+								<numIndex index="0" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:grouping_yes</numIndex>
+									<numIndex index="1">1</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:grouping_no</numIndex>
+									<numIndex index="1">0</numIndex>
+								</numIndex>
+							</items>
+                            <minitems>1</minitems>
+							<maxitems>1</maxitems>
+							<size>1</size>
+							<default>1</default>
+						</config>
+					  </TCEforms>
+					</grouping>
+                    <grouping_by>
+					<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:grouping_by</label>
+						<displayCond>FIELD:grouping:=:1</displayCond>
+						<config>
+							<type>select</type>
+							<items>
+								<numIndex index="0" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_owner</numIndex>
+									<numIndex index="1">owner</numIndex>
+								</numIndex>
+                                <numIndex index="1" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_type</numIndex>
+									<numIndex index="1">type</numIndex>
+								</numIndex>
+                                <numIndex index="2" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_status</numIndex>
+									<numIndex index="1">status</numIndex>
+								</numIndex>
+                                <numIndex index="3" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_key</numIndex>
+									<numIndex index="1">dkey</numIndex>
+								</numIndex>
+                                <numIndex index="4" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_date</numIndex>
+									<numIndex index="1">date</numIndex>
+								</numIndex>
+							</items>
+                            <minitems>1</minitems>
+							<maxitems>1</maxitems>
+							<size>1</size>
+							<default>owner</default>
+						</config>
+					  </TCEforms>
+					</grouping_by>
+					<sorting>
+					<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:sorting</label>
+						<displayCond>FIELD:mode:=:PI</displayCond>
+						<config>
+							<type>select</type>
+							<items>
+								<numIndex index="0" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_title</numIndex>
+									<numIndex index="1">title</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_date</numIndex>
+									<numIndex index="1">date</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_owner</numIndex>
+									<numIndex index="1">owner</numIndex>
+								</numIndex>
+                                <numIndex index="3" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_type</numIndex>
+									<numIndex index="1">type</numIndex>
+								</numIndex>
+                                <numIndex index="4" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_status</numIndex>
+									<numIndex index="1">status</numIndex>
+								</numIndex>
+                                <numIndex index="5" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_key</numIndex>
+									<numIndex index="1">dkey</numIndex>
+								</numIndex>
+                                <numIndex index="6" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:by_date</numIndex>
+									<numIndex index="1">date</numIndex>
+								</numIndex>
+							</items>
+                            <minitems>1</minitems>
+							<maxitems>1</maxitems>
+							<size>1</size>
+							<default>title</default>
+						</config>
+					  </TCEforms>
+					</sorting>
+					<sorting_order>
+					<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:sorting_order</label>
+						<displayCond>FIELD:mode:=:PI</displayCond>
+						<config>
+							<type>radio</type>
+							<items>
+								<numIndex index="0" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:asc</numIndex>
+									<numIndex index="1">ASC</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:desc</numIndex>
+									<numIndex index="1">DESC</numIndex>
+								</numIndex>
+							</items>
+							<default>ASC</default>
+						</config>
+						</TCEforms>
+					</sorting_order>
+					<descriptors>
+						<TCEforms>
+							<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:descriptors</label>
+                            <displayCond>FIELD:mode:=:PI</displayCond>
+							<config>
+								<type>select</type>
+								<form_type>user</form_type>
+								<userFunc>tx_docdb_treeview->displayCategoryTree</userFunc>
+								<treeView>1</treeView>
+								<foreign_table>tx_docdb_descriptor</foreign_table>
+								<foreign_table_where>ORDER BY tx_docdb_descriptor.title</foreign_table_where>
+								<size>5</size>
+								<autoSizeMax>30</autoSizeMax>
+								<minitems>0</minitems>
+								<maxitems>499</maxitems>
+								<items type="array">
+								<numIndex index="500">
+									<numIndex index="0">ALL</numIndex>
+									<numIndex index="1">0</numIndex>
+								</numIndex>
+								</items>
+								<allowNonIdValues>1</allowNonIdValues>
+								<foreign_selector>pi_flexform</foreign_selector>
+								<wizards>
+									<search>
+										<type>popup</type>
+										<title>Search descriptor</title>
+										<script>EXT:doc_db/wizard/class.tx_docdb_wizardSearchDescriptor.php</script>
+										<popup_onlyOpenIfSelected>0</popup_onlyOpenIfSelected>
+										<params type="array">
+											<numIndex index="0">
+												<numIndex index="0">fieldName</numIndex>
+												<numIndex index="1">tx_docdb_doc_descriptor</numIndex>
+											</numIndex>
+										</params>
+										<icon>zoom.gif</icon>
+										<JSopenParams>height=360,width=780,status=0,menubar=0,scrollbars=1</JSopenParams>
+									</search>
+									<_VALIGN>top</_VALIGN>
+								</wizards>
+							</config>
+						</TCEforms>
+					</descriptors>
+                    <descr_combination>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:descriptors_combinaison</label>
+                        <displayCond>FIELD:mode:=:PI</displayCond>
+						<config>
+							<type>radio</type>
+							<items>
+								<numIndex index="0" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:and</numIndex>
+									<numIndex index="1">AND</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:or</numIndex>
+									<numIndex index="1">OR</numIndex>
+								</numIndex>
+							</items>
+							<default>OR</default>
+						</config>
+						</TCEforms>
+					</descr_combination>
+                </el>
+			</ROOT>
+		</sDEF>
+        <sDisplay>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:display</sheetTitle>
+					<cshFile>LLL:EXT:doc_db/configuration/llang/locallang_csh_tx_docdb.xml</cshFile>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<mainWidth>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:main_width</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>700</default>
+						</config>
+						</TCEforms>
+					</mainWidth>
+                    <mulSel_height>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:mulSel_height</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>210</default>
+						</config>
+						</TCEforms>
+					</mulSel_height>
+                    <dscrTreeMin_height>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:dscrTreeMin_height</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>300</default>
+						</config>
+						</TCEforms>
+					</dscrTreeMin_height>
+                    <dscrTreeMax_height>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:dscrTreeMax_height</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>1000</default>
+						</config>
+						</TCEforms>
+					</dscrTreeMax_height>
+                    <resPanel_height>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:resPanel_height</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>510</default>
+						</config>
+						</TCEforms>
+					</resPanel_height>
+                    <resGrid_height>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:resGrid_height</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>380</default>
+						</config>
+						</TCEforms>
+					</resGrid_height>
+                    <resGrid_pageSize>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:resGrid_pageSize</label>
+						<config>
+							<type>select</type>
+							<items>
+								<numIndex index="0" type="array">
+									<numIndex index="0">5</numIndex>
+									<numIndex index="1">5</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">10</numIndex>
+									<numIndex index="1">10</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="0">15</numIndex>
+									<numIndex index="1">15</numIndex>
+								</numIndex>
+                                <numIndex index="3" type="array">
+									<numIndex index="0">20</numIndex>
+									<numIndex index="1">20</numIndex>
+								</numIndex>
+                                <numIndex index="4" type="array">
+									<numIndex index="0">25</numIndex>
+									<numIndex index="1">25</numIndex>
+								</numIndex>
+                                <numIndex index="5" type="array">
+									<numIndex index="0">50</numIndex>
+									<numIndex index="1">50</numIndex>
+								</numIndex>
+                                <numIndex index="5" type="array">
+									<numIndex index="0">100</numIndex>
+									<numIndex index="1">100</numIndex>
+								</numIndex>
+							</items>
+                            <minitems>1</minitems>
+							<maxitems>1</maxitems>
+							<size>1</size>
+							<default>10</default>
+						</config>
+						</TCEforms>
+					</resGrid_pageSize>
+                    <pWinWidth>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:pWinWidth</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>750</default>
+                            <!--checkbox>750</checkbox-->
+						</config>
+						</TCEforms>
+					</pWinWidth>
+                    <pWinHeight>
+						<TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:pWinHeight</label>
+						<config>
+							<type>input</type>
+							<size>8</size>
+                            <max>8</max>
+                            <eval>int</eval>
+							<default>380</default>
+						</config>
+						</TCEforms>
+					</pWinHeight>
+                    <divContIdWinP>
+                        <TCEforms>
+						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:divContIdWinP</label>
+						<config>
+							<type>input</type>
+							<size>20</size>
+                            <max>40</max>
+                            <eval>trim</eval>
+							<default>main-content</default>
+						</config>
+						</TCEforms>
+                    </divContIdWinP>
+				</el>
+			</ROOT>
+		</sDisplay>
+	</sheets>
+</T3DataStructure>
