@@ -1,0 +1,24 @@
+
+# cat=basic//10; type=int; label=Doc. Definition storage page Id: Indicate the page id of the SysFolder where the document definition(owner,type,status) are stored (this can not be 0)
+dscrDefStoragePid = 0
+
+# cat=basic//20; type=int; label=Descriptors(cat) storage page Id: Indicate the page id of the SysFolder where the descriptors are stored (this can not be 0)
+dscrStoragePid = 0
+
+# cat=basic//90; type=options[title,uid]; label= Descriptors(cat) ordering in BackEnd trees: Here you can configure the the ordering of descriptors in descriptors trees in BackEnd forms.
+treeOrderBy = title
+
+# cat=basic/dims/60; type=int [0-600]; label= Width of the left descriptors field: This field shows the selected descriptors in the doc_db record (or parent descriptors in the descriptors db-record). If "descriptorsSelectedWidth" is set to 0 (zero) the default width (=200px) will be taken.
+descriptorsSelectedWidth = 200
+
+# cat=basic/dims/70; type=int [0-600]; label= Width of the right descriptors field: This field shows the descriptors tree in the doc_db record (or in the descriptors db-record). If "descriptorsTreeWidth" is set to 0 (zero) the default width will depend on the browser which displays the TYPO3 BackEnd. The default width for all browsers except IE is 300px, for IE the default width is 330px to suppress the unneeded horizontal scrollbar below the category tree.
+descriptorsTreeWidth = 300
+
+# cat=basic/dims/80; type=int [6-30]; label= Max height for descriptors trees: Here you can configure the maximum height of descriptors trees in BackEnd forms.
+descriptorsTreeHeigth = 6
+
+
+TSConstantEditor.basic {
+  description = <span style="background:red; padding:1px 2px; color:#fff; font-weight:bold;">1</span> After change the setting of "the Document Definition storage page Id" [dscrDefStoragePid] and pressed UPDATE button:<br /><br />Please <u>exit</u> the extension manager or <u>select an other option from the above select option menu</u><em>(ex. Edit files)</em><br />and <span style="background:yellow; padding:0 3px; color:#222; font-weight:bold;">come back to this page (information)</span>.<br />This ensure that the required default values are set correctly. Thank you<br />
+  1=dscrDefStoragePid
+}
