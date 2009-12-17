@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>doktype</description>
+        <type></type>
+        <csh_table></csh_table>
+        <labelContext type="array">
+        </labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index="pages.doktype.I.198">Document</label>
+        </languageKey>
+        <languageKey index="fr" type="array">
+            <label index="pages.doktype.I.198">Document</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="pages.doktype.I.198">Dokument</label>
+        </languageKey>
+        <languageKey index="es" type="array">
+            <label index="pages.doktype.I.198">Documento</label>
+        </languageKey>
+    </data>
+</T3locallang>

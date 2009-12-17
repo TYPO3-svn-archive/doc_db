@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>plugin</type>
+		<description>Language labels for extjs grid standalone</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			
+            <label index="grid.resPanel.title">Documents list</label>
+			<label index="grid.header.title">Title</label>
+			<label index="grid.header.date">Date</label>
+			<label index="grid.header.owner">Owner</label>
+			<label index="grid.header.key">Key</label>
+			<label index="grid.header.type">Type</label>
+			<label index="grid.header.status">Status</label>
+			<label index="grid.loading">Loading documents...</label>
+            
+            <label index="docDetail.helpText">Please select a row to see additional details and double click on row to show a preview.</label>
+            <label index="docDetail.title">Title:</label>
+            <label index="docDetail.owner">Owner:</label>
+            <label index="docDetail.type">Type:</label>
+            <label index="docDetail.status">Status:</label>
+            <label index="docDetail.key">Key:</label>
+            <label index="docDetail.date">Last updated:</label>
+            <label index="docDetail.link2page">Exit the search and go to the destination page:</label>
+            <label index="docDetail.link2preview">View the document in a popup window (and stay on this page).</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			
+            <label index="grid.resPanel.title">Liste Dokumente</label>
+			<label index="grid.header.title">Titel</label>
+			<label index="grid.header.date">Datum</label>
+			<label index="grid.header.owner">Eigentümer</label>
+			<label index="grid.header.key">Schlüssel</label>
+			<label index="grid.header.type">Sorte</label>
+			<label index="grid.header.status">Status</label>
+			<label index="grid.loading">Loading Dokumente ...</label>
+            
+            <label index="docDetail.helpText">Bitte wählen Sie eine Zeile, um weitere Informationen und doppelklicken Sie auf Zeile zu sehen, eine Vorschau anzeigen.</label>
+            <label index="docDetail.title">Titel:</label>
+            <label index="docDetail.owner">Eigentümer:</label>
+            <label index="docDetail.type">Sorte:</label>
+            <label index="docDetail.status">Status:</label>
+            <label index="docDetail.key">Schlüssel:</label>
+            <label index="docDetail.date">Last updated:</label>
+            <label index="docDetail.link2page">Verlassen Sie die Suche und gehen Sie zu der Zielseite:</label>
+            <label index="docDetail.link2preview">Sehen Sie das Dokument in einem Popup-Fenster (und auf dieser Seite bleiben).</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			
+            <label index="grid.resPanel.title">Liste de documents</label>
+			<label index="grid.header.title">Titre</label>
+			<label index="grid.header.date">Date</label>
+			<label index="grid.header.owner">Propriétaire</label>
+			<label index="grid.header.key">Clé</label>
+			<label index="grid.header.type">Type</label>
+			<label index="grid.header.status">Status</label>
+			<label index="grid.loading">Chargement des documents ...</label>
+            
+            <label index="docDetail.helpText">Pour afficher les informations détaillées, selectionner un ligne ou double cliquer sur celle-ci.</label>
+            <label index="docDetail.title">Titre:</label>
+            <label index="docDetail.owner">Propriétaire:</label>
+            <label index="docDetail.type">Type:</label>
+            <label index="docDetail.status">Status:</label>
+            <label index="docDetail.key">Clé:</label>
+            <label index="docDetail.date">Mis à jour le:</label>
+            <label index="docDetail.link2page">Quitter la liste et afficher la page de destination:</label>
+            <label index="docDetail.link2preview">Afficher le document dans une fenêtre contextuelle (et rester sur cette page).</label>
+		</languageKey>
+        <languageKey index="es" type="array">
+
+            <label index="grid.resPanel.title">Lista de documentos</label>
+			<label index="grid.header.title">Título</label>
+			<label index="grid.header.date">Fecha</label>
+			<label index="grid.header.owner">Propietario</label>
+			<label index="grid.header.key">Clave</label>
+			<label index="grid.header.type">Tipo</label>
+			<label index="grid.header.status">Estado</label>
+			<label index="grid.loading">Cargando ...</label>
+
+            <label index="docDetail.helpText">Para ver información detallada, seleccione una línea o un doble clic sobre ella.</label>
+            <label index="docDetail.title">Título:</label>
+            <label index="docDetail.owner">Propietario:</label>
+            <label index="docDetail.type">Tipo:</label>
+            <label index="docDetail.status">Estado:</label>
+            <label index="docDetail.key">Clave:</label>
+            <label index="docDetail.date">Actualización:</label>
+            <label index="docDetail.link2page">Deja la búsqueda y mostrar la página de destino:</label>
+            <label index="docDetail.link2preview">Afficher le document dans une fenêtre contextuelle (et conserver les paramètre de recherche).</label>
+		</languageKey>
+	</data>
+</T3locallang>

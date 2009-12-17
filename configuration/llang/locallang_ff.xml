@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>Flexform fields</description>
+        <type></type>
+        <csh_table></csh_table>
+        <labelContext type="array">
+        </labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+
+            <label index="mode">Display mode</label>
+            <label index="mode_fe">FE mode: Display Search form in frontend (FE)</label>
+            <label index="mode_pi">PI mode: Query defined in plugin (Display result list grid in frontend)</label>
+
+            <label index="owner">Owner (if none selected, all are listed)</label>
+            <label index="type">Document Type (if none selected, all are listed)</label>
+            <label index="status">Document Status (if none selected, all are listed)</label>
+            <label index="grouping">Grouping enabled</label>
+            <label index="grouping_yes">yes</label>
+            <label index="grouping_no">no</label>
+            <label index="by_tile">By title</label>
+            <label index="by_owner">By owner</label>
+            <label index="by_type">By type</label>
+            <label index="by_status">By status</label>
+            <label index="by_key">By keyRef</label>
+            <label index="by_date">By lastUpdated date</label>
+            <label index="sorting">Default documents sorting field</label>
+            <label index="sorting_order">Sorting order</label>
+            <label index="asc">Ascending</label>
+            <label index="desc">Descending</label>
+            <label index="and">AND</label>
+            <label index="or">OR</label>
+
+            <label index="descriptors">Document Descriptors (Use the wizard to select only those related to documents)</label>
+            <label index="descriptors_combinaison">Descriptors combinaison</label>
+
+            <label index="display">Parameters of frontend plugin display</label>
+
+            <label index="main_width">Main div panel\nTotal width:..(px)</label>
+            <label index="mulSel_height">Multi-select 3 columns (owner/type/status)\nHeight:..(px)</label>
+            
+            <label index="dscrTreeMin_height">Descriptor tree\nMin height:..(px)</label>
+            <label index="dscrTreeMax_height">Descriptor tree\nMax height:..(px)</label>
+            
+            <label index="resPanel_height">Grid result Panel\nTotal height:..(px)</label>
+            <label index="resGrid_height">Grid result\nHeight:..(px)</label>
+            <label index="resGrid_pageSize">Grid result:\nNumber of results per page</label>
+            
+            <label index="pWinWidth">Document detail:  contextual box window:\nWidth:..(px)</label>
+            <label index="pWinHeight">Document detail: contextual box window:\nHeight:..(px)</label>
+            <label index="divContIdWinP">CSS ID (#) wrap: id of content div from document page to display in box window.</label>
+
+            <label index="pages.tx_docdb_doc_related_pages">Related Pages</label>
+
+        </languageKey>
+        <languageKey index="fr" type="array">
+
+            <label index="mode">Mode d'affichage</label>
+            <label index="mode_fe">FE mode: Affiche un formulaire de recherche en frontend (FE)</label>
+            <label index="mode_pi">PI mode: Query defined in plugin (Display result list grid in frontend)</label>
+
+            <label index="owner">Propriétaire (Si aucun n'est sélectionné, tous sont listés)</label>
+            <label index="type">Type de document (Si aucun n'est sélectionné, tous sont listés)</label>
+            <label index="status">Status de document (Si aucun n'est sélectionné, tous sont listés)</label>
+            <label index="grouping">Activer le groupement</label>
+            <label index="grouping_yes">oui</label>
+            <label index="grouping_no">non</label>
+            <label index="by_tile">Par titre</label>
+            <label index="by_owner">Par propriétaire</label>
+            <label index="by_type">Par type</label>
+            <label index="by_status">Par status</label>
+            <label index="by_key">Par clé de référence</label>
+            <label index="by_date">Par date de dernière mise à jour</label>
+            <label index="sorting">Champ de tri par défaut de la liste de document</label>
+            <label index="sorting_order">Order de tri</label>
+            <label index="asc">Ascendant</label>
+            <label index="desc">Descendant</label>
+            <label index="and">AND</label>
+            <label index="or">OR</label>
+
+            <label index="descriptors">Déscripteurs (utiliser l'assistant pour ne choisir que parmi ceux attribués à un document)</label>
+            <label index="descriptors_combinaison">Combinaison des déscripteur</label>
+
+            <label index="display">Paramètres d'affichage du plugin</label>
+
+            <label index="main_width">Div principal\nLargueur totale:..(px)</label>
+            <label index="mulSel_height">Multi-select 3 colonnes (propriétaire/type/status)\nHauteur:..(px)</label>
+
+            <label index="dscrTreeMin_height">Menu arborescent des déscripteurs\nHauteur (Min):..(px)</label>
+            <label index="dscrTreeMax_height">Menu arborescent des déscripteurs\nHauteur (Max):..(px)</label>
+
+            <label index="resPanel_height">Div d'affichage des résultats\nHauteur totale:..(px)</label>
+            <label index="resGrid_height">Grille de résultat:\nHauteur:..(px)</label>
+            <label index="resGrid_pageSize">Grille de résultat:\nNombre de résultats par page</label>
+
+            <label index="pWinWidth">Fenêtre contextuelle pour l'affichage du contenu du document:\nLargueur:..(px)</label>
+            <label index="pWinHeight">Fenêtre contextuelle pour l'affichage du contenu du document:\nHauteur:..(px)</label>
+            <label index="divContIdWinP">CSS ID (#): id du div de la page document contenant la partie à afficher dans la fnêtre contextuelle.</label>
+            
+            <label index="pages.tx_docdb_doc_related_pages">Page-s relative-s</label>
+        </languageKey>
+    </data>
+</T3locallang>

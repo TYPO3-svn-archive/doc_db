@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>pi1</description>
+        <type></type>
+        <csh_table></csh_table>
+        <labelContext type="array">
+        </labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index="pi1_title">Document DB.</label>
+            <label index="pi1_plus_wiz_description">Add document DB plugin as page content.</label>
+        </languageKey>
+        <languageKey index="fr" type="array">
+            <label index="pi1_title">Document DB</label>
+            <label index="pi1_plus_wiz_description">Ajouter le plugin document DB.</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="pi1_title">Dokument DB</label>
+            <label index="pi1_plus_wiz_description">Dokument hinzufügen DB-Plugin als Inhalt.</label>
+        </languageKey>
+        <languageKey index="es" type="array">
+            <label index="pi1_title">Documento DB</label>
+            <label index="pi1_plus_wiz_description">Añadir plugin DB documento como contenido de la página.</label>
+        </languageKey>
+    </data>
+</T3locallang>

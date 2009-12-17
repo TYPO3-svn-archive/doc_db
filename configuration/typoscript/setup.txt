@@ -1,0 +1,22 @@
+
+
+plugin.tx_docdb_pi1 {
+
+	extJS {
+
+        # include ExtJS lib
+		path = {$plugin.tx_docdb_pi1.extJS.path}
+
+        # ext-all.jsalready available
+        doNotLoadExtAllJS = {$plugin.tx_docdb_pi1.extJS.doNotLoadExtAllJS}
+
+        # ext-all.jsalready available
+        doNotLoadExtAllCSS = {$plugin.tx_docdb_pi1.extJS.doNotLoadExtAllCSS}
+
+        # js include prod version
+        production = {$plugin.tx_docdb_pi1.extJS.production}
+
+        # js asynchronous loading
+        asyncLoading = {$plugin.tx_docdb_pi1.extJS.asyncLoading}
+	}
+}

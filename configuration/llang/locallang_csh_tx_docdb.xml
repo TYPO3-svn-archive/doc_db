@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>CSH labels for doc_db extension</description>
+        <type>CSH</type>
+        <csh_table>EXT_tx_docdb</csh_table>
+        <fileId>EXT:doc_db/configuration/llang/locallang_csh_tx_docdb.xml</fileId>
+        <labelContext type="array">Documents database</labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index=".alttitle">Document database (doc_db)</label>
+			<label index=".description">The Document database extension (doc_db) act as a document database.<br />
+            It extends the logic of pages, adding various sorts of descriptors (type of doc, institutional owner, status), including a fully flexible tree of categories (desscriptors).<br />
+            A search plugin is also featured, that allows users to search for a page. Moreover, the plugin can be configured in the backend, to deliver pre-defined lists of documents to the frontend.</label>
+            
+            <label index="descr_combination.alttitle">Descriptors combinaison</label>
+            <label index="descr_combination.description">description</label>
+            <label index="descr_combination.details">details</label>
+            <label index="descr_combination.syntax">syntax</label>
+            <label index="descr_combination.image_descr">wizard</label>
+            <label index="descr_combination.image">EXT:doc_db/res/csh_img/search-a-descriptor.png</label>
+            <label index=".index">index</label>
+
+            <label index="descriptors.alttitle">Document descriptors</label>
+            <label index="descriptors.description">
+                Select the descriptors that will be used to display the list of documents.
+            </label>
+            <label index="descriptors.details">
+                <![CDATA[
+                The hierarchical tree view on the right shows <b>all</b> the descriptors.<br />
+                But if you use the <b>wizard</b>, only descriptors <b>with related documents</b> are listed.
+                ]]>
+            </label>
+            <label index="descriptors.image_descr">wizard</label>
+            <label index="descriptors.image">EXT:doc_db/res/csh_img/search-a-descriptor.png</label>
+            <label index=".">index</label>
+
+            <label index="owner.alttitle">institutional owner (issuer)</label>
+            <label index="owner.description">Select the owner-s of a document</label>
+            <label index="owner.details">
+                Unlike the award of an owner to a page, here several owners may be selected.
+            </label>
+            <label index="owner.alttitle">Type of document</label>
+            <label index="owner.description">The type-s of a document</label>
+            <label index="owner.details">
+                Unlike the award of an type to a page, here several types may be selected.
+            </label>
+            <label index="owner.alttitle">institutional owner (issuer)</label>
+            <label index="owner.description">The owner-s of a docuement</label>
+            <label index="owner.details">
+                Unlike the award of an status to a page, here several status may be selected.
+            </label>
+        </languageKey>
+        <languageKey index="fr" type="array">
+            <label index=".alttitle">Document database (doc_db)</label>
+			<label index=".description">
+                L'extension "base de documents" (doc_db) agit comme une base documentaire.<br />
+                Elle étend la logique de pages, permet l'ajout de divers types de descripteurs (type de doc, propriétaire institutionnel, status), y compris un arbre entièrement de catégories (nomé descripteurs).<br />
+                Un plugin frontend de recherche est également fourni, qui permet aux utilisateurs de rechercher une page. En outre, le plugin peut être configuré dans le backend, pour fournir des listes pré-définies de documents pour le frontend.
+                </label>
+
+            <label index="descr_combination.alttitle">Descriptors combinaison</label>
+            <label index="descr_combination.description">description</label>
+            <label index="descr_combination.details">details</label>
+            <label index="descr_combination.syntax">syntax</label>
+            <label index="descr_combination.image_descr">wizard</label>
+            <label index="descr_combination.image">EXT:doc_db/res/csh_img/search-a-descriptor.png</label>
+            <label index=".index">index</label>
+
+            <label index="descriptors.alttitle">Descripteurs de documents</label>
+            <label index="descriptors.description">
+                Sélectionnez les descripteurs qui seront utilisés pour afficher la liste des documents.
+            </label>
+            <label index="descriptors.details">
+                <![CDATA[
+                La vue arborescente hiérarchique sur la droite montre <b>tout</b> les descripteurs existants.<br />
+                Mais si vous utilisez <b>l'Assistant</b><em>(wizard)</em>, seuls les descripteurs avec des <b>documents connexes</b> sont listés.
+                ]]>
+            </label>
+            <label index="descriptors.image_descr">wizard</label>
+            <label index="descriptors.image">EXT:doc_db/res/csh_img/search-a-descriptor.png</label>
+            <label index=".">index</label>
+
+            <label index="owner.alttitle">Propriétaire institutionnel</label>
+            <label index="owner.description">le-s propriétaire-s du document (émetteur)</label>
+            <label index="owner.details">
+                A la différence de l'attribution d'un propriétaire à une page, ici plusieurs propriétaires peuvent être sélectionnés.
+            </label>
+            <label index="type.alttitle">Type de document</label>
+            <label index="type.description">le-s type-s du document</label>
+            <label index="type.details">
+                A la différence de l'attribution d'un type à une page, ici plusieurs types peuvent être sélectionnés.
+            </label>
+            <label index="status.alttitle">Status</label>
+            <label index="status.description">le-s status du document</label>
+            <label index="status.details">
+                A la différence de l'attribution d'un status à une page, ici plusieurs status peuvent être sélectionnés.
+            </label>
+        </languageKey>
+    </data>
+</T3locallang>
