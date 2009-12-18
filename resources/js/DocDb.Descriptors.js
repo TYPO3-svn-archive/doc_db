@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.Descriptors.js 131 2009-12-04 14:38:25Z lcherpit $
+ * @version : $Id: DocDb.Descriptors.js 166 2009-12-18 17:37:47Z lcherpit $
  */
 Ext.ns( 'Ext.ux' );
 Ext.ux.DscrLoader = Ext.extend( Ext.tree.TreeLoader, {
@@ -70,9 +70,15 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
                     // ownerCt:tree
                     delete this.ownerCt.loader.baseParams;
                     this.ownerCt.loader.baseParams = {};
-                    this.ownerCt.loader.load(this.ownerCt.getRootNode());
+                    
                     // ownerCt.ownerCt:form
                     this.ownerCt.ownerCt.form.reset( );
+
+                    if( this.ownerCt.searchIsOn ) {
+                        this.ownerCt.trigger.onTriggerClick( );
+                    } else {
+                        this.ownerCt.collapseAll( );
+                    }
                 }
             }]
             ,root : {
@@ -186,6 +192,9 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
 
                 obj.ui.toggleCheck( false );
             });
+//            if( ! this.searchIsOn ) {
+                DocDb.model_descriptor.setSessionNode( node.id, 'collapse' );
+//            }
         });
     
     
@@ -217,10 +226,6 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
             node.collapseChildNodes( true );
 
             this.resizeTreePanel( );
-            
-            if( ! this.searchIsOn ) {
-                DocDb.model_descriptor.setSessionNode( node.id, 'collapse' );
-            }
         });
 
         this.loader.on( 'beforeload', function( ld, node ) {
@@ -241,7 +246,7 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
                     (function( ) { this.body.mask( this.lang.noResult, 'x-mask' ); }.defer( 20, this ) );
                 }
             }
-
+            
             node.isAlreadyExpanded = false;
         }
         ,this
@@ -423,10 +428,12 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
           var t = this.tree
 
           if( t.searchIsOn ) {
-
+            
             delete t.loader.baseParams.needle;
             t.searchIsOn = false;
-            t.loader.load( t.getRootNode( ) );
+            t.loader.load(
+                t.getRootNode( )
+            );
             
             if( t.body.isMasked( )  ) {
                 t.body.unmask( );
@@ -464,7 +471,8 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
 
                 // delete initial children Nodes to allow direct query
                 delete this.getRootNode( ).attributes.children;
-
+                
+                this.collapseAll( );
                 // get root node with related setted params
                 this.loader.load( this.getRootNode( ) );
 
