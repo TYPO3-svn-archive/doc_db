@@ -10,15 +10,118 @@
     <data type="array">
         <languageKey index="default" type="array">
             <label index="pages.doktype.I.198">Document</label>
+
+            <label index="extmng.updatermsgOption">.</label>
+            <label index="extmng.updatermsgHeader">Important</label>
+            <label index="extmng.updatermsg">
+                Before using the Document database extension, some check are needed. To make those checks click the link below.
+                But before you should set the "Doc. Definition storage page Id":[dscrDefStoragePid].
+            </label>
+            <label index="extmng.updatermsgLink">Open the updater</label>
+
+            <label index="updater.back">[&lt;- back]</label>
+            <label index="updater.reload">[reload page]</label>
+            <label index="updater.updateresults">Update results:</label>
+
+            <label index="updater.warningHeader">Important message</label>
+            <label index="updater.warningMsg">
+                The next actions must be performed in order to work. Begin by the first. Each action is available when the previous one is ok.
+                Anyway, before update it\'s always a good choice to make a backup of the database and of the extension
+            </label>
+            <label index="updater.actions">Actions</label>
+
+
+
+            <label index="updater.lbl_checkTableFieldsToRename">Db tables fields to rename</label>
+            <label index="updater.question_checkTableFieldsToRename">Rename some fields</label>
+            <label index="updater.questionInfo_checkTableFieldsToRename">Rename some fields</label>
+
+            <label index="updater.msg_checkTableFieldsToRename">Rename some fields</label>
+            <label index="updater.foundMsg_checkTableFieldsToRename">###COUNT### field-s should be renamed</label>
+            <label index="updater.btn_checkTableFieldsToRename">Rename</label>
+
+
+            <label index="updater.lbl_defaultVal">Default values</label>
+            <label index="updater.question_defaultVal">Some default values are required</label>
+            <label index="updater.questionInfo_defaultVal">Default values in tables tx_docdb[owner|type|status] will be created.</label>
+
+            <label index="updater.msg_defaultVal">Check default values</label>
+            <label index="updater.foundMsg_defaultVal">###COUNT### values should be updated</label>
+            <label index="updater.btn_defaultVal">Update</label>
+
+
+            <label index="updater.lbl_relToPage">Relations to Pages</label>
+            <label index="updater.question_relToPage">Some relations to foreign field in table pages are required</label>
+            <label index="updater.questionInfo_relToPage">Relations to table pages will be updated/created. It could take some time, once the process running, please let it finish.</label>
+
+            <label index="updater.msg_relToPage">Check relations of default values to table pages</label>
+            <label index="updater.foundMsg_relToPage">###COUNT### relations should be updated</label>
+            <label index="updater.btn_relToPage">Update</label>
+
+            
+            <label index="updater.lbl_oldTableRename">Backup and rename old mm tables</label>
+            <label index="updater.question_oldTableRename">Relationnal tables need to be updated</label>
+            <label index="updater.questionInfo_oldTableRename">Old mm tables will be backuped and renamed to follow the TYPO3 table namespace</label>
+
+            <label index="updater.msg_oldTableRename">Check if Old mm relationnal tables exist and need to be backuped and renamed</label>
+            <label index="updater.btn_oldTableRename">Update</label>
+
+
+
+
+
+            <label index="updater.nothingtodo">Nothing to do, It's ok.</label>
+
+            
+
         </languageKey>
         <languageKey index="fr" type="array">
             <label index="pages.doktype.I.198">Document</label>
+
+            <label index="extmng.updatermsgOption">.</label>
+            <label index="extmng.updatermsgHeader">Important</label>
+            <label index="extmng.updatermsg">
+                Avant de pouvoir utiliser l'extension, certains contôle sont requis. Pour les effectuer, cliquer sur le lien ci-dessous.
+                Mais au préalable, il est avisé de renseigner l'option "Doc. Definition storage page Id":[dscrDefStoragePid]
+            </label>
+            <label index="extmng.updatermsgLink">Ouvrir le page de mise à jour</label>
+
+            <label index="updater.back">[&lt;- retour]</label>
+            <label index="updater.updateresults">Résultats de la mise à jour:</label>
+
+            <label index="updater.warningHeader">Message Important</label>
+            <label index="updater.warningMsg">
+                Les actions suivantes doivent être executée dans l'ordre. Chaque action est disponible lorsque la précèdente a été executée.
+                Avant de procéder à la mise à jour, il est toujours plus sûr au préalable de faire une sauvegarde de l'extension et de la base de donnée.
+            </label>
+
         </languageKey>
         <languageKey index="de" type="array">
             <label index="pages.doktype.I.198">Dokument</label>
+
+            <label index="extmng.updatermsgOption">.</label>
+            <label index="extmng.updatermsgHeader">Important</label>
+            <label index="extmng.updatermsg">Before using new version of Document database, some check are needed. To make those checks click the link below.</label>
+            <label index="extmng.updatermsgLink">Open the updater</label>
+
+            <label index="updater.back">[&lt;- back]</label>
+
+            <label index="updater.warningHeader">Important message</label>
+            <label index="updater.warningMsg">message</label>
         </languageKey>
         <languageKey index="es" type="array">
             <label index="pages.doktype.I.198">Documento</label>
+
+            <label index="extmng.updatermsgOption">.</label>
+            <label index="extmng.updatermsgHeader">Important</label>
+            <label index="extmng.updatermsg">Before using new version of Document database, some check are needed. To make those checks click the link below.</label>
+            <label index="extmng.updatermsgLink">Open the updater</label>
+            
+            <label index="updater.back">[&lt;- back]</label>
+
+            <label index="updater.warningHeader">Important message</label>
+            <label index="updater.warningMsg">message</label>
+
         </languageKey>
     </data>
 </T3locallang>
