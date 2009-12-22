@@ -17,8 +17,11 @@ descriptorsTreeWidth = 300
 # cat=basic/dims/80; type=int [6-30]; label= Max height for descriptors trees: Here you can configure the maximum height of descriptors trees in BackEnd forms.
 descriptorsTreeHeigth = 6
 
+# cat=basic/dev/1000; type=user[EXT:doc_db/classes/class.tx_docdb_tsparserext.php:tx_docdb_tsparserext->displayMessage]; label=LLL:EXT:doc_db/configuration/llang/locallang.xml:extmng.updatermsgOption
+updateMessage=1
+
 
 TSConstantEditor.basic {
-  description = <span style="background:red; padding:1px 2px; color:#fff; font-weight:bold;">1</span> After change the setting of "the Document Definition storage page Id" [dscrDefStoragePid] and pressed UPDATE button:<br /><br />Please <u>exit</u> the extension manager or <u>select an other option from the above select option menu</u><em>(ex. Edit files)</em><br />and <span style="background:yellow; padding:0 3px; color:#222; font-weight:bold;">come back to this page (information)</span>.<br />This ensure that the required default values are set correctly. Thank you<br />
+  description = <span style="background:red; padding:1px 2px; color:#fff; font-weight:bold;">1</span> After change the setting of "the Document Definition storage page Id" [dscrDefStoragePid] and pressed UPDATE button:<br /><br />Please click to the updater link just above or <u>select option menu</u> <span style="background:yellow; padding:0 3px; color:#222; font-weight:bold;">UPDATE.</span>.<br />This ensure that the required default values are set correctly. Thank you<br />
   1=dscrDefStoragePid
 }
