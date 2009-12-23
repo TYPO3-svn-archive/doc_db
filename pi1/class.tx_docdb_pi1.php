@@ -276,7 +276,7 @@ class tx_docdb_pi1 extends tslib_pibase
 												'assign'    => 'DocDb.mainGrid',
 												'lang.'     => array(
 														'prefix' => '',
-														'LLfile' => $this->_siteRelPath . 'resources/lang/extjs.docdb.gridStandalone.xml',
+														'LLfile' => $this->_siteRelPath . 'resources/lang/extjs.docdb.locallang_gridStandalone.xml',
 												),
 												'statvar.' => array(
 														'RENDER_TO'      => $this->_conf[ 'extjs-ct' ],
