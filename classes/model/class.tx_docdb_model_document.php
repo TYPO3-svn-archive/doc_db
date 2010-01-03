@@ -25,9 +25,9 @@
  /**
  * Class/Function
  * 
- * $Id: class.tx_docdb_model_document.php 156 2009-12-06 22:43:41Z lcherpit $
+ * $Id: class.tx_docdb_model_document.php 186 2010-01-03 13:27:43Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2009-12-06 23:43:41 +0100 (dim 06 déc 2009) $
+ * $Date: 2010-01-03 14:27:43 +0100 (dim 03 jan 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -49,21 +49,21 @@ class tx_docdb_model_document
 	/**
 	 * Local cObj for typolink,parseFuncRTE, ...
 	 * 
-	 * @var $cObj 
+	 * @var object
 	 */ 
 	public $cObj     = NULL;
 	
 	/**
 	 * devLog debug
 	 * 
-	 * @var $_debug
+	 * @var boolean
 	 */
 	protected $_debug   = FALSE;
 	
 	/**
 	 * Store sql Clause keys: where,order, limit
 	 * 
-	 * @var
+	 * @var array
 	 */
 	private $_sqlClause = array();
 	
@@ -403,7 +403,7 @@ class tx_docdb_model_document
         $rows = array();
 
         $res = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTquery(
-            'uid,title',
+            'uid,title,subtitle,abstract',
             'pages',
             'uid IN( SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
             $this->cObj->enableFields( 'pages' ),
@@ -417,6 +417,7 @@ class tx_docdb_model_document
             $relPageObj = new stdClass();
             $relPageObj->pUrl   = $this->cObj->typoLink( '', array('parameter' => $row[ 'uid' ], 'returnLast' => 'url' ) );
             $relPageObj->pTitle = $row[ 'title' ];
+            $relPageObj->aTitle = $row[ 'abstract' ] ? $row[ 'abstract' ] : ( $row[ 'subtitle' ] ? $row[ 'subtitle' ] :  $row[ 'title' ] );
 
             $rows[] = $relPageObj;
         }

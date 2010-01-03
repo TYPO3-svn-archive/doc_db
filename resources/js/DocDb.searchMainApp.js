@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.searchMainApp.js 158 2009-12-07 02:35:24Z lcherpit $
+ * @version : $Id: DocDb.searchMainApp.js 182 2010-01-03 02:17:33Z lcherpit $
  */
 /**
  * Global app
@@ -17,7 +17,7 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
         align : 'left',
         pack  : 'start'
     },
-    border : true,
+    border   : true,
 
     initComponent : function( ) {
     
@@ -27,21 +27,19 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
             height     : this.statvar.mSelHeight + this.statvar.treeHeight.min,
             formHeight : this.statvar.formHeight,
             gridHeight : this.statvar.gridHeight,
-            // store height of result panel here to animate later
-            resPHeight : this.statvar.resPHeight,
             items:[{
-                xtype          : 'docgridresultdetail',
-                id             : 'resultsPanel',
-                standaloneGrid : false,
-                pageSize       : this.statvar.PAGESIZE,
+                xtype          : 'gridresults',
+                id             : 'gridResults',
                 lang           : this.lang.grid,
+                docDetail      : this.statvar.docDetail,
+                dLL            : this.lang.docDetail,
+                pageSize       : parseInt( this.statvar.PAGESIZE, 10 ),
+                region         : 'north',
                 width          : this.statvar.mainPWidth,
                 height         : 0,
-                docDetail      : this.statvar.docDetail,
-                docDetailLL    : this.lang.docDetail
-
+                standaloneGrid : false,
+                hidden         : true
             },{
-
                 xtype         : 'searchform',
                 id            : 'advSearch',
                 lang          : this.lang,
@@ -70,7 +68,6 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
         this.toggleGrid( false );
         var docGridSm = Ext.getCmp( 'gridResults' ).getSelectionModel( );
         docGridSm.clearSelections( true );
-        Ext.getCmp( 'detailPanel' ).restoreInitText();
     },
     this
     );
@@ -125,10 +122,12 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
                 mainPanel.toggleGrid( true );
                 mainPanel.body.unmask( );
-                mainPanel.body.fadeIn( {
-                    endOpacity: 0,
+
+                mainPanel.el.fadeIn( {
+                    endOpacity: 1,
                     easing: 'easeOut',
-                    duration: .7
+                    duration: 0.6,
+                    block: true
                 } );
             };
 
@@ -147,7 +146,6 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
     ,toggleGrid : function( openGrid ) {
 
-        var resultsP  = Ext.getCmp( 'resultsPanel' );
         var grid      = Ext.getCmp( 'gridResults' );
         var gridBbar  = Ext.getCmp( 'g-p-bbar' );
         var panel     = Ext.getCmp( 'mainPanel' );
@@ -159,15 +157,12 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
         if( openGrid ) {
 
-            resultsP.setHeight( panel.resPHeight );
             grid.setHeight( panel.gridHeight );
-            panel.setHeight( panel.resPHeight );
+            panel.setHeight( panel.gridHeight );
 
             grid.show( );
             gridBbar.show( );
             panel.doLayout( );
-
-            resultsP.doLayout();
             advSearP.collapse( );
 
         } else {
@@ -175,17 +170,13 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
             gridBbar.hide( );
             grid.hide( );
 
-            resultsP.setHeight( 0 );
-
-            advSearP.setPagePosition( searchX,( searchY-panel.resPHeight ) )
+            advSearP.setPagePosition( searchX,( searchY-panel.gridHeight ) )
             grid.setHeight( 0 );
-
-            advSearP.body.setStyle( 'opacity', 1 );
             advSearP.expand( );
-            advSearP.body.fadeIn({
-                endOpacity: 0,
+            advSearP.el.fadeIn({
+                endOpacity: 1,
                 easing: 'easeOut',
-                duration: .7
+                duration: 1
             } );
             (function( ){ Ext.getCmp( 'dsrcTree' ).resizeTreePanel( ) }.defer( 10 ) );
         }
@@ -216,19 +207,18 @@ Ext.onReady( function( ) {
     Ext.app.REMOTING_API.id = 'docdb-direct';
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
 
+    // mask when init framework
+    var lMask = Ext.get( 'loading-mask' );
+    
     // create and show main app Panel
     var searchMainApp = new DocDb.mainPanel( );
 
-    searchMainApp.show( );
-
-    // mask when init framework
-    var lMask = Ext.get( 'loading-mask' );
-    (function( ) { lMask.setHeight( searchMainApp.getHeight() ) }.defer( 10 ) );
+    (function( ) { lMask.setHeight( searchMainApp.getHeight( ) ); }.defer( 1 ) );
     
      setTimeout( function( ) {
         Ext.fly( 'loading' ).remove( );
         lMask.fadeOut( {duration: 1, remove:true} );
-        }, 250
+        }, 350
     );
  
 }); // eo function onReady
