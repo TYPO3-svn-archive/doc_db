@@ -38,6 +38,7 @@ Ext.ux.grid.RowExpander = Ext.extend(Ext.util.Observable, {
     id : 'expander',
     lazyRender : true,
     enableCaching : true,
+    rowScrollToTop : true,
 
     constructor: function(config){
         Ext.apply(this, config);
@@ -208,6 +209,7 @@ Ext.ux.grid.RowExpander = Ext.extend(Ext.util.Observable, {
     },
 
     expandRow : function(row){
+
         if(typeof row == 'number'){
             row = this.grid.view.getRow(row);
         }
@@ -217,6 +219,15 @@ Ext.ux.grid.RowExpander = Ext.extend(Ext.util.Observable, {
             this.state[record.id] = true;
             Ext.fly(row).replaceClass('x-grid3-row-collapsed', 'x-grid3-row-expanded');
             this.fireEvent('expand', this, record, body, row.rowIndex);
+        }
+        /**
+         * add focus and and scroll to top of grid for selected expanded row
+         * @author Laurent Cherpit
+         * @date 2009.01.03
+         */
+        if( this.rowScrollToTop ) {
+            this.grid.getView( ).focusRow( this.grid.store.indexOfId(record.id ) );
+            this.grid.getView( ).scroller.scrollTo( 'top', row.offsetTop, true );
         }
     },
 

@@ -46,15 +46,21 @@
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Loading documents...</label>
             
-            <label index="docDetail.helpText">Please select a row to see additional details and double click on row to show a preview.</label>
+            <label index="docDetail.relatedDscr">Related descriptor</label>
+            <label index="docDetail.relatedDscr_pl">Related descriptors</label>
+            <label index="docDetail.relatedPage">Related page</label>
+            <label index="docDetail.relatedPage_pl">Related pages</label>
             <label index="docDetail.title">Title:</label>
             <label index="docDetail.owner">Owner:</label>
             <label index="docDetail.type">Type:</label>
             <label index="docDetail.status">Status:</label>
             <label index="docDetail.key">Key:</label>
             <label index="docDetail.date">Last updated:</label>
-            <label index="docDetail.link2page">Exit the search and go to the destination page:</label>
-            <label index="docDetail.link2preview">Display document in contextual window.(and keep the search criteria)</label>
+            <label index="docDetail.prevDoc">Previous doc.</label>
+            <label index="docDetail.nextDoc">Next doc.</label>
+            <label index="docDetail.link2page">View this document as a separate page</label>
+            <label index="docDetail.link2pageTooltip">Exit the grid result.</label>
+            <label index="docDetail.link2preview">View the document in a popup window (and stay on this page).</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="form.title">Erweiterte Suche</label>
@@ -97,14 +103,20 @@
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Loading Dokumente ...</label>
             
-            <label index="docDetail.helpText">Bitte wählen Sie eine Zeile, um weitere Informationen und doppelklicken Sie auf Zeile zu sehen, eine Vorschau anzeigen.</label>
+            <label index="docDetail.relatedDscr">Related descriptor</label>
+            <label index="docDetail.relatedDscr_pl">Related descriptors</label>
+            <label index="docDetail.relatedPage">Related page</label>
+            <label index="docDetail.relatedPage_pl">Related pages</label>
             <label index="docDetail.title">Titel:</label>
             <label index="docDetail.owner">Eigentümer:</label>
             <label index="docDetail.type">Sorte:</label>
             <label index="docDetail.status">Status:</label>
             <label index="docDetail.key">Schlüssel:</label>
             <label index="docDetail.date">Last updated:</label>
+            <label index="docDetail.prevDoc">Previous doc.</label>
+            <label index="docDetail.nextDoc">Next doc.</label>
             <label index="docDetail.link2page">Verlassen Sie die Suche und gehen Sie zu der Zielseite:</label>
+            <label index="docDetail.link2pageTooltip">>Verlassen Sie die Suche</label>
             <label index="docDetail.link2preview">Sehen Sie das Dokument in einem Popup-Fenster (und auf dieser Seite bleiben).</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
@@ -148,14 +160,20 @@
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Chargement des documents ...</label>
             
-            <label index="docDetail.helpText">Pour afficher les informations détaillées, selectionner un ligne ou double cliquer sur celle-ci.</label>
+            <label index="docDetail.relatedDscr">Déscripteur relatif</label>
+            <label index="docDetail.relatedDscr_pl">Déscripteurs relatifs</label>
+            <label index="docDetail.relatedPage">Page relative</label>
+            <label index="docDetail.relatedPage_pl">Pages relatives</label>
             <label index="docDetail.title">Titre:</label>
             <label index="docDetail.owner">Propriétaire:</label>
             <label index="docDetail.type">Type:</label>
             <label index="docDetail.status">Status:</label>
             <label index="docDetail.key">Clé:</label>
             <label index="docDetail.date">Mis à jour le:</label>
-            <label index="docDetail.link2page">Quitter la recherche et afficher la page de destination:</label>
+            <label index="docDetail.prevDoc">Document précédent</label>
+            <label index="docDetail.nextDoc">Document suivant</label>
+            <label index="docDetail.link2page">Voir la page d'origine du document</label>
+            <label index="docDetail.link2pageTooltip">Quitter la recherche</label>
             <label index="docDetail.link2preview">Afficher le document dans une fenêtre contextuelle (et conserver les paramètres de recherche).</label>
 		</languageKey>
         <languageKey index="es" type="array">
@@ -199,14 +217,20 @@
 			<label index="grid.header.status">Estatus</label>
 			<label index="grid.loading">Cargando...</label>
 
-            <label index="docDetail.helpText">Para ver información detallada, seleccione una línea o un doble clic sobre ella.</label>
+            <label index="docDetail.relatedDscr">Relacionado descriptor</label>
+            <label index="docDetail.relatedDscr_pl">Descriptores relacionados</label>
+            <label index="docDetail.relatedPage">Página relacionados</label>
+            <label index="docDetail.relatedPage_pl">Páginas relacionadas</label>
             <label index="docDetail.title">Título:</label>
             <label index="docDetail.owner">Propietario:</label>
             <label index="docDetail.type">Typo:</label>
             <label index="docDetail.status">Estatus:</label>
             <label index="docDetail.key">Llave:</label>
             <label index="docDetail.date">Actualizado:</label>
+            <label index="docDetail.prevDoc">documento anterior</label>
+            <label index="docDetail.nextDoc">próximo documento</label>
             <label index="docDetail.link2page">Deja la búsqueda y ver la página de destino:</label>
+            <label index="docDetail.link2pageTooltip">Salir Page</label>
             <label index="docDetail.link2preview">Ver el documento en una ventana emergente (y mantener los parámetros de búsqueda).</label>
 		</languageKey>
 	</data>

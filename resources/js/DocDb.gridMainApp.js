@@ -25,22 +25,18 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
             renderTo   : this.statvar.RENDER_TO,
             
             width      : parseInt( this.statvar.mainPWidth, 10 ),
-            height     : parseInt( this.statvar.resPHeight, 10 ),
-//            gridHeight : this.statvar.gridHeight,
-//            // stor height of result panel here to animate later
-//            resPHeight : this.statvar.resPHeight,
+            height     : parseInt( this.statvar.gridHeight, 10 ),
             items:[{
-                xtype          : 'docgridresultdetail',
-                id             : 'resultsPanel',
-                standaloneGrid : true,
-                pageSize       : this.statvar.PAGESIZE,
+                xtype          : 'gridresults',
+                id             : 'gridResults',
                 lang           : this.lang.grid,
-                width          : this.statvar.mainPWidth,
-                height         : this.statvar.resPHeight,
-                gridHeight     : this.statvar.gridHeight,
                 docDetail      : this.statvar.docDetail,
-                docDetailLL    : this.lang.docDetail
-
+                dLL            : this.lang.docDetail,
+                pageSize       : parseInt( this.statvar.PAGESIZE, 10 ),
+                region         : 'north',
+                width          : this.statvar.mainPWidth,
+                height         : this.statvar.gridHeight,
+                standaloneGrid : true
             }] // end items of mainPanel
         }
   
@@ -71,7 +67,7 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
         );
 
         // load result in gridPanel
-        gridResult.store.load();
+        gridResult.store.load( );
     } // eo function setBaseParams
 
 
@@ -99,23 +95,20 @@ Ext.onReady( function( ) {
     Ext.app.REMOTING_API.id = 'docdb-direct';
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
 
+    // create and show main app Panel
+    var gridMainApp = new DocDb.mainGrid( );
+
+    gridMainApp.show( );
+    
+    ( function( ) { gridMainApp.setBaseParams(); }.defer( 10 ) );
+    gridMainApp.doLayout( );
+
     // mask when init framework
      setTimeout( function( ) {
         Ext.fly( 'loading' ).remove( );
         Ext.get( 'loading-mask' ).fadeOut( {duration: 1, remove:true} );
         }, 250
     );
-
-    // create and show main app Panel
-    var gridMainApp = new DocDb.mainGrid( );
-
-    gridMainApp.show( );
-    
-    (function( ) { gridMainApp.setBaseParams(); }.defer( 10 ));
-//    gridMainApp.doLayout();
-
-    
-
 }); // eo function onReady
 
 // eof
