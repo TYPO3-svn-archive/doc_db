@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.GridResults.js 186 2010-01-03 13:27:43Z lcherpit $
+ * @version : $Id: DocDb.GridResults.js 192 2010-01-13 21:08:11Z lcherpit $
  */
 
 Ext.ns('DocDb');
@@ -14,42 +14,49 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
   border : false,
   
     initComponent:function( ) {
-    
+
+        // language labels for grid
+        var gll  = this.lang.grid,
+        // language labels for detail preview
+        dll = this.lang.docDetail,
+        // date format
+        dF = this.dF,
+
         // row expander
-        var rowExpander = new Ext.ux.grid.RowExpander({
+        rowExpander = new Ext.ux.grid.RowExpander({
             tpl : new Ext.XTemplate(
                 '<div class="x-grid3-expander-preview">',
                     '<hr class="hr4tmpl" />',
                     '<div style="float:left;width:91%;">',
                         '<tpl if="owner.length &gt;1">',
-                            '<b>' + this.dLL.owner + '</b> {owner}<br/>',
+                            '<b>' + dll.owner + '</b> {owner}<br/>',
                         '</tpl>',
                         '<tpl if="type.length &gt;1">',
-                            '<b>' + this.dLL.type + '</b> {type}<br/>',
+                            '<b>' + dll.type + '</b> {type}<br/>',
                         '</tpl>',
                         '<tpl if="status.length &gt;1">',
-                            '<b>' + this.dLL.status + '</b> {status}<br/>',
+                            '<b>' + dll.status + '</b> {status}<br/>',
                         '</tpl>',
                         '<tpl if="dkey.length &gt;1">',
-                            '<b>' + this.dLL.key + '</b> {dkey}<br/>',
+                            '<b>' + dll.key + '</b> {dkey}<br/>',
                         '</tpl>',
                         '<tpl if="date !==0">',
-                            '<b>' + this.dLL.date + '</b> {[this.fDate(values["date"])]}<br/>',
+                            '<b>' + dll.date + '</b> {[this.fDate(values["date"])]}<br/>',
                         '</tpl>',
                     '</div>',
                     '<div style="float:right;width:8%;text-align:right;">',
-                        '<a href="{docPageURL}" title="' + this.dLL.link2page + '"><img class="x-docdetail-lint2page" src="' + Ext.BLANK_IMAGE_URL + '" /></a>',
+                        '<a href="{docPageURL}" title="' + dll.link2page + '"><img class="x-docdetail-lint2page" src="' + Ext.BLANK_IMAGE_URL + '" /></a>',
                     '</div>',
                     '<div style="clear:both;"><!-- --></div>',
                     '<hr class="hr4tmpl" />',
                     '<tpl if="this.cAr(dscr)">',
-                        '<div><b>{[values["dscr"].length > 0?"' + this.dLL.relatedDscr_pl + '":"' + this.dLL.relatedDscr + '"]}:</b>',
+                        '<div><b>{[values["dscr"].length > 0?"' + dll.relatedDscr_pl + '":"' + dll.relatedDscr + '"]}:</b>',
                         '<tpl for="dscr">',
                             '<p>- {dtitle}</p>',
                         '</tpl></div><hr class="hr4tmpl" />',
                     '</tpl>',
                     '<tpl if="this.cAr(pages)">',
-                        '<div><b>{[values["dscr"].length > 0?"' + this.dLL.relatedPage_pl + '":"' + this.dLL.relatedPage + '"]}:</b>',
+                        '<div><b>{[values["dscr"].length > 0?"' + dll.relatedPage_pl + '":"' + dll.relatedPage + '"]}:</b>',
                         '<tpl for="pages">',
                             '<p>- <a href="{pUrl}" title="{aTitle}">{pTitle}</a></p>',
                         '</tpl></div><hr class="hr4tmpl" />',
@@ -63,13 +70,13 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 },{
                     fDate : function( d ) {
                         var dt = new Date( d );
-                        return dt.format( 'd.m.Y' );
+                        return dt.format( dF.detail );
                     }
                 }
             )
-        });
+        }),
 
-        var filters = new Ext.ux.grid.GridFilters( {
+        filters = new Ext.ux.grid.GridFilters( {
             encode: true, // json encode the filter query
             local: false,   // remote filtering
             filters : [{
@@ -88,34 +95,32 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 type      : 'string',
                 dataIndex : 'status'
             }]
-        } );
+        } ),
 
-        var titleRenderer = function( value, id, record ) {
+        titleRenderer = function( value, id, record ) {
 
              
-            return '<div style="white-space:normal !important;"><a class="docpreview" href="' + record.data.docPageURL + '" title="' + this.dLL.link2preview + '">' + value + '</a></div>';
-        }
+            return '<div style="white-space:normal !important;"><a class="docpreview" href="' + record.data.docPageURL + '" title="' + dll.link2preview + '">' + value + '</a></div>';
+        },
 
-   
 
-        var config = {
-            title            : this.lang.resPanel.title,
-            //height           : this.standaloneGrid ? this.height : 0,
+        config = {
+            title            : gll.resPanel.title,
             autoScroll       : true,
             forceFit         : true,
             style            : 'border-bottom:1px solid #bbb;',
             autoExpandColumn : 'title',
             autoSizeColumn   : true,
-            autoExpandMin    : 160,
-            autoExpandMax    : 400,
+            autoExpandMin    : 150,
+            autoExpandMax    : 650,
             plugins          : this.standaloneGrid ? [rowExpander,filters] : [rowExpander,filters,new Ext.ux.plugins.HeaderButtons( )],
             hbuttons         : this.standaloneGrid ? '' : [{
-                text          : this.lang.resPanel.searchAgain,
+                text          : gll.resPanel.searchAgain,
                 id            : 'btnMakeNewSearch',
                 iconCls       : 'x-btn-search'
             }],
             loadMask         : {
-                msg : this.lang.loading
+                msg : gll.loading
             },
             store : new Ext.data.GroupingStore({
                 baseParams : {
@@ -166,42 +171,42 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 rowExpander,
                 {
                     id        : 'title',
-                    header    : this.lang.header.title,
-                    width     : 250,
+                    header    : gll.header.title,
+                    width     : this.colsW[ 0 ],
                     sortable  : true,
                     dataIndex : 'title',
                     renderer  : {fn: titleRenderer, scope: this }
                     //,css       : 'white-space:normal !important;'
                 },{
-                    header    : this.lang.header.date,
-                    width     : 60,
+                    header    : gll.header.date,
+                    width     : this.colsW[ 1 ],
                     fixed     : true,
                     resizable : false,
                     sortable  : true,
-                    renderer  : Ext.util.Format.dateRenderer( 'd.m.y' ),
+                    renderer  : Ext.util.Format.dateRenderer( dF.row ),
                     dataIndex : 'date'
                 },{
-                    header    : this.lang.header.owner,
-                    width     : 130,
+                    header    : gll.header.owner,
+                    width     : this.colsW[ 2 ],
                     sortable  : true,
                     dataIndex : 'owner',
                     renderer  : function( value, id, record ) { return '<div style="white-space:normal !important;">' + value + '</div>';}
                 },{
-                    header    : this.lang.header.key,
-                    width     : 35,
+                    header    : gll.header.key,
+                    width     : this.colsW[ 3 ],
                     fixed     : true,
                     sortable  : true,
                     dataIndex : 'dkey'
                 },{
-                    header     : this.lang.header.type,
-                    width     : 130,
+                    header     : gll.header.type,
+                    width     : this.colsW[ 4 ],
                     fixed     : true,
                     sortable  : true,
                     dataIndex : 'type',
                     renderer  : function( value, id, record ) { return '<div style="white-space:normal !important;">' + value + '</div>';}
                 },{
-                    header    : this.lang.header.status,
-                    width     : 60,
+                    header    : gll.header.status,
+                    width     : this.colsW[ 5 ],
                     fixed     : true,
                     sortable  : true,
                     dataIndex : 'status'
@@ -240,12 +245,14 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 });
 
         DocDb.GridResults.superclass.initComponent.apply( this, arguments );
-    
+        
   }, // eo function initComponent
  
   onClickLink : function( el, a, e ) {
-      
-    var selM = this.getSelectionModel( );
+
+    // language labels for detail preview
+    var dll = this.lang.docDetail,
+    selM = this.getSelectionModel( );
 
     if (!this.win) {
         this.win = new Ext.Window({
@@ -266,7 +273,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 text    : '',
                 id      : 'btnPrev',
                 iconCls : 'x-tbar-page-prev',
-                tooltip : this.dLL.prevDoc,
+                tooltip : dll.prevDoc,
                 listeners : {
                     click: function( el, e ) {
 
@@ -282,7 +289,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 text    : '',
                 id      : 'btnNext',
                 iconCls : 'x-tbar-page-next',
-                tooltip : this.dLL.nextDoc,
+                tooltip : dll.nextDoc,
                 listeners : {
                     click: function( el, e ) {
 
@@ -295,11 +302,11 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                     scope: this
                 }
             },'->',{
-                text        : this.dLL.link2page,
+                text        : dll.link2page,
                 id          : 'btnExtUrl',
                 iconCls     : 'x-docdetail-lint2page',
                 iconAlign   : 'right',
-                tooltip     : this.dLL.link2pageTooltip,
+                tooltip     : dll.link2pageTooltip,
                 handler     : function( ) {
                     window.location.href = selM.getSelected( ).data.docPageURL;
                 }
@@ -330,13 +337,10 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 url       : selM.getSelected( ).data.docPageURL,
                 callback : function( obj, b, s ) {
 
-                    var bodyC = this.win.body;
-                    var cont = Ext.select( '#docdb-previewWin div#' + this.docDetail.divContIdWinP, bodyC );
+                    var bodyC = this.win.body,
+                    cont = Ext.select( '#docdb-previewWin div#' + this.docDetail.divContIdWinP +'', bodyC );
 
-                    bodyC.update( '' ).setStyle( 'background', '#fff' );
-                    dEl = bodyC.createChild( );
-                    dEl.hide( ).update( cont.elements[0].innerHTML ).fadeIn( { stopFx:true, duration:.5 } );
-
+                    bodyC.update( cont.elements[0].innerHTML ).fadeIn( { stopFx:true, duration:.5 } );
                     this.prevNextStatus( );
                 },
                 scope : this
@@ -346,9 +350,9 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 
   prevNextStatus : function( ) {
 
-    var selM = this.getSelectionModel( );
-    var btnP = Ext.getCmp( 'btnPrev' );
-    var btnN = Ext.getCmp( 'btnNext' );
+    var selM = this.getSelectionModel( ),
+    btnP = Ext.getCmp( 'btnPrev' ),
+    btnN = Ext.getCmp( 'btnNext' );
 
     if( selM.hasPrevious( ) ) {
         btnP.enable( );

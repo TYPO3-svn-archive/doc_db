@@ -151,7 +151,6 @@
 					<sorting>
 					<TCEforms>
 						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:sorting</label>
-						<displayCond>FIELD:mode:=:PI</displayCond>
 						<config>
 							<type>select</type>
 							<items>
@@ -183,14 +182,13 @@
                             <minitems>1</minitems>
 							<maxitems>1</maxitems>
 							<size>1</size>
-							<default>title</default>
+							<default>date</default>
 						</config>
 					  </TCEforms>
 					</sorting>
 					<sorting_order>
 					<TCEforms>
 						<label>LLL:EXT:doc_db/configuration/llang/locallang_ff.xml:sorting_order</label>
-						<displayCond>FIELD:mode:=:PI</displayCond>
 						<config>
 							<type>radio</type>
 							<items>
@@ -203,7 +201,7 @@
 									<numIndex index="1">DESC</numIndex>
 								</numIndex>
 							</items>
-							<default>ASC</default>
+							<default>DESC</default>
 						</config>
 						</TCEforms>
 					</sorting_order>

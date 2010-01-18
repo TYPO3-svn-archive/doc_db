@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.Descriptors.js 166 2009-12-18 17:37:47Z lcherpit $
+ * @version : $Id: DocDb.Descriptors.js 198 2010-01-18 03:44:48Z lcherpit $
  */
 Ext.ns( 'Ext.ux' );
 Ext.ux.DscrLoader = Ext.extend( Ext.tree.TreeLoader, {
@@ -12,10 +12,9 @@ Ext.ux.DscrLoader = Ext.extend( Ext.tree.TreeLoader, {
             node.text = '<img class="x-tree-node-relDscr" src="' + Ext.BLANK_IMAGE_URL + '" /> ' + node.text;
 
             node.qtip = '<b>Rel.:</b><br />'
-            for( i = 0; i < node.relDscr.length; i++) {
+            for( var i = 0; i < node.relDscr.length; i++) {
                 node.qtip += '<p>- ' + node.relDscr[ i ].title + '</p>';
             }
-//            node.qtip = '';
         }
     },
 
@@ -73,12 +72,7 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
                     
                     // ownerCt.ownerCt:form
                     this.ownerCt.ownerCt.form.reset( );
-
-                    if( this.ownerCt.searchIsOn ) {
-                        this.ownerCt.trigger.onTriggerClick( );
-                    } else {
-                        this.ownerCt.collapseAll( );
-                    }
+                    this.ownerCt.trigger.onTriggerClick( e );
                 }
             }]
             ,root : {
@@ -141,11 +135,11 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
                     tree            : this,
                     triggerClass    : 'x-form-clear-trigger',
                     emptyText       : this.lang.filterEmpTxt,
-                    onTriggerClick  : function(){ this.onTriggerClick(); },
+                    onTriggerClick  : function( ) { this.onTriggerClick( ); },
                     enableKeyEvents : true,
-                    minLength       : 4,
-                    maxLength       : 50,
-                    vtype           : 'alphanumMask'
+                    minLength       : 2,
+                    maxLength       : 50
+                    //vtype           : 'alphanumMask'
                 }
             ]
         }; // eo config object
@@ -154,32 +148,41 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
         Ext.apply(this, Ext.apply( this.initialConfig, config ) );
         DocDb.DescriptorsTree.superclass.initComponent.apply( this, arguments );
 
-        this.on('beforeclick',function( node, e ) {
+        this.on( 'beforeclick', function( node, e ) {
 
             node.ui.toggleCheck( );
         });
-    
+
         // change style bubbling to parent and send state to server
         this.on( 'checkchange', function( node, state ) {
 
-            var checked = state ? 'checked' : 'unchecked';
+            var checked = state ? 'checked' : 'unchecked',
+            expandP = 'collapse';
 
             if( node.isLeaf( ) ) {
 
                 this.bubbleSetStyle( node, state );
-
-                if( ! this.searchIsOn ) {
-                    // store state
-                    DocDb.model_descriptor.setSessionNode( node.id, checked );
+                
+                if( this.searchIsOn ) {
+                    if( state ) {
+                        expandP = 'expand';
+                    }
+                    node.bubble( function( ) {
+                        
+                        DocDb.model_descriptor.setSessionNode( this.id, expandP );
+                    } );
                 }
+
+                DocDb.model_descriptor.setSessionNode( node.id, checked );
             }
         }
         ,this
         );
     
         this.on( 'beforeexpandnode', function( node, e ) {
-
+            
             if( ! this.searchIsOn ) {
+                
                 DocDb.model_descriptor.setSessionNode( node.id, 'expand' );
             }
         });
@@ -192,12 +195,13 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
 
                 obj.ui.toggleCheck( false );
             });
-//            if( ! this.searchIsOn ) {
-                DocDb.model_descriptor.setSessionNode( node.id, 'collapse' );
-//            }
-        });
+
+            DocDb.model_descriptor.setSessionNode( node.id, 'collapse' );
+        },
+        this
+        );
     
-    
+        
         this.on( 'expandnode', function( node ) {
 
             this.applyAttrToChildrenOfNode( node );
@@ -238,16 +242,30 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
     
     
         this.loader.on( 'load', function( ld, node, response ) {
+            
+            if( Ext.isDefined( this.loader.baseParams.reset ) ) {
+                delete this.loader.baseParams.reset;
+            }
 
             if( this.searchIsOn ) {
                 this.expandAll( );
 
                 if( response.responseText[0].id === 'nores' ) {
-                    (function( ) { this.body.mask( this.lang.noResult, 'x-mask' ); }.defer( 20, this ) );
+                    (function( ) { this.body.mask( this.lang.noResult, 'x-mask-noresult' ); }.defer( 20, this ) );
                 }
             }
             
             node.isAlreadyExpanded = false;
+
+            // is rootNode
+            if( node.getDepth() === 0 ) {
+                // change root line style of checked nodes
+                Ext.each( this.getChecked(), function( node ) {
+                    this.bubbleSetStyle( node, true );
+                },
+                this
+                ); // eo each
+            } // eo getDepth root node
         }
         ,this
         ); // eo onload
@@ -259,12 +277,12 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
      */
     ,resizeTreePanel : function( ) {
         
-        var mP = Ext.getCmp( 'mainPanel' );
-        var aS = Ext.getCmp( 'advSearch' );
-        var mS = Ext.get( 'mSelect' );
-        var newH  = 0;
-        var treeH = ( parseInt( this.getTreeEl( ).dom.firstElementChild.clientHeight, 10 ) + Math.ceil( this.getFrameHeight( )*1.5 ) );
-        
+        var mP = Ext.getCmp( 'mainPanel' ),
+        aS     = Ext.getCmp( 'advSearch' ),
+        mS     = Ext.get( 'mSelect' ),
+        newH   = 0,
+        treeH  = ( parseInt( this.getTreeEl( ).dom.firstChild.clientHeight, 10 ) + Math.ceil( this.getFrameHeight( )*1.5 ) );
+
         if( treeH <= this.treeHeight.min ) {
 
             newH  = ( mS.getHeight( ) + this.treeHeight.min );
@@ -326,36 +344,56 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
         }
         ,this
         ); // eo bubble
-    }
+    },
 
+    // collapse all unchecked nodes
+    collapseUnchecked: function( ) {
+
+        var root = this.getRootNode( ),
+        chkNodes = this.getChecked( '', root );
+
+        root.cascade( function( ) {
+            var pass = false;
+            Ext.each( chkNodes, function( node, idx ) {
+                if( this.contains( node ) ) {
+                    pass = true;
+                }
+            }, this );
+
+            if( ! pass && this.isExpanded( ) ) {
+                this.collapse( true );
+            }
+        } );
+    },
+    
  
-    ,applyAttrToChildrenOfNode : function( node ) {
+    applyAttrToChildrenOfNode : function( node ) {
 
 
         if( node.firstChild && node.firstChild.isLeaf( ) && ! node.isAlreadyExpanded ) {
 
             // Put text in tip when it is too wide and addClass bubbling to parent
             node.eachChild( function( obj, index ) {
-                
-                var atext  = obj.ui.elNode.lastElementChild;
-                var tWidth = ( atext.offsetLeft+atext.offsetWidth );
+
+                var atext = obj.ui.elNode.lastChild,
+                tWidth = ( atext.offsetLeft+atext.offsetWidth ),
+                qtip;
 
                 if( tWidth > ( this.width-20 ) ) {
-
-                    this.updateqt( obj, obj.qtip + '<br />' + obj.attributes.text );
+                    qtip = Ext.isDefined( obj.qtip ) ? obj.qtip + '<br />' : '';
+                    this.updateqt( obj, qtip + obj.attributes.text );
                 }
             } // eo func
             ,this
             ); // eo each
         } // eo if
-    } // eo function applyAttrToChildrenOfNode
+    }, // eo function applyAttrToChildrenOfNode
     
     
-    ,disableBodyTree : function( el, chkState ) {
+    disableBodyTree : function( el, chkState ) {
 
-        var mP  = Ext.getCmp( 'mainPanel' );
-        var sTA = Ext.getCmp( 'selTypeAnd' );
-        var sTO = Ext.getCmp( 'selTypeOr' );
+        var sTA = Ext.getCmp( 'selTypeAnd' ),
+        sTO = Ext.getCmp( 'selTypeOr' );
 
         if( chkState ) {
 
@@ -364,7 +402,7 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
             this.trigger.disable( );
             this.btClpsAll.disable( );
             this.collapseAll( );
-            this.body.mask( this.lang.allDscrSelected, 'x-mask' );
+            this.body.mask( this.lang.allDscrSelected, 'x-mask-noresult' );
 
         } else {
 
@@ -420,38 +458,40 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
 
         this.chkAll.on( 'check', this.disableBodyTree, this );
 
+        
         // Search filter field
         this.trigger.onTriggerClick = function( e ) {
-
-          this.setValue( '' );
-          
-          var t = this.tree
-
-          if( t.searchIsOn ) {
-            
-            delete t.loader.baseParams.needle;
+        
+            var t = this.tree;
             t.searchIsOn = false;
-            t.loader.load(
-                t.getRootNode( )
-            );
+            delete t.getRootNode( ).attributes.children;
+            this.setValue( '' );
+
+            if( Ext.isDefined( t.loader.baseParams.needle ) ) {
+                delete t.loader.baseParams.needle;
+            }
+
+            if( ! Ext.isDefined( e ) && this.getValue( ) || ! Ext.isDefined( e ) ) {
+
+                t.loader.baseParams.reset = true;
+            }
+
+            if( Ext.isDefined( e ) ) {
+
+                t.collapseAll( );
+            }
             
+            t.loader.load( t.getRootNode( ) );
+            
+            if( t.chkAll.getValue( ) ) {
+                t.chkAll.setValue( false );
+            }
+
             if( t.body.isMasked( )  ) {
                 t.body.unmask( );
             }
-          }
         } // eo function onTriggerClick
 
-        this.trigger.on( 'blur', function( textF ) {
-
-            if( textF.getValue( ).length < 4 && this.searchIsOn ) {
-
-                // to exec reload init on triggerClick
-                this.searchIsOn = true;
-                textF.onTriggerClick( );
-            }
-        }
-        ,this
-        ); // eo onBlur
 
         this.trigger.on( 'keyup', function( textF, e ) {
             
@@ -462,8 +502,9 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
             if( textF.validateValue( textF.getValue( ) ) ) {
 
                 // secu. twice check.
-                if( textF.getValue( ).length < 4 ) {
-                    textF.markInvalid( );
+                if( textF.getValue( ).length < 2 ) {
+//                    textF.invalidText = textF.minLengthText;
+                    textF.markInvalid( textF.minLengthText + ' 2' );
                     return false;
                 }
 
@@ -471,24 +512,42 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
 
                 // delete initial children Nodes to allow direct query
                 delete this.getRootNode( ).attributes.children;
-                
-                this.collapseAll( );
-                // get root node with related setted params
-                this.loader.load( this.getRootNode( ) );
 
-                this.searchIsOn = true;
+                //if the first search, before collapse all unchecked nodes
+                if( ! this.searchIsOn ) {
 
+                    this.collapseFirst = this.collapseUnchecked.createSequence(function( ){
+
+                        this.searchIsOn = true;
+                        this.loader.load( this.getRootNode( ) );
+                    }, this );
+
+                    this.collapseFirst();
+
+                } else {
+
+                    this.loader.load( this.getRootNode( ) );
+                }
             } // eo if validateValue
         }
         ,this
         ,{buffer: 600}
         ); // eo onKeyup
+
+        this.trigger.on( 'blur', function( textF, e ) {
+
+            if( textF.getValue( ).length > 2 ) {
+                return false;
+            }
+
+            this.trigger.onTriggerClick( );
+        }
+        ,this
+        );
     } // eo function afterRender
 
 
     ,getRelatedDescriptors: function( sub, msg ) {
-
-        var conf = {};
 
         if( msg.val.length ) {
 
@@ -524,7 +583,12 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
             this.loader.lastOptions = this.loader.baseParams;
 
             // get root node with related setted params
-            this.loader.load( this.getRootNode( ) );
+            this.collapseFirst = this.collapseUnchecked.createSequence( function( ){
+
+                this.loader.load( this.getRootNode( ) );
+            }, this );
+
+            this.collapseFirst();
         }
 
     } // eo function getRelatedDescriptors

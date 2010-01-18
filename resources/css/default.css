@@ -29,6 +29,10 @@
     text-align:center;
     height:auto;
 }
+/* scroll bar IE */
+#main-content .tx-docdb-pi1 {
+    scrollbar-base-color:#D4CABA;
+}
 
 /* anchors */
 #main-content .tx-docdb-pi1 a {
@@ -56,8 +60,10 @@
 
 /* loading mask */
 .ext-el-mask {
-    background-color: #fff;
+    background-color: #fff !important;
     opacity : 1;
+    filter: alpha(opacity = 100);
+    zoom: 1;
 }
 .ext-el-mask-msg {
     border:none;
@@ -71,7 +77,9 @@
 .x-mask-loading div {
 	background-color:#fbfbfb;
 }
-
+.x-mask-noresult {
+    top:80px !important;
+}
 /* fbar o */
 .x-panel-fbar {
 	background-color :#666;

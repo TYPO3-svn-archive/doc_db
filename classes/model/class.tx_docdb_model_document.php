@@ -25,9 +25,9 @@
  /**
  * Class/Function
  * 
- * $Id: class.tx_docdb_model_document.php 186 2010-01-03 13:27:43Z lcherpit $
+ * $Id: class.tx_docdb_model_document.php 195 2010-01-17 03:26:14Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-01-03 14:27:43 +0100 (dim 03 jan 2010) $
+ * $Date: 2010-01-17 04:26:14 +0100 (dim 17 jan 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -58,7 +58,7 @@ class tx_docdb_model_document
 	 * 
 	 * @var boolean
 	 */
-	protected $_debug   = FALSE;
+	protected $_debug   = TRUE;
 	
 	/**
 	 * Store sql Clause keys: where,order, limit
@@ -106,10 +106,6 @@ class tx_docdb_model_document
 		// build clause of query
 		$this->_setSqlClause( $params );
 		
-		if( $this->_debug ) {
-			
-			t3lib_div::devLog( 'class model_document sql clause', 'doc_db', 0, $this->_sqlClause );
-		}
 		// store
 		$rows = array();
 		
@@ -117,7 +113,12 @@ class tx_docdb_model_document
 		$select .= 'p.tx_docdb_doc_key AS dkey, o.owner, t.type, s.status';
 
         //  p.tx_templavoila_flex AS flex,
-		
+
+        if( $this->_debug ) {
+
+			t3lib_div::devLog( 'class model_document sql clause', 'doc_db', 0, array($select, $this->_sqlClause ) );
+		}
+
 		$from    = $this->_sqlClause[ 'from' ];
 		
 		$where   = '(p.doktype=198 AND (p.deleted=0 AND p.hidden=0))';
@@ -153,6 +154,9 @@ class tx_docdb_model_document
 				$row[ 'docPageURL' ] = $this->cObj->typoLink( '', array('parameter' => $row[ 'uid' ], 'returnLast' => 'url' ) ); 
 			}
 
+            // current descriptors
+//            $row[ 'curDscr' ] = $this->_getCurrentDescritors( $params->selNodes );
+
             // related descriptors if any
             $row[ 'dscr' ] = $row[ 'dscr' ] ? $this->_getRelatedDescriptors( $row[ 'uid' ] ) : array();
             
@@ -176,7 +180,7 @@ class tx_docdb_model_document
 		
 		$GLOBALS[ 'TYPO3_DB' ]->sql_free_result( $res );
 		
-		$totalCount = tx_docdb_div::exec_SELECTcountRows( 'p.uid', $from, $where );
+		$totalCount = tx_docdb_div::exec_SELECTcountRows( 'DISTINCT(p.uid)', $from, $where );
 		
 		$out = array(
 			'success'    => TRUE,
@@ -287,16 +291,34 @@ class tx_docdb_model_document
 			$from  .= ',tx_docdb_pages_doc_descriptor_mm mm, tx_docdb_descriptor d';
 			$where .= ' AND ((mm.uid_local=p.uid AND mm.uid_foreign=d.uid)';
 			
-			if( $dscrSelType === 'OR' ) {
+
+			if( $dscrSelType === 'AND' ) {
 				
-				$where .= ' AND (mm.uid_foreign IN(' . $dscrIds . ')))';
-				
+//				$dscrIds = explode( ',', $dscrIds );
+//				$dscrIds = implode( ' AND mm.uid_foreign=', $dscrIds );
+//				$where  .= ' AND (mm.uid_foreign=' . $dscrIds .'))';
+
+//                $dscrIds = explode( ',', $dscrIds );
+
+                $nbRel = count( explode( ',', $dscrIds ) );
+
+				//$dscrIds = implode( ' OR d.uid=', $dscrIds );
+				$where  .= ' AND mm.uid_local IN (
+                    SELECT m.uid_local FROM tx_docdb_pages_doc_descriptor_mm m
+                    WHERE m.uid_foreign IN(' . $dscrIds . ')
+                    GROUP BY m.uid_local
+                    HAVING COUNT(m.uid_local)>' . ($nbRel-1) .')
+                )';
+
+
+//SELECT mm.uid_local from tx_docdb_pages_doc_descriptor_mm mm where mm.uid_foreign in(28176,29803) group by mm.uid_local HAVING count(mm.uid_local)>1
+
+
+//t3lib_div::devLog( 'class model_document', 'doc_db', 0, array( $where ) );
 			} else {
-				
-				$dscrIds = explode( ',', $dscrIds );
-				$dscrIds = implode( ' AND mm.uid_foreign=', $dscrIds );
-				$where  .= ' AND (mm.uid_foreign=' . $dscrIds .'))';
-			}
+                
+                $where .= ' AND mm.uid_foreign IN(' . $dscrIds . '))';
+            }
 		}
 		
 		if( $ownerIds && $typeIds && $statusIds ) {
@@ -366,6 +388,35 @@ class tx_docdb_model_document
             'tx_docdb_pages_doc_descriptor_mm',
             'tx_docdb_descriptor',
             'AND pages.uid=' . $pageId . ' ' . $this->cObj->enableFields( 'tx_docdb_descriptor' ),
+            'uid',
+            'title',
+            '20'
+        );
+
+        while( ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) ) ) {
+
+            $dscrObj = new stdClass();
+            $dscrObj->did    = $row[ 'uid' ];
+            $dscrObj->dtitle = $row[ 'title' ];
+
+            $rows[] = $dscrObj;
+        }
+
+        //print_r( $rows ); exit;
+        return $rows;
+    }
+
+
+    protected function _getCurrentDescritors( $dscrId ) {
+
+        // store result array
+        $rows = array();
+
+        $res = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTquery(
+            'uid,title',
+            'tx_docdb_descriptor',
+            'uid IN( SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
+            $this->cObj->enableFields( 'pages' ),
             'uid',
             'title',
             '20'

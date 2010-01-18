@@ -25,9 +25,9 @@
  /**
  * Class/Function with div util static methods 
  * 
- * $Id: class.tx_docdb_div.php 156 2009-12-06 22:43:41Z lcherpit $
+ * $Id: class.tx_docdb_div.php 189 2010-01-04 16:21:49Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2009-12-06 23:43:41 +0100 (dim 06 déc 2009) $
+ * $Date: 2010-01-04 17:21:49 +0100 (lun 04 jan 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -128,7 +128,31 @@ class tx_docdb_div
 		
 		return $count;
 	}
-	
+
+
+    public static function subExtPrefixPath( &$path ) {
+
+        if( strcmp( substr( $path, 0, 4 ), 'EXT:' ) === 0 ) {
+
+			list( $extKey, $script ) = explode( '/', substr( $path, 4 ), 2 );
+
+			if( $extKey && t3lib_extMgm::isLoaded( $extKey ) ) {
+				$extPath = t3lib_extMgm::siteRelPath( $extKey );
+				$path = $extPath . $script;
+			}
+		}
+    }
+
+    public static function checkFileExist( $filePath ) {
+
+        $filePath = t3lib_div::getFileAbsFileName( $filePath, FALSE );
+
+        if( file_exists( $filePath ) ) {
+            return TRUE;
+        }
+
+        return FALSE;
+    }
 
 }
 
