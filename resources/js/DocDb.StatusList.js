@@ -1,6 +1,6 @@
 /**
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.StatusList.js 106 2009-11-27 01:56:29Z lcherpit $
+ * @version : $Id: DocDb.StatusList.js 199 2010-01-18 17:23:39Z lcherpit $
  */
 /**
  * Global app

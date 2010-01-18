@@ -25,9 +25,9 @@
  /**
  * Class/Function with div util static methods 
  * 
- * $Id: class.tx_docdb_div.php 189 2010-01-04 16:21:49Z lcherpit $
+ * $Id: class.tx_docdb_div.php 199 2010-01-18 17:23:39Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-01-04 17:21:49 +0100 (lun 04 jan 2010) $
+ * $Date: 2010-01-18 18:23:39 +0100 (lun 18 jan 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0

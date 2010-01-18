@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.GridResults.js 192 2010-01-13 21:08:11Z lcherpit $
+ * @version : $Id: DocDb.GridResults.js 199 2010-01-18 17:23:39Z lcherpit $
  */
 
 Ext.ns('DocDb');

@@ -1,6 +1,6 @@
 /**
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.OwnersList.js 127 2009-12-04 00:05:27Z lcherpit $
+ * @version : $Id: DocDb.OwnersList.js 199 2010-01-18 17:23:39Z lcherpit $
  */
 /**
  * Global app

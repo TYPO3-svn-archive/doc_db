@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.Descriptors.js 198 2010-01-18 03:44:48Z lcherpit $
+ * @version : $Id: DocDb.Descriptors.js 199 2010-01-18 17:23:39Z lcherpit $
  */
 Ext.ns( 'Ext.ux' );
 Ext.ux.DscrLoader = Ext.extend( Ext.tree.TreeLoader, {
