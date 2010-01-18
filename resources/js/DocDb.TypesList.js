@@ -1,6 +1,6 @@
 /**
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.TypesList.js 111 2009-11-29 05:21:00Z lcherpit $
+ * @version : $Id: DocDb.TypesList.js 199 2010-01-18 17:23:39Z lcherpit $
  */
 /**
  * Global app

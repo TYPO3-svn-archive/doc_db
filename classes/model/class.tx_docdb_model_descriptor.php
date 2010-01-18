@@ -25,9 +25,9 @@
  /**
  * Class/Function
  * 
- * $Id: class.tx_docdb_model_descriptor.php 198 2010-01-18 03:44:48Z lcherpit $
+ * $Id: class.tx_docdb_model_descriptor.php 200 2010-01-18 17:28:01Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-01-18 04:44:48 +0100 (lun 18 jan 2010) $
+ * $Date: 2010-01-18 18:28:01 +0100 (lun 18 jan 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -329,18 +329,13 @@ class tx_docdb_model_descriptor
             // Remove checked nodes not related to the selection of owner|type|status if any.
             // Otherwise no search result of document will be displayed
             if( $remNotRelChkNode && ! isset( $params->needle ) ) {
-                t3lib_div::devLog('DESCRIPTOR before','doc_db',0,
-			$params->checkedNodes
-			);
+                
                 $rmNodes = array_diff( $params->checkedNodes, $dscrUidList );
                 foreach( $rmNodes as $id ) {
                     unset( $_SESSION['docdb-dscrtree-nodes-status'][ $id ] );
                 }
                 $params->checkedNodes = array_intersect( $params->checkedNodes, $dscrUidList );
 
-t3lib_div::devLog('DESCRIPTOR after','doc_db',0,
-			$params->checkedNodes
-			);
                 $dscrUidList = array_merge( $dscrUidList, $params->checkedNodes );
             } else {
                 $dscrUidList = array_merge( $dscrUidList, $params->checkedNodes );

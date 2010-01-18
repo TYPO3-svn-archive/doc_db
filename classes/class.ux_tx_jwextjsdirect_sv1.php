@@ -26,9 +26,9 @@
  * Class/Function override extjs direct service to modify the tech. used to load js and css files
  * And also change static conf key to statvar, because static is a reserved keyword in javascript
  *
- * $Id: class.ux_tx_jwextjsdirect_sv1.php 190 2010-01-12 18:04:21Z lcherpit $
+ * $Id: class.ux_tx_jwextjsdirect_sv1.php 199 2010-01-18 17:23:39Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-01-12 19:04:21 +0100 (mar 12 jan 2010) $
+ * $Date: 2010-01-18 18:23:39 +0100 (lun 18 jan 2010) $
  *
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
