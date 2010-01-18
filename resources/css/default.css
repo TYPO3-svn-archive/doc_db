@@ -30,7 +30,8 @@
     height:auto;
 }
 /* scroll bar IE */
-#main-content .tx-docdb-pi1 {
+.tx-docdb-pi1,
+#docdb-previewWin {
     scrollbar-base-color:#D4CABA;
 }
 
