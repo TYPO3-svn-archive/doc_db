@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.Descriptors.js 199 2010-01-18 17:23:39Z lcherpit $
+ * @version : $Id: DocDb.Descriptors.js 201 2010-01-18 18:26:15Z lcherpit $
  */
 Ext.ns( 'Ext.ux' );
 Ext.ux.DscrLoader = Ext.extend( Ext.tree.TreeLoader, {
@@ -534,16 +534,16 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
         ,{buffer: 600}
         ); // eo onKeyup
 
-        this.trigger.on( 'blur', function( textF, e ) {
-
-            if( textF.getValue( ).length > 2 ) {
-                return false;
-            }
-
-            this.trigger.onTriggerClick( );
-        }
-        ,this
-        );
+//        this.trigger.on( 'blur', function( textF, e ) {
+//
+//            if( textF.getValue( ).length > 1 ) {
+//                return false;
+//            }
+//
+//            this.trigger.onTriggerClick( );
+//        }
+//        ,this
+//        );
     } // eo function afterRender
 
 
