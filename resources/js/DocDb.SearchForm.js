@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.SearchForm.js 112 2009-11-29 17:12:44Z lcherpit $
+ * @version : $Id: DocDb.SearchForm.js 192 2010-01-13 21:08:11Z lcherpit $
  */
 Ext.ns('DocDb');
 
@@ -11,80 +11,85 @@ Ext.ns('DocDb');
  */
 DocDb.SearchForm = Ext.extend(Ext.form.FormPanel, {
   
-  border:false
+  border:false,
   
-    ,initComponent:function() {
-    
-    var config = {
-        title             : this.lang.form.title || 'form title not defined'
-        ,height           : this.height
-        ,deferHeight      : true
-        ,border           : false
-        ,collapsible      : true
-        ,hideCollapseTool : true
-        
-      ,items : [{
-        layout       : 'column'
-        ,id           : 'mSelect'
-        ,border      : false
-        ,bodyStyle : 'padding-bottom:5px;'
-        ,defaults    : {
-          hideLabel    : true
-          ,border       : false
-          ,height       : this.columnHeight
-          ,allowBlank   : false
-          ,displayField : 1
-        },
-        items : [{
-          bodyStyle : 'padding:'+this.mSelPadding.top+'px '+this.mSelPadding.inner+'px 0 '+this.mSelPadding.outer+'px;'
-          ,columnWidth : 0.55
-          ,items : [{
-            xtype   : 'ownerslist'
-            ,legend      : this.lang.owner.legend
-            ,loadingText : this.lang.owner.loading
-            ,labelAll    : this.lang.owner.all
-            ,width: '100%'
-            ,height : this.columnHeight-this.mSelPadding.top
-          }]
-        },{
-          bodyStyle     : 'padding:'+this.mSelPadding.top+'px '+this.mSelPadding.inner+'px 0 0;'
-          ,columnWidth : 0.28
-          ,items : [{
-            xtype   : 'typeslist'
-            ,legend      : this.lang.type.legend
-            ,loadingText : this.lang.type.loading
-            ,labelAll    : this.lang.type.all
-            ,width: '100%'
-            ,height : this.columnHeight-this.mSelPadding.top
-          }]
-        },{
-          bodyStyle : 'padding:'+this.mSelPadding.top+'px '+this.mSelPadding.outer+'px 0 0;'
-          ,columnWidth : 0.165
-          ,items : [{
-            xtype        : 'statuslist'
-            ,legend      : this.lang.status.legend
-            ,loadingText : this.lang.status.loading
-            ,labelAll    : this.lang.status.all
-            ,width       : '100%'
-            ,height      : this.columnHeight-this.mSelPadding.top
-          }]
-        }]
-      },{
-        xtype          : 'descriptorstree'
-        ,id            : 'dsrcTree'
-        ,title         : this.lang.dscrtree.legend
-        ,lang          : this.lang.dscrtree
-        ,treeHeight    : this.treeHeight
-        ,width         : this.width
-        ,treeNodes     : this.treeNodes
-      }] // end items of advSearch form
-    }; // eo config object
-    
+    initComponent:function() {
 
-    // apply config
-    Ext.apply( this, Ext.apply( this.initialConfig, config ) );
+        var ll   = this.lang,
+        mPad     = this.mSelPadding,
+        colH     = this.columnHeight,
+        colItemH = (Ext.isIE ? colH-15 : colH-mPad.top),
 
-    DocDb.SearchForm.superclass.initComponent.apply( this, arguments );
+        config = {
+            title            : ll.form.title || 'form title not defined',
+            height           : this.height,
+            deferHeight      : true,
+            border           : false,
+            collapsible      : true,
+            hideCollapseTool : true,
+
+
+            items : [{
+                layout      : 'column',
+                id          : 'mSelect',
+                border      : false,
+                bodyStyle : 'padding-bottom:5px;',
+                defaults    : {
+                  hideLabel    : true,
+                  border       : false,
+                  height       : colH,
+                  allowBlank   : false,
+                  displayField : 1
+                },
+                items : [{
+                  bodyStyle : 'padding:'+mPad.top+'px '+mPad.inner+'px 0 '+mPad.outer+'px;',
+                  columnWidth : 0.55,
+                  items : [{
+                    xtype   : 'ownerslist',
+                    legend      : ll.owner.legend,
+                    loadingText : ll.owner.loading,
+                    labelAll    : ll.owner.all,
+                    width: '100%',
+                    height : colItemH
+                  }]
+                },{
+                  bodyStyle     : 'padding:'+mPad.top+'px '+mPad.inner+'px 0 0;',
+                  columnWidth : 0.28,
+                  items : [{
+                    xtype   : 'typeslist',
+                    legend      : ll.type.legend,
+                    loadingText : ll.type.loading,
+                    labelAll    : ll.type.all,
+                    width: '100%',
+                    height : colItemH
+                  }]
+                },{
+                  bodyStyle : 'padding:'+mPad.top+'px '+mPad.outer+'px 0 0;',
+                  columnWidth : 0.165,
+                  items : [{
+                    xtype        : 'statuslist',
+                    legend      : ll.status.legend,
+                    loadingText : ll.status.loading,
+                    labelAll    : ll.status.all,
+                    width       : '100%',
+                    height      : colItemH
+                  }]
+                }]
+                },{
+                xtype          : 'descriptorstree',
+                id            : 'dsrcTree',
+                title         : ll.dscrtree.legend,
+                lang          : ll.dscrtree,
+                treeHeight    : this.treeHeight,
+                width         : this.width,
+                treeNodes     : this.treeNodes
+            }] // end items of advSearch form
+        }; // eo config object
+
+        // apply config
+        Ext.apply( this, Ext.apply( this.initialConfig, config ) );
+
+        DocDb.SearchForm.superclass.initComponent.apply( this, arguments );
   } // eo function initComponent
  
 //  ,afterRender:function() {

@@ -25,9 +25,9 @@
  /**
  * Class/Function
  * 
- * $Id: class.tx_docdb_model_descriptor.php 156 2009-12-06 22:43:41Z lcherpit $
+ * $Id: class.tx_docdb_model_descriptor.php 198 2010-01-18 03:44:48Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2009-12-06 23:43:41 +0100 (dim 06 déc 2009) $
+ * $Date: 2010-01-18 04:44:48 +0100 (lun 18 jan 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -92,36 +92,40 @@ class tx_docdb_model_descriptor
 	* @remotable
 	* @remoteName get
 	*/
-//	public function get( $id, $needle='', $ownerfk=0, $typefk=0 ) {
 	public function get( $id, $params ) {
 		
 		if( $id === 'root' ){
 			$id = isset( $this->conf['tree.']['rootPageId'] ) ? $this->conf['tree.']['rootPageId'] : 0;
 		}
 		
-		if( $id === 0 && ( isset( $params->needle ) || isset( $params->ownerfk ) || isset( $params->typefk ) || isset( $params->statusfk ) ) ) {
-			
-			if( isset( $params->needle ) && strlen( $params->needle ) < 4 ) {
+        session_start();
+
+		if( $id === 0 &&  ( isset( $params->reset ) || isset( $params->needle ) || isset( $params->ownerfk ) || isset( $params->typefk ) || isset( $params->statusfk ) ) ) {
+
+			if( isset( $params->needle ) && strlen( $params->needle ) < 2 ) {
 				// continue
 			} else {
-				
+
+                $matchChecked = $this->_getCheckedNodes();
+                if( count( $matchChecked ) ) {
+
+                    $params->checkedNodes = $matchChecked;
+                }
+
 				$out = $this->_getFilteredTree( $params );
-			
+
 				return $out;
 			}
 		}
-		
-		
-		/*
+
+		/**
 		 * @toto: check if better to do that here , therefore not doing it twice.
 		 */
-		session_start();
-		
 		$_SESSION[ 'docdb-dscrtree-nodes-status' ][ $id ] = 'expand';
-		
+
 		$matchDescr = $this->_getDescrLeafRelatedDoc( $params );
 		
-		/*
+		/**
 		 * @todo : not realy needed
 		 */
 		if( count($matchDescr) < 1 ) {
@@ -129,7 +133,7 @@ class tx_docdb_model_descriptor
 			return $this->_getNoResultReponse();
 			// print_r( $matchDescr );exit;
 		}
-		
+
 		// add uid of matching parent in rootline
 		$this->_setFilteredRootline( $matchDescr );
 		
@@ -217,9 +221,9 @@ class tx_docdb_model_descriptor
 		$this->_setFilteredRootline( $matchDescr );
 		
 		if( isset( $params->needle ) ) {
-			
+
 			$this->_setFilteredTreeNodes( 'root', NULL, $matchDescr );
-			
+
 		} else {
 			// session
 			$this->_setFilteredTreeNodes( 'root', NULL, $matchDescr, TRUE );
@@ -237,15 +241,16 @@ class tx_docdb_model_descriptor
 	 */
 	private function _getDescrLeafRelatedDoc( $params=NULL ) {
 		
-		// dscr_pid unique list
-		$dscrPidList  = array();
-		$searchNeedle   = '';
-		$addWhere       = '';
-		$whereRelOwner  = '';
-		$whereRelType   = '';
-		$whereRelStatus = '';
+		// dscr_uid unique list
+		$dscrUidList      = array();
+		$searchNeedle     = '';
+		$addWhere         = '';
+		$whereRelOwner    = '';
+		$whereRelType     = '';
+		$whereRelStatus   = '';
+        $remNotRelChkNode = FALSE;
 		
-		if( isset($params->needle ) ) {
+		if( isset( $params->needle ) ) {
 			
 			$searchNeedle = ' AND (d.title LIKE \'%' .
 					$GLOBALS[ 'TYPO3_DB' ]->quoteStr(
@@ -255,14 +260,15 @@ class tx_docdb_model_descriptor
 					'tx_docdb_descriptor' ) .
 				'%\')';
 		}
-		
+
 		// build whereClause to filter by descriptor related to owner-type-status
 		if( ( isset( $params->ownerfk ) && (int)$params->ownerfk !== 0 ) ||
 				( isset( $params->typefk ) && (int)$params->typefk !== 0 ) ||
 				( isset( $params->statusfk ) && (int)$params->statusfk !== 0 ) ) {
-			
-			//$addWhere = ' WHERE uid_local IN (SELECT uid FROM pages p WHERE ';
-			
+
+
+			$remNotRelChkNode = TRUE;
+            
 			if( isset( $params->ownerfk ) && (int)$params->ownerfk !== 0 ) {
 				
 				$whereRelOwner = ' AND p.tx_docdb_doc_owner IN(' . $params->ownerfk . ')';
@@ -271,19 +277,14 @@ class tx_docdb_model_descriptor
 			if( isset( $params->typefk ) && (int)$params->typefk !== 0 ) {
 				
 				$whereRelType = 'AND p.tx_docdb_doc_type IN(' . $params->typefk . ')';
-				
-				//$whereRelType = ( strlen( $whereRelOwner ) > 1 ? ' AND ' . $whereRelType : $whereRelType );
 			}
 			
 			if( isset( $params->statusfk ) && (int)$params->statusfk !== 0 ) {
 				
 				$whereRelStatus = 'AND p.tx_docdb_doc_status IN(' . $params->statusfk . ')';
-				
-				//$whereRelStatus = ( ( strlen( $whereRelOwner ) > 1 || strlen( $whereRelType ) > 1 ) ? ' AND ' . $whereRelStatus : $whereRelStatus );
 			}
 			
 			$addWhere .= $whereRelOwner . $whereRelType . $whereRelStatus;
-			//$addWhere .= ' AND ((p.deleted=0 AND p.hidden=0) AND p.doktype=198))';
 		}
 		
 		
@@ -298,7 +299,7 @@ class tx_docdb_model_descriptor
 		$groupBy = 'd.uid';
 		$orderBy = '';
 		$limit   = '';
-		
+
 		// get
 		$res = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTquery(
 			$select,
@@ -308,7 +309,7 @@ class tx_docdb_model_descriptor
 		
 		while( ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) ) ) {
 			
-			$dscrPidList[] = $row[ 'uid' ];
+			$dscrUidList[] = $row[ 'uid' ];
 		}
 		
 		$GLOBALS[ 'TYPO3_DB' ]->sql_free_result($res);
@@ -321,8 +322,32 @@ class tx_docdb_model_descriptor
 		}
 		
 		unset( $row, $select, $from, $where, $groupBy, $orderBy, $limit );
-		
-		return array_unique( $dscrPidList );
+
+        // uid list of checked nodes
+        if( isset( $params->checkedNodes ) ) {
+
+            // Remove checked nodes not related to the selection of owner|type|status if any.
+            // Otherwise no search result of document will be displayed
+            if( $remNotRelChkNode && ! isset( $params->needle ) ) {
+                t3lib_div::devLog('DESCRIPTOR before','doc_db',0,
+			$params->checkedNodes
+			);
+                $rmNodes = array_diff( $params->checkedNodes, $dscrUidList );
+                foreach( $rmNodes as $id ) {
+                    unset( $_SESSION['docdb-dscrtree-nodes-status'][ $id ] );
+                }
+                $params->checkedNodes = array_intersect( $params->checkedNodes, $dscrUidList );
+
+t3lib_div::devLog('DESCRIPTOR after','doc_db',0,
+			$params->checkedNodes
+			);
+                $dscrUidList = array_merge( $dscrUidList, $params->checkedNodes );
+            } else {
+                $dscrUidList = array_merge( $dscrUidList, $params->checkedNodes );
+            }
+        }
+
+		return array_unique( $dscrUidList );
 	}
 
 
@@ -353,7 +378,7 @@ class tx_docdb_model_descriptor
 			} else {
 				
 				$nodeObj->leaf    = TRUE;
-				$nodeObj->checked = $_SESSION[ 'docdb-dscrtree-nodes-status' ][ $dscrItem[ 'uid' ] ] == 'checked' ? TRUE : FALSE;
+				$nodeObj->checked = $_SESSION[ 'docdb-dscrtree-nodes-status' ][ $dscrItem[ 'uid' ] ] === 'checked' ? TRUE : FALSE;
 
                 if( $dscrItem[ 'dscr_related' ] ) {
 
@@ -499,6 +524,19 @@ class tx_docdb_model_descriptor
 	}
 
 
+    private function _getCheckedNodes() {
+
+        // get array of uid of checked nodes
+        return array_keys(
+            array_filter(
+                $_SESSION[ 'docdb-dscrtree-nodes-status' ],
+                create_function(
+                    '$a','return ($a === "checked");'
+                )
+            )
+        );
+    }
+
 	/*
 	 * build treeNodes related to the searh filter   $this->_getDescrByTitle( $needle );
 	 * 
@@ -537,8 +575,13 @@ class tx_docdb_model_descriptor
 				
 				if( isset( $node->expanded ) ) { unset( $node->expanded ); }
 				
+                // remove expand node status if node not in result
+                if( ! in_array( $node->id, $selIdsFilter ) ) {
+                    unset( $_SESSION['docdb-dscrtree-nodes-status'][ $node->id ] );
+                }
+
 				// if node id is registered in session
-				$expand = $_SESSION['docdb-dscrtree-nodes-status'][ $node->id ] == 'expand' ? TRUE : FALSE;
+				$expand = ( isset( $_SESSION['docdb-dscrtree-nodes-status'][ $node->id ] ) && $_SESSION['docdb-dscrtree-nodes-status'][ $node->id ] == 'expand' ) ? TRUE : FALSE;
 				
 				if( $expand ) {
 					

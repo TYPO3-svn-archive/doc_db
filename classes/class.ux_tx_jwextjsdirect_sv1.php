@@ -26,9 +26,9 @@
  * Class/Function override extjs direct service to modify the tech. used to load js and css files
  * And also change static conf key to statvar, because static is a reserved keyword in javascript
  *
- * $Id: class.ux_tx_jwextjsdirect_sv1.php 147 2009-12-06 21:59:20Z lcherpit $
+ * $Id: class.ux_tx_jwextjsdirect_sv1.php 190 2010-01-12 18:04:21Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2009-12-06 22:59:20 +0100 (dim 06 déc 2009) $
+ * $Date: 2010-01-12 19:04:21 +0100 (mar 12 jan 2010) $
  *
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -40,6 +40,41 @@
 
 class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
 {
+
+
+    /**
+     * performs the service processing
+     *
+     * @param	string		Content which should be processed.
+     * @param	string		Content type
+     * @param	array		Configuration array
+     * @return	boolean
+     */
+	public function process( $conf, $typo3conf ) {
+
+        require_once( t3lib_extMgm::extPath( 'doc_db' ) . 'classes/class.tx_docdb_div.php' );
+		require_once( PATH_t3lib . 'class.t3lib_tsparser.php' );
+
+		$parser = t3lib_div::makeInstance( 't3lib_TSparser' );
+		$ts     = @file_get_contents( t3lib_extMgm::extPath( 'jw_extjsdirect' ) . '/configuration/typoscript/setup.txt' );
+		$ts = $parser->parse( $ts );
+
+		$_conf = $parser->setup[ 'plugin.' ][ 'tx_jwextjsdirect_sv1.' ][ 'extJS.' ];
+
+        if( is_array( $_conf ) ) {
+			$conf = t3lib_div::array_merge_recursive_overrule( $_conf, $conf );
+        }
+
+		if( is_array( $typo3conf ) ) {
+			$conf = t3lib_div::array_merge_recursive_overrule( $conf,$typo3conf );
+        }
+
+        tx_docdb_div::subExtPrefixPath( $conf[ 'path' ] );
+        tx_docdb_div::subExtPrefixPath( $conf[ 'resourcesPath' ] );
+        
+		$this->setHeaderIncludes( $conf );
+		return false;
+	}
 
 
 	/**
@@ -57,7 +92,8 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
         
         if( $conf[ 'asyncLoading' ] ) {
 
-            $deferTag = ' defer="true" async="true"';
+            //$deferTag = ' defer="defer" async="async"';
+            $deferTag = '';
         }
 
         if( $conf[ 'production' ] ) {
@@ -65,25 +101,31 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
             $minified = '-min';
         }
         
-//    print_r( $conf );exit;
         $includesJsLL = '';
 
         if( ! $conf[ 'doNotLoadExtAllCSS' ] ) {
 
-            $includes =  "\t" . '<style type="text/css">@import url("' . $conf[ 'path' ] . 'resources/css/ext-all' . $minified . '.css");</style>' . "\n";
+            $includes =  "\t" . '<style type="text/css">@import url("' . $conf[ 'resourcesPath' ] . 'css/ext-all' . $minified . '.css");</style>' . "\n";
         }
 
         if( is_array( $conf[ 'themes.' ] ) ) {
 
 			foreach( $conf[ 'themes.' ]  as $idx =>  $theme ) {
+                
+                $themeFile = $conf[ 'resourcesPath' ] . 'css/xtheme-' . $theme . $minified .'.css';
+                if( ! tx_docdb_div::checkFileExist( $themeFile ) ) {
+
+                    $themeFile = $conf[ 'resourcesPath' ] . 'css/xtheme-' . $theme .'.css';
+                }
+                
 				$conf[ 'themes.' ][ $idx ] = "\t" .
-                '<style type="text/css">@import url("' . $conf[ 'path' ] . 'resources/css/xtheme-' . $theme . $minified .'.css");</style>';
+                '<style type="text/css">@import url("' . $themeFile .'");</style>';
 			}
 			$includes .= implode( "\n", $conf[ 'themes.' ] ) . "\n";
 
 		} else {
             
-			$includes .= "\t" . '<style type="text/css">@import url("' . $conf[ 'path' ] . 'resources/css/xtheme-blue.css");</style>' . "\n";
+			$includes .= "\t" . '<style type="text/css">@import url("' . $conf[ 'resourcesPath' ] . 'css/xtheme-wcc.css");</style>' . "\n";
         }
 
 		if( is_array( $conf[ 'css.' ] ) ) {
@@ -120,18 +162,16 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
         
         // put locale js in $includesJsLL to put after other js to override label
 		if( file_exists( PATH_site . $conf[ 'path' ] . 'src/locale/ext-lang-' . $GLOBALS[ 'TSFE' ]->config[ 'config' ][ 'language' ] . $minified . '.js' ) ) {
-
-			$includesJsLL .= "\t" .'<script type="text/javascript"' . $deferTag . ' src="' . $conf[ 'path' ] .
+//' . $deferTag . '
+			$includesJsLL .= "\t" .'<script type="text/javascript" src="' . $conf[ 'path' ] .
             'src/locale/ext-lang-' . $GLOBALS[ 'TSFE' ]->config[ 'config' ][ 'language' ] . $minified . '.js"></script>' . "\n";
 
         } else {
 
-			$includesJsLL .= "\t" . '<script type="text/javascript"' . $deferTag . ' src="' . $conf[ 'path' ] . 'src/locale/ext-lang-en.js"></script>' . "\n";
+			$includesJsLL .= "\t" . '<script type="text/javascript" src="' . $conf[ 'path' ] . 'src/locale/ext-lang-en.js"></script>' . "\n";
         }
         
-		$script = '<script type="text/javascript"' . $deferTag . '>' .
-                    "\t" . 'Ext.BLANK_IMAGE_URL = "' . $conf[ 'path' ] . 'resources/images/default/s.gif";' . "\n" .
-                  '</script>' . "\n";
+		$blankImg = "\t" . 'Ext.BLANK_IMAGE_URL = "' . $conf[ 'resourcesPath' ] . 'images/default/s.gif";' . "\n";
 
 		if( is_array( $conf[ 'js.' ] ) ) {
 
@@ -169,11 +209,11 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
 					$scr = array_merge( $default, $scr );
                 }
 
-				$conf[ 'statvar.' ][ $idx ] = $this->getStaticJavaScript( $scr );
+				$conf[ 'statvar.' ][ $idx ] = $this->getStaticJavaScript( $scr, '', $blankImg );
 			}
 
-			$scriptLL .= '<script type="text/javascript"' . $deferTag . '>' .
-                        "\t" . implode( "\n\t", $conf[ 'statvar.' ] ) .
+			$scriptLL .= '<script type="text/javascript">' .
+                        "\n\t" . implode( "\n\t", $conf[ 'statvar.' ] ) .
                         '</script>' . "\n";
 		}
 
@@ -184,7 +224,6 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
 
         // finally put header
 		$GLOBALS[ 'TSFE' ]->additionalHeaderData[ ( $extKey ? $extKey : $this->extKey ) . 'useradd_inc' ] = $includes . "\n" .
-            "\t" . $script ."\n" .
             $conf[ 'js.' ] . "\n" .
             "\t" .'<script type="text/javascript"' . $deferTag . ' src="' . $conf[ 'url' ] . '"></script>' . "\n" .
             "\t" . $scriptLL . "\n" .
@@ -203,7 +242,7 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
 	 * @return	[type]		...
 	 */
 
-	protected function getStaticJavaScript( $params, $stripFromSelectionName = '' ) {
+	protected function getStaticJavaScript( $params, $stripFromSelectionName = '', $blankImg = '' ) {
 
         $filename = $params[ 'lang.' ][ 'LLfile' ];
         $selectionPrefix = $params[ 'lang.' ][ 'prefix' ] ? $params[ 'lang.' ][ 'prefix' ] : '';
@@ -306,7 +345,15 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
             }
         }
 
-        return 	$script;
+        $ExtOnReady  = 'Ext.onReady( function( ) {' . "\n\t";
+        $ExtOnReady .= $blankImg;
+        $ExtOnReady .= $script . "\n\t";
+        $ExtOnReady .= 'DocDb.initMain();' . "\n\t";
+        $ExtOnReady .= '});';
+
+        unset( $script );
+        
+        return 	$ExtOnReady;
 	}
 }
 

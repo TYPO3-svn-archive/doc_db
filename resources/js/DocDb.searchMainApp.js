@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.searchMainApp.js 182 2010-01-03 02:17:33Z lcherpit $
+ * @version : $Id: DocDb.searchMainApp.js 195 2010-01-17 03:26:14Z lcherpit $
  */
 /**
  * Global app
@@ -20,38 +20,44 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
     border   : true,
 
     initComponent : function( ) {
-    
-        var config = {
-            renderTo   : this.statvar.RENDER_TO,
-            width      : this.statvar.mainPWidth,
-            height     : this.statvar.mSelHeight + this.statvar.treeHeight.min,
-            formHeight : this.statvar.formHeight,
-            gridHeight : this.statvar.gridHeight,
+
+        // get var from prototype
+        var sVar = this.statvar,
+        ll = this.lang,
+        
+        config = {
+            renderTo   : sVar.RENDER_TO,
+            width      : sVar.mainPWidth,
+            height     : sVar.mSelHeight + sVar.treeHeight.min,
+            formHeight : sVar.formHeight,
+            gridHeight : sVar.gridHeight,
+            gSortInfo  : sVar.gridParams,
             items:[{
                 xtype          : 'gridresults',
                 id             : 'gridResults',
-                lang           : this.lang.grid,
-                docDetail      : this.statvar.docDetail,
-                dLL            : this.lang.docDetail,
-                pageSize       : parseInt( this.statvar.PAGESIZE, 10 ),
+                lang           : ll,
+                docDetail      : sVar.docDetail,
+                dF             : sVar.gridParams.dF,
+                colsW          : sVar.gridParams.colsW,
+                pageSize       : parseInt( sVar.PAGESIZE, 10 ),
                 region         : 'north',
-                width          : this.statvar.mainPWidth,
+                width          : sVar.mainPWidth,
                 height         : 0,
                 standaloneGrid : false,
                 hidden         : true
             },{
                 xtype         : 'searchform',
                 id            : 'advSearch',
-                lang          : this.lang,
-                width         : this.statvar.mainPWidth,
-                height        : this.statvar.formHeight,
-                columnHeight  : this.statvar.mSelHeight,
+                lang          : ll,
+                width         : sVar.mainPWidth,
+                height        : sVar.formHeight,
+                columnHeight  : sVar.mSelHeight,
                 mSelPadding   : {inner:8,outer:5,top:5},
-                treeHeight    : this.statvar.treeHeight,
-                treeNodes     : this.statvar.nodes
+                treeHeight    : sVar.treeHeight,
+                treeNodes     : sVar.nodes
 
             }] // end items of mainPanel
-        }
+        };
   
     // apply config
     Ext.apply( this, Ext.apply( this.initialConfig, config ) );
@@ -64,10 +70,10 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
     this.btnBackToForm = Ext.getCmp( 'btnMakeNewSearch' );
     this.btnBackToForm.on( 'click', function( ) {
-
+        var g = Ext.getCmp( 'gridResults' );
         this.toggleGrid( false );
-        var docGridSm = Ext.getCmp( 'gridResults' ).getSelectionModel( );
-        docGridSm.clearSelections( true );
+        g.getSelectionModel( ).clearSelections( true );
+        this.gSortInfo = g.store.sortInfo;
     },
     this
     );
@@ -81,23 +87,25 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
    */
     getFormAllVal : function( btn, e ) {
 
-        var form       = Ext.getCmp( 'advSearch' );
-        var tree       = Ext.getCmp( 'dsrcTree' );
-        var gridResult = Ext.getCmp( 'gridResults' );
-        var mainPanel  = Ext.getCmp( 'mainPanel' );
+        var form = Ext.getCmp( 'advSearch' ),
+        tree = Ext.getCmp( 'dsrcTree' ),
+        grid = Ext.getCmp( 'gridResults' ),
+        mP   = Ext.getCmp( 'mainPanel' ),
+        gS,p,selNodes,selDscrIds,loadObj;
 
         if( form.getForm( ).isValid( ) ) {
 
+            gS = grid.store;
             // get gridParams used to set grouping or not
-            var params = mainPanel.statvar.gridParams;
+            p = mP.statvar.gridParams;
+            
+            selNodes = tree.getChecked( );
+            selDscrIds = '';
+            loadObj = {};
 
-            var selNodes = tree.getChecked( ),
-                selDscrIds = '',
-                loadObj = {};
+            Ext.copyTo( p, form.getForm( ).getValues( ), 'owner,type,selType,status' );
 
-            Ext.copyTo( params, form.getForm( ).getValues( ), 'owner,type,selType,status' );
-
-            params.selNodes = '';
+            p.selNodes = '';
             // get nodes Id-s
             Ext.each( selNodes, function( node ) {
                 if( selDscrIds.length > 0 ) {
@@ -108,22 +116,27 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
             if( selDscrIds.length ) {
                 // add selected descriptors tree nodes
-                params.selNodes = selDscrIds;
+                p.selNodes = selDscrIds;
             }
 
-            Ext.iterate( params, function( k, v ) {
-                // set store baseParams, like that those are keep on sort change or when the store is reloaded
-                gridResult.store.setBaseParam( k, v );
+            Ext.iterate( p, function( k, v ) {
+                if( k !== 'colsW' && k !== 'dF' ) {
+                    // set store baseParams, like that those are keep on sort change or when the store is reloaded
+                    gS.setBaseParam( k, v );
+                }
             },
             this
             );
+
+            // set default sort Info
+            gS.setDefaultSort( mP.gSortInfo.field, mP.gSortInfo.direction );
             
             loadObj.callback = function( ) {
 
-                mainPanel.toggleGrid( true );
-                mainPanel.body.unmask( );
+                mP.toggleGrid( true );
+                mP.body.unmask( );
 
-                mainPanel.el.fadeIn( {
+                mP.el.fadeIn( {
                     endOpacity: 1,
                     easing: 'easeOut',
                     duration: 0.6,
@@ -132,37 +145,37 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
             };
 
             // load result in gridPanel
-            gridResult.store.load( loadObj );
+            gS.load( loadObj );
 
             if( tree.body.isMasked( ) ) {
                 tree.chkAll.setValue( false );
             }
 
-            mainPanel.body.mask( mainPanel.lang.form.searchRun, 'x-mask-loading' );
+            mP.body.mask( mP.lang.form.searchRun, 'x-mask-loading' );
 
-            delete selNodes, selDscrIds, params, loadObj;
+            delete selNodes, selDscrIds, p, loadObj;
         } // eo form isValid
     } // eo function getFormAllVal
 
     ,toggleGrid : function( openGrid ) {
 
-        var grid      = Ext.getCmp( 'gridResults' );
-        var gridBbar  = Ext.getCmp( 'g-p-bbar' );
-        var panel     = Ext.getCmp( 'mainPanel' );
+        var grid  = Ext.getCmp( 'gridResults' ),
+        gridBbar  = Ext.getCmp( 'g-p-bbar' ),
+        mP        = Ext.getCmp( 'mainPanel' ),
 
-        var advSearP  = Ext.getCmp( 'advSearch' );
-        var searchPos = advSearP.getPosition( );
-        var searchX   = Math.ceil( searchPos[0] );
-        var searchY   = Math.ceil( searchPos[1] );
+        advSearP  = Ext.getCmp( 'advSearch' ),
+        searchPos = advSearP.getPosition( ),
+        searchX   = Math.ceil( searchPos[0] ),
+        searchY   = Math.ceil( searchPos[1] );
 
         if( openGrid ) {
 
-            grid.setHeight( panel.gridHeight );
-            panel.setHeight( panel.gridHeight );
+            grid.setHeight( mP.gridHeight );
+            mP.setHeight( mP.gridHeight );
 
             grid.show( );
             gridBbar.show( );
-            panel.doLayout( );
+            mP.doLayout( );
             advSearP.collapse( );
 
         } else {
@@ -170,7 +183,7 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
             gridBbar.hide( );
             grid.hide( );
 
-            advSearP.setPagePosition( searchX,( searchY-panel.gridHeight ) )
+            advSearP.setPagePosition( searchX,( searchY-mP.gridHeight ) )
             grid.setHeight( 0 );
             advSearP.expand( );
             advSearP.el.fadeIn({
@@ -187,11 +200,9 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 Ext.reg( 'mainpanel', DocDb.mainPanel );
 
 
-
-
 // application main entry point
-Ext.onReady( function( ) {
- 
+DocDb.initMain = function( ) {
+
     Ext.QuickTips.init({
         showDelay    : 100,
         dismissDelay : 0,
@@ -208,19 +219,18 @@ Ext.onReady( function( ) {
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
 
     // mask when init framework
-    var lMask = Ext.get( 'loading-mask' );
+    var lMask = Ext.get( 'loading-mask' ),
     
     // create and show main app Panel
-    var searchMainApp = new DocDb.mainPanel( );
+    sApp = new DocDb.mainPanel( );
 
-    (function( ) { lMask.setHeight( searchMainApp.getHeight( ) ); }.defer( 1 ) );
+    (function( ) { lMask.setHeight( sApp.getHeight( ) ); }.defer( 1 ) );
     
      setTimeout( function( ) {
         Ext.fly( 'loading' ).remove( );
         lMask.fadeOut( {duration: 1, remove:true} );
         }, 350
     );
- 
-}); // eo function onReady
+}
 
 // eof

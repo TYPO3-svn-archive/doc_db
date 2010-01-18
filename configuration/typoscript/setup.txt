@@ -4,8 +4,17 @@ plugin.tx_docdb_pi1 {
 
 	extJS {
 
+        # test include TS (value required for the ext .to work)
+        confInc = 1
+
         # include ExtJS lib
 		path = {$plugin.tx_docdb_pi1.extJS.path}
+
+        # include css theme and images resourcesPath
+        resourcesPath = {$plugin.tx_docdb_pi1.extJS.resourcesPath}
+
+        # theme name
+        themes.0 = {$plugin.tx_docdb_pi1.extJS.themes.0}
 
         # ext-all.jsalready available
         doNotLoadExtAllJS = {$plugin.tx_docdb_pi1.extJS.doNotLoadExtAllJS}
@@ -18,5 +27,28 @@ plugin.tx_docdb_pi1 {
 
         # js asynchronous loading
         asyncLoading = {$plugin.tx_docdb_pi1.extJS.asyncLoading}
+
+        # grid headers columns width
+        gridColsWidth = {$plugin.tx_docdb_pi1.extJS.gridColsWidth}
+
+        dateF {
+            
+            # date format for the grid row
+            row ={$plugin.tx_docdb_pi1.extJS.dateF.row}
+
+            # date format for the detail view
+            detail ={$plugin.tx_docdb_pi1.extJS.dateF.detail}
+        }
+        
+        dateFCustom {
+
+            # user defined date format for the grid row
+            row = {$plugin.tx_docdb_pi1.extJS.dateFCustom.row}
+
+            # user defined date format for the detail view
+            detail ={$plugin.tx_docdb_pi1.extJS.dateFCustom.detail}
+        }
+
+
 	}
 }

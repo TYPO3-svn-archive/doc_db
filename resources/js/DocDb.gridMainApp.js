@@ -20,25 +20,30 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
     border : true,
     
     initComponent : function( ) {
-    
-        var config = {
-            renderTo   : this.statvar.RENDER_TO,
+
+        // get var from prototype
+        var sVar = this.statvar,
+        ll = this.lang,
+
+        config = {
+            renderTo   : sVar.RENDER_TO,
             
-            width      : parseInt( this.statvar.mainPWidth, 10 ),
-            height     : parseInt( this.statvar.gridHeight, 10 ),
+            width      : parseInt( sVar.mainPWidth, 10 ),
+            height     : parseInt( sVar.gridHeight, 10 ),
             items:[{
                 xtype          : 'gridresults',
                 id             : 'gridResults',
-                lang           : this.lang.grid,
-                docDetail      : this.statvar.docDetail,
-                dLL            : this.lang.docDetail,
-                pageSize       : parseInt( this.statvar.PAGESIZE, 10 ),
+                lang           : ll,
+                docDetail      : sVar.docDetail,
+                dF             : sVar.gridParams.dF,
+                colsW          : sVar.gridParams.colsW,
+                pageSize       : parseInt( sVar.PAGESIZE, 10 ),
                 region         : 'north',
-                width          : this.statvar.mainPWidth,
-                height         : this.statvar.gridHeight,
+                width          : sVar.mainPWidth,
+                height         : sVar.gridHeight,
                 standaloneGrid : true
             }] // end items of mainPanel
-        }
+        };
   
     // apply config
     Ext.apply( this, Ext.apply( this.initialConfig, config ) );
@@ -55,22 +60,26 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
    */
     setBaseParams : function( ) {
 
-        var gridResult = Ext.getCmp( 'gridResults' );
+        // grid result store
+        var gS = Ext.getCmp( 'gridResults' ).store,
 
-        var params = this.statvar.gridParams;
+        // params
+        p = this.statvar.gridParams;
 
-        Ext.iterate(params, function( k, v ) {
-            // set store baseParams, like that those are keep on sort change or when the store is reloaded
-            gridResult.store.setBaseParam( k, v );
-        },
-        this
+        Ext.iterate( p, function( k, v ) {
+                // set store baseParams, like that those are keep on sort change or when the store is reloaded
+                gS.setBaseParam( k, v );
+            },
+            this
         );
 
+        gS.setDefaultSort( p.field, p.direction );
+        delete p;
+        
         // load result in gridPanel
-        gridResult.store.load( );
+        gS.load( );
+        
     } // eo function setBaseParams
-
-
 }); // end extend DocDb.mainGrid
 
 // register xtype
@@ -78,7 +87,7 @@ Ext.reg( 'maingrid', DocDb.mainGrid );
 
 
 // application main entry point
-Ext.onReady( function( ) {
+DocDb.initMain = function( ) {
  
     Ext.QuickTips.init({
         showDelay    : 100,
@@ -109,6 +118,6 @@ Ext.onReady( function( ) {
         Ext.get( 'loading-mask' ).fadeOut( {duration: 1, remove:true} );
         }, 250
     );
-}); // eo function onReady
+} // eo function initMain
 
 // eof

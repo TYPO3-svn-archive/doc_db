@@ -15,7 +15,6 @@ Ext.ns('DocDb');
 DocDb.OwnersList = Ext.extend( Ext.ux.form.MultiSelect, {
   
   border       :false
-  //,id   : 'owner-list'
   
   ,initComponent:function( ) {
     
@@ -47,9 +46,9 @@ DocDb.OwnersList = Ext.extend( Ext.ux.form.MultiSelect, {
      */
     this.store.on( 'load', function( ) {
       
-      var recMixCol = this.store.query( 'id', 0 );
-      var index     = this.store.indexOfId( recMixCol.keys[0] );
-      var record    = this.store.getAt( index );
+      var recMixCol = this.store.query( 'id', 0 ),
+      index  = this.store.indexOfId( recMixCol.keys[0] ),
+      record = this.store.getAt( index );
       // change label All
       record.data.owner = this.labelAll;
       // replace

@@ -20,7 +20,6 @@ DocDb.TypesList = Ext.extend( Ext.ux.form.MultiSelect, {
     
     var config = {
       name     : 'type'
-      //,id      : 'type-list'
       ,plugins : ['msgbus']
       ,store   : new Ext.data.DirectStore({
         root    : 'result'
@@ -44,9 +43,9 @@ DocDb.TypesList = Ext.extend( Ext.ux.form.MultiSelect, {
     
     this.store.on('load',function() {
       
-      var recMixCol = this.store.query( 'id', 0 );
-      var index     = this.store.indexOfId( recMixCol.keys[0] );
-      var record    = this.store.getAt( index );
+      var recMixCol = this.store.query( 'id', 0 ),
+      index     = this.store.indexOfId( recMixCol.keys[0] ),
+      record    = this.store.getAt( index );
       // change label All
       record.data.type = this.labelAll;
       // replace
