@@ -37,7 +37,7 @@
             <label index="dscrtree.allDscrSelected">All descriptors selected</label>
 
             <label index="grid.resPanel.title">Result</label>
-            <label index="grid.resPanel.searchAgain">Search again</label>
+            <label index="grid.resPanel.searchAgain">Search</label>
 			<label index="grid.header.title">Title</label>
 			<label index="grid.header.date">Date</label>
 			<label index="grid.header.owner">Owner</label>
@@ -94,7 +94,7 @@
             <label index="dscrtree.allDscrSelected">Alles descriptors</label>
 
             <label index="grid.resPanel.title">Result</label>
-            <label index="grid.resPanel.searchAgain">Erneute Suche</label>,
+            <label index="grid.resPanel.searchAgain">Suche</label>,
 			<label index="grid.header.title">Titel</label>
 			<label index="grid.header.date">Datum</label>
 			<label index="grid.header.owner">Eigentümer</label>
@@ -151,7 +151,7 @@
             <label index="dscrtree.allDscrSelected">Tous les déscripteurs sélectionnés</label>
 
             <label index="grid.resPanel.title">Résultat</label>
-            <label index="grid.resPanel.searchAgain">Effectuer une nouvelle recherche</label>
+            <label index="grid.resPanel.searchAgain">Recherche</label>
 			<label index="grid.header.title">Titre</label>
 			<label index="grid.header.date">Date</label>
 			<label index="grid.header.owner">Propriétaire</label>
@@ -208,7 +208,7 @@
             <label index="dscrtree.allDscrSelected">Todos los descriptores seleccionados</label>
 
             <label index="grid.resPanel.title">Resultados</label>
-            <label index="grid.resPanel.searchAgain">Realizar una nueva búsqueda</label>
+            <label index="grid.resPanel.searchAgain">Búsqueda</label>
 			<label index="grid.header.title">Título</label>
 			<label index="grid.header.date">Fecha</label>
 			<label index="grid.header.owner">Propietario</label>

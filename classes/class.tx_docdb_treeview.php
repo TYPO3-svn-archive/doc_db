@@ -30,9 +30,9 @@
  * @author    Rupert Germann <rupi@gmx.li>
  * @ Adapted  for doc_db by Olivier Schopfer
  * 
- * $Id: class.tx_docdb_treeview.php 159 2009-12-07 14:57:41Z lcherpit $
+ * $Id: class.tx_docdb_treeview.php 205 2010-02-06 17:30:07Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2009-12-07 15:57:41 +0100 (lun 07 déc 2009) $
+ * $Date: 2010-02-06 18:30:07 +0100 (sam 06 fév 2010) $
  * 
  * @author     Laurent Cherpit  <laurent@eosgarden.com>
  * @version    2.0.0
@@ -312,7 +312,7 @@ class tx_docdb_treeview
 		// related descriptor-s
 		} elseif( $treeViewObj->treeName === 'dscrrelatedtree') {
 			
-			$selectedItems = explode( ',', $GLOBALS[ 'TYPO3_DB' ]->cleanIntList ( $this->_row[ 'dscr_related' ] ) );
+			$selectedItems = explode( ',', $GLOBALS[ 'TYPO3_DB' ]->cleanIntList( $this->_row[ 'dscr_related' ] ) );
 			
 			// plugin in tt_content
 		} elseif( isset( $this->_row[ 'pi_flexform' ] ) ) {

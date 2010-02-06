@@ -250,7 +250,7 @@ $GLOBALS[ 'PAGES_TYPES' ][ '198' ][ 'icon' ] = '../' . t3lib_extMgm::siteRelPath
 
 // Add plugin FlexForm
 t3lib_div::loadTCA( 'tt_content' );
-$TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_excludelist' ][ $_EXTKEY . '_pi1' ] = 'layout,select_key';
+//$TCA[ 'tt_content' ][ 'types' ][ 'list' ][ 'subtypes_excludelist' ][ $_EXTKEY . '_pi1' ] = 'layout,select_key';
 
 t3lib_extMgm::addPlugin( array(
         'LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tt_content.list_type_pi1',

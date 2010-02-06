@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.searchMainApp.js 199 2010-01-18 17:23:39Z lcherpit $
+ * @version : $Id: DocDb.searchMainApp.js 204 2010-02-06 02:05:23Z lcherpit $
  */
 /**
  * Global app
@@ -54,7 +54,8 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
                 columnHeight  : sVar.mSelHeight,
                 mSelPadding   : {inner:8,outer:5,top:5},
                 treeHeight    : sVar.treeHeight,
-                treeNodes     : sVar.nodes
+                treeNodes     : sVar.nodes,
+                collapsed     : true
 
             }] // end items of mainPanel
         };
@@ -70,10 +71,10 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
     this.btnBackToForm = Ext.getCmp( 'btnMakeNewSearch' );
     this.btnBackToForm.on( 'click', function( ) {
-        var g = Ext.getCmp( 'gridResults' );
+//        var g = Ext.getCmp( 'gridResults' );
         this.toggleGrid( false );
-        g.getSelectionModel( ).clearSelections( true );
-        this.gSortInfo = g.store.sortInfo;
+//        g.getSelectionModel( ).clearSelections( true );
+//        this.gSortInfo = g.store.sortInfo;
     },
     this
     );
@@ -155,15 +156,15 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
             delete selNodes, selDscrIds, p, loadObj;
         } // eo form isValid
-    } // eo function getFormAllVal
+    }, // eo function getFormAllVal
 
-    ,toggleGrid : function( openGrid ) {
+    toggleGrid : function( openGrid ) {
 
         var grid  = Ext.getCmp( 'gridResults' ),
         gridBbar  = Ext.getCmp( 'g-p-bbar' ),
         mP        = Ext.getCmp( 'mainPanel' ),
-
         advSearP  = Ext.getCmp( 'advSearch' ),
+        tree      = Ext.getCmp( 'dsrcTree' ),
         searchPos = advSearP.getPosition( ),
         searchX   = Math.ceil( searchPos[0] ),
         searchY   = Math.ceil( searchPos[1] );
@@ -180,20 +181,70 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
         } else {
 
+            advSearP.el.setStyle( {'opacity':'0'} );
+            grid.getSelectionModel( ).clearSelections( true );
+            this.gSortInfo = grid.store.sortInfo;
+
             gridBbar.hide( );
             grid.hide( );
 
             advSearP.setPagePosition( searchX,( searchY-mP.gridHeight ) )
             grid.setHeight( 0 );
             advSearP.expand( );
-            advSearP.el.fadeIn({
-                endOpacity: 1,
-                easing: 'easeOut',
-                duration: 1
+
+            advSearP.on( 'expand', function( p ) {
+
+                tree.resizeTreePanel( );
+                ( function( ) {
+                    p.el.fadeIn({
+                        endOpacity: 1,
+                        easing: 'easeOut',
+                        duration: 1,
+                        stopFx: 1
+                    } );
+                }.defer( 10 ) );
             } );
-            (function( ){ Ext.getCmp( 'dsrcTree' ).resizeTreePanel( ) }.defer( 10 ) );
+            
         }
-    } // eo toggle grid
+    }, // eo toggle grid
+
+    /*
+     * get all selected treeNodes and formFields values
+     * and prepare request to load grid result
+     * and on grid beforeload exec togglegrid
+     */
+    setBaseParams : function( ) {
+
+        // grid result store
+        var gS  = Ext.getCmp( 'gridResults' ).store,
+        mP      = Ext.getCmp( 'mainPanel' ),
+        lMask   = Ext.get( 'loading-mask' ),
+        loadObj = {},
+        // params
+        p = this.statvar.gridParams;
+
+        Ext.iterate( p, function( k, v ) {
+                // set store baseParams, like that those are keep on sort change or when the store is reloaded
+                gS.setBaseParam( k, v );
+            },
+            this
+        );
+
+        gS.setDefaultSort( p.field, p.direction );
+        delete p;
+
+        loadObj.callback = function( ) {
+
+                mP.toggleGrid( true );
+                //mP.body.unmask( );
+                 Ext.fly( 'loading' ).remove( );
+                lMask.fadeOut( {duration: 1, remove:true} );
+            };
+        // load result in gridPanel
+        gS.load( loadObj );
+
+    } // eo function setBaseParams
+
 }); // end extend DocDb.mainPanel
 
 // register xtype
@@ -208,7 +259,6 @@ DocDb.initMain = function( ) {
         dismissDelay : 0,
         shadow       : true
     });
-    //Ext.form.Field.prototype.msgTarget = 'side';
 
     // Notice that Direct requests will batch together if they occur
     // within the enableBuffer delay period (in milliseconds).
@@ -217,20 +267,13 @@ DocDb.initMain = function( ) {
     Ext.app.REMOTING_API.enableBuffer = 60;
     Ext.app.REMOTING_API.id = 'docdb-direct';
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
-
-    // mask when init framework
-    var lMask = Ext.get( 'loading-mask' ),
     
     // create and show main app Panel
-    sApp = new DocDb.mainPanel( );
+    var sApp = new DocDb.mainPanel( );
 
-    (function( ) { lMask.setHeight( sApp.getHeight( ) ); }.defer( 1 ) );
-    
-     setTimeout( function( ) {
-        Ext.fly( 'loading' ).remove( );
-        lMask.fadeOut( {duration: 1, remove:true} );
-        }, 350
-    );
+    ( function( ) { Ext.get( 'loading-mask' ).setHeight( sApp.getHeight( ) ); }.defer( 1 ) );
+
+    ( function( ) { sApp.setBaseParams(); }.defer( 10 ) );
 }
 
 // eof

@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.Descriptors.js 201 2010-01-18 18:26:15Z lcherpit $
+ * @version : $Id: DocDb.Descriptors.js 204 2010-02-06 02:05:23Z lcherpit $
  */
 Ext.ns( 'Ext.ux' );
 Ext.ux.DscrLoader = Ext.extend( Ext.tree.TreeLoader, {
@@ -276,10 +276,10 @@ DocDb.DescriptorsTree = Ext.extend( Ext.tree.TreePanel, {
      * size between minHeight and expanded nodes height sum.
      */
     ,resizeTreePanel : function( ) {
-        
+
         var mP = Ext.getCmp( 'mainPanel' ),
         aS     = Ext.getCmp( 'advSearch' ),
-        mS     = Ext.get( 'mSelect' ),
+        mS     = Ext.getCmp( 'mSelect' ),
         newH   = 0,
         treeH  = ( parseInt( this.getTreeEl( ).dom.firstChild.clientHeight, 10 ) + Math.ceil( this.getFrameHeight( )*1.5 ) );
 
