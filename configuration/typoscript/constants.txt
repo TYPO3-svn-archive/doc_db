@@ -20,7 +20,7 @@ plugin.tx_docdb_pi1 {
         themes.0 = wcc
 
 
-        # cat=docdb/extJsAvailable/d; type=boolean; label=Do not include ExtJS: Define to true if ext-base & ext-all.js are already available on your installation, ext-all-min.js from doc_db load only the neccessary widgets lib.
+        # cat=docdb/extJsAvailable/d; type=boolean; label=Do not include ExtJS: Define to true if ext-base & ext-all.js are already available on your installation, ext-all-min.js from doc_db load only the neccessary widgets lib. (ex. if you have already include ExtJS from javascriptLibs.ExtJs = 1 , "not yet tested")
         doNotLoadExtAllJS = 0
 
         # cat=docdb/extJsAvailable/e; type=boolean; label=Do not include ext-all.css:Define to true if ext-all.css are already available on your installation

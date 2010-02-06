@@ -10,22 +10,22 @@
     <data type="array">
         <languageKey index="default" type="array">
             <label index="errorMsgTsNotInc">Static TypoScript Template not included or if it is, try to clear cache</label>
-            <label index="searchLoadingText">Loading search tool...</label>
+            <label index="searchLoadingText">Loading documents and search tool...</label>
             <label index="gridLoadingText">Loading documents...</label>
         </languageKey>
         <languageKey index="fr" type="array">
             <label index="errorMsgTsNotInc">Le gabarit statique TypoScript n'est pas inclu ou s'il l'est essayez de vider le cache</label>
-            <label index="searchLoadingText">Chargement de l'outil de recherche...</label>
+            <label index="searchLoadingText">Chargement des documents et de l'outil de recherche...</label>
             <label index="gridLoadingText">Chargement la liste de document...</label>
         </languageKey>
         <languageKey index="de" type="array">
             <label index="errorMsgTsNotInc">Static TypoScript Template not included or if it is, try to clear cache</label>
-            <label index="searchLoadingText">Loading search-tool...</label>
+            <label index="searchLoadingText">Loading dokuments und search-tool...</label>
             <label index="gridLoadingText">Das Laden der Liste des Dokuments...</label>
         </languageKey>
         <languageKey index="es" type="array">
             <label index="errorMsgTsNotInc">Static TypoScript Template not included or if it is, try to clear cache</label>
-            <label index="searchLoadingText">Cargando Search Tool...</label>
+            <label index="searchLoadingText">Cargando documentos e Search Tool...</label>
             <label index="gridLoadingText">Carga de la lista de documentos...</label>
         </languageKey>
     </data>

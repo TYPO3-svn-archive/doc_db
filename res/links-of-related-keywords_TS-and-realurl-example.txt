@@ -1,0 +1,122 @@
+###########################################################################################
+# Example TS: To display a list of links on each page-type "document" of related keywords #
+# works on two mode: PI and FE                                                            #
+###########################################################################################
+
+
+lib.myTyposcriptObjectPath = COA
+
+// wrap all
+lib.myTyposcriptObjectPath.wrap  = <div class="tx-docdb-pi1-quicklinks"> | </div>
+
+lib.myTyposcriptObjectPath.10 = TEXT
+lib.myTyposcriptObjectPath.10.value = <h2>Related documents</h2>
+
+lib.myTyposcriptObjectPath.20 = CONTENT
+lib.myTyposcriptObjectPath.20 {
+
+    table = tx_docdb_descriptor
+    select {
+
+        selectFields = tx_docdb_descriptor.uid,tx_docdb_descriptor.title
+        join = tx_docdb_pages_doc_descriptor_mm ON (tx_docdb_descriptor.uid = tx_docdb_pages_doc_descriptor_mm.uid_foreign)
+
+        // that's the pidList of storage folder of descriptors
+        pidInList = 7265
+
+        andWhere.dataWrap = uid_local = {page:uid}
+        orderBy = title
+    }
+
+    renderObj = COA
+    renderObj {
+
+        1 = TEXT
+        1 {
+            typolink {
+
+                returnLast = url
+
+                // page Id that contains the plugin tx_docdb_pi1 to display the selected results
+                parameter = 7269
+                additionalParams.field = uid
+
+                // important! the piVars parameter must be : tx_docdb_pi1[descriptors]
+                additionalParams.wrap = &tx_docdb_pi1[descriptors]= |
+            }
+            wrap = <li><a href="|"
+        }
+
+        2 = TEXT
+        2.value = show related documents
+        2.wrap = title="|">
+
+        3 = TEXT
+        3.field = title
+        3.wrap = |</a></li>
+    }
+
+    wrap = <ul>|</ul>
+}
+
+// display the list of links only on page-type document
+lib.myTyposcriptObjectPath.if {
+    value = 198
+    equals.data = page:doktype
+}
+
+
+##########################
+# Realurl example config #
+##########################
+// two type of alternative configuration are possible:
+//  - in postVarSet key
+//  - in fixedPostVars key
+
+// postVarSet with by ex. "docs-related-to" as path-prefix.
+
+'postVarSets' => array(
+    '_DEFAULT' => array(
+        // tx_docdb 'docs-related-to'
+        'docs-related-to' => array(
+            array(
+                'GETvar' => 'tx_docdb_pi1[descriptors]',
+                'lookUpTable' => array(
+                    'table' => 'tx_docdb_descriptor',
+                    'id_field' => 'uid',
+                    'alias_field' => 'title',
+                    'addWhereClause' => ' AND NOT deleted',
+                    'useUniqueCache' => 1,
+                    'useUniqueCache_conf' => array(
+                        'strtolower' => 1,
+                        'spaceCharacter' => '-',
+                    )
+                )
+            )
+        )
+    )
+),
+
+
+// or with fixedPostVars. so the keyword will not be prefixed
+// as key you must specify the uid of page that contains the plugin tx_docdb_pi1.
+
+'fixedPostVars' => array(
+    // page uid of tx_docdb_pi1
+    '7269' => array(
+        array(
+            'GETvar' => 'tx_docdb_pi1[descriptors]',
+            'lookUpTable' => array(
+                'table' => 'tx_docdb_descriptor',
+                'id_field' => 'uid',
+                'alias_field' => 'title',
+                'addWhereClause' => ' AND NOT deleted',
+                'useUniqueCache' => 1,
+                'useUniqueCache_conf' => array(
+                    'strtolower' => 1,
+                    'spaceCharacter' => '-',
+                )
+            )
+        )
+    )
+),
