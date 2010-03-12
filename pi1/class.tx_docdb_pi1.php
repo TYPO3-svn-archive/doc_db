@@ -180,7 +180,7 @@ class tx_docdb_pi1 extends tslib_pibase
                 $nodes ='';
                 require_once( t3lib_extMgm::extPath( $this->extKey ) . 'classes/model/class.tx_docdb_model_descriptor.php' );
                 $dscr = t3lib_div::makeInstance( 'tx_docdb_model_descriptor' );
-                $nodes = $dscr->getSessionNodes( 'root' );
+                $nodes = $dscr->getSessionNodes( '0' );
 
                 if( $this->_conf['extJS.']['production'] ) {
 
