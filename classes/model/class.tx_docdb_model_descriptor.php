@@ -97,7 +97,7 @@ class tx_docdb_model_descriptor
 		if( $id === 'root' ){
 			$id = isset( $this->conf['tree.']['rootPageId'] ) ? $this->conf['tree.']['rootPageId'] : 0;
 		}
-		
+
         session_start();
 
 		if( $id === 0 &&  ( isset( $params->reset ) || isset( $params->needle ) || isset( $params->ownerfk ) || isset( $params->typefk ) || isset( $params->statusfk ) ) ) {
@@ -152,7 +152,7 @@ class tx_docdb_model_descriptor
 	 * @remotable
 	 */
 	public function setSessionNode( $id, $status ) {
-		
+
 		session_start();
 		
 		if( $status === 'checked' ) {
@@ -183,7 +183,7 @@ class tx_docdb_model_descriptor
 	public function getSessionNodes( $id ) {
 		
 		session_start();
-		
+
 		$matchDescr = $this->_getDescrLeafRelatedDoc();
 		
 		if( count($matchDescr) < 1 ) {
@@ -191,10 +191,10 @@ class tx_docdb_model_descriptor
 			return $this->_getNoResultReponse();
 			print_r( $matchDescr );exit;
 		}
-		
+
 		// add uid of matching parent in rootline
 		$this->_setFilteredRootline( $matchDescr );
-		
+
 		$this->_setFilteredTreeNodes( 'root', NULL, $matchDescr, TRUE );
 		
 		return self::$_resultArTree;
@@ -208,7 +208,7 @@ class tx_docdb_model_descriptor
 	 * @param : object : params object with needle, ownerfk, typefk, statusfk properties 
 	 */
 	private function _getFilteredTree( $params ) {
-		
+
 		$matchDescr = $this->_getDescrLeafRelatedDoc( $params );
 		
 		if( count($matchDescr) < 1 ) {
@@ -240,7 +240,7 @@ class tx_docdb_model_descriptor
 	 * @return : array  : ids of descriptors leaf related to doc
 	 */
 	private function _getDescrLeafRelatedDoc( $params=NULL ) {
-		
+
 		// dscr_uid unique list
 		$dscrUidList      = array();
 		$searchNeedle     = '';
@@ -317,7 +317,7 @@ class tx_docdb_model_descriptor
 		if( $this->_debug ) {
 			
 			t3lib_div::devLog('DESCRIPTOR','doc_db',0,
-			array( 'SELECT ' . $select . ' FROM ' . $from . ' WHERE ' . $where . ' GROUP BY ' . $groupBy )
+                array( 'SELECT ' . $select . ' FROM ' . $from . ' WHERE ' . $where . ' GROUP BY ' . $groupBy )
 			);
 		}
 		
@@ -352,7 +352,7 @@ class tx_docdb_model_descriptor
 	 * 
 	 */
 	private function _getDescritpors( $pDscrPid, $selIdsFilter = NULL ) {
-		
+
 		// store result
 		$out = array();
 		
@@ -402,7 +402,7 @@ class tx_docdb_model_descriptor
 	 * @return : hash array of descriptors 
 	 */
 	private  function _getDescriptors4Level( $pDscrPid, $count=FALSE, $selIdsFilter=NULL ) {
-		
+
 		$rows = array();
 		
 		$select  = 'd.uid,d.dscr_pid,d.dscr_related,d.title';
@@ -481,10 +481,17 @@ class tx_docdb_model_descriptor
 	 * @param : array $tempPids : parent level to process
 	 */
 	private function _setFilteredRootline( &$childrenPids, $tempPids=array() ) {
-		
+
+        static $firstCall = TRUE, $isLeaf;
+
+        if( $firstCall ) {
+            $isLeaf = $childrenPids;
+            $firstCall = FALSE;
+        }
+            
 		$tempPids = count($tempPids) > 0 ? $tempPids : $childrenPids;
 		
-		$select  = 'dscr_pid';
+		$select  = 'uid,dscr_pid';
 		$from    = 'tx_docdb_descriptor';
 		$where   = 'uid IN (' . implode( ',', $tempPids ) . ')';
 		$groupBy = 'dscr_pid';
@@ -499,16 +506,22 @@ class tx_docdb_model_descriptor
 		);
 		
 		$rows = array();
-		while( ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_row( $res ) ) ) {
-			
-			$rows[] = $row[ 0 ];
+		while( ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) ) ) {
+
+            // if the first level is leaf
+            if( in_array( $row['uid'], $isLeaf ) && (int)$row['dscr_pid'] == 0             ) {
+                continue;
+            }
+            $rows[] = $row['dscr_pid'];
 		}
 		
 		$GLOBALS[ 'TYPO3_DB' ]->sql_free_result($res);
 		
 		// store result in ref array
 		$childrenPids = array_merge( $childrenPids, $rows );
-		
+
+        rsort( $childrenPids, SORT_NUMERIC );
+
 		// while not in root
 		if( ! in_array( '0', $rows) ){
 			
@@ -541,11 +554,11 @@ class tx_docdb_model_descriptor
 	 * @param : mixed/boolean $session : TRUE if call from session restore
 	 */
 	private function _setFilteredTreeNodes( $id, $parent=NULL, $selIdsFilter=array(), $session=NULL ) {
-		
+
 		static $tempNodes = array(),
 					 $pathIndex = array();
 		static $level     = 0,
-					 $lastLevel = 0;
+               $lastLevel = 0;
 		
 		if($id === 'root') {
 			$id = $this->conf['tree.']['rootPageId'] ? $this->conf['tree.']['rootPageId']:'0';
