@@ -40,6 +40,7 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
                 dF             : sVar.gridParams.dF,
                 colsW          : sVar.gridParams.colsW,
                 pageSize       : parseInt( sVar.PAGESIZE, 10 ),
+                gF             : sVar.gridParams.groupBy,
                 region         : 'north',
                 width          : sVar.mainPWidth,
                 height         : 0,
@@ -264,7 +265,7 @@ DocDb.initMain = function( ) {
     // within the enableBuffer delay period (in milliseconds).
     // Slow the buffering down from the default of 10ms to 100ms
     Ext.app.REMOTING_API.namespace = DocDb;
-    Ext.app.REMOTING_API.enableBuffer = 60;
+    Ext.app.REMOTING_API.enableBuffer = 100;
     Ext.app.REMOTING_API.id = 'docdb-direct';
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
     

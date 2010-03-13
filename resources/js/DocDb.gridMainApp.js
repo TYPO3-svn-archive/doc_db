@@ -21,7 +21,7 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
     
     initComponent : function( ) {
 
-        // get var from prototype
+        // get var from apply
         var sVar = this.statvar,
         ll = this.lang,
 
@@ -35,10 +35,11 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
                 id             : 'gridResults',
                 lang           : ll,
                 docDetail      : sVar.docDetail,
+                region         : 'north',
                 dF             : sVar.gridParams.dF,
                 colsW          : sVar.gridParams.colsW,
                 pageSize       : parseInt( sVar.PAGESIZE, 10 ),
-                region         : 'north',
+                gF             : sVar.gridParams.groupBy,
                 width          : sVar.mainPWidth,
                 height         : sVar.gridHeight,
                 standaloneGrid : true
@@ -75,7 +76,7 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
 
         gS.setDefaultSort( p.field, p.direction );
         delete p;
-        
+
         // load result in gridPanel
         gS.load( );
         
