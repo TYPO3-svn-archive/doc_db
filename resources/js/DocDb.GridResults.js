@@ -128,9 +128,9 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                     limit : this.pageSize
                 },
                 autoLoad    : false,
-                remoteGroup : true,
+                remoteGroup : this.gF ? true : false,
                 groupOnSort : false,
-                remoteSort  : true,
+                remoteSort  : this.gF || '',
                 groupField  : 'owner',
                 sortInfo    : {
                     field     : 'title',
@@ -158,7 +158,19 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                         //           ,{name:'prevH',type:'string'}
                         //           ,{name:'prevC',type:'string'}
                     ]
-                }) // eo reader
+                }), // eo reader
+                listeners : {
+                    datachanged : {
+                        fn: function(obj) {
+                            if(obj.groupField) {
+                                this.groupField = obj.groupField;
+                                this.remoteGroup = true;
+                                this.setBaseParam( 'groupBy', obj.groupField );
+                                this.setBaseParam( 'grouping', true );
+                            }
+                        }
+                    }
+                }
             }), // eo groupingStore
             view : new Ext.grid.GroupingView({
                 forceFit          : false,
