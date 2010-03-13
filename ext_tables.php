@@ -275,7 +275,12 @@ if ( TYPO3_MODE == 'BE' ) {
 // add context sensitive help for tca
 t3lib_extMgm::addLLrefForTCAdescr( 'tx_docdb', 'EXT:doc_db/configuration/llang/locallang_csh_tx_docdb.xml' );
 
+// add wizard for new CE
 $TBE_MODULES_EXT[ 'xMOD_db_new_content_el' ][ 'addElClasses' ][ 'tx_docdb_pi1_wizicon' ] = t3lib_extMgm::extPath( $_EXTKEY ) . 'pi1/class.tx_docdb_pi1_wizicon.php';
+
+// add custom wizard to search descriptors in be forms
+t3lib_extMgm::addModulePath( 'xMOD_txdocdbwizard', t3lib_extMgm::extPath( $_EXTKEY ) . 'wizard/' );
+
 }
 
 ?>
