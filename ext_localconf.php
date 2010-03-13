@@ -35,6 +35,6 @@ $GLOBALS[ 'TYPO3_CONF_VARS' ][ 'SC_OPTIONS' ][ 't3lib/class.t3lib_tcemain.php' ]
 
 // xclass class.tx_jwextjsdirect_sv1.php to modify a little bit the render  of the header of page.
 $TYPO3_CONF_VARS[ TYPO3_MODE ][ 'XCLASS' ][ 'ext/jw_extjsdirect/sv1/class.tx_jwextjsdirect_sv1.php' ] =
-     PATH_typo3conf . 'ext/doc_db/classes/class.ux_tx_jwextjsdirect_sv1.php';
+    t3lib_extMgm::extPath( $_EXTKEY ) . 'classes/class.ux_tx_jwextjsdirect_sv1.php';
      
 ?>
