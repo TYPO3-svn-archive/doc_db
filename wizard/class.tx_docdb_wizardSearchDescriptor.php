@@ -40,14 +40,24 @@
  * @subpackage doc_db
  */
 
+//echo __DIR__;
+//
+//echo PATH_typo3;
+//echo $TYPO3_CONF_VARS[TYPO3_MODE];
+//exit;
+//if()
+unset($MCONF);
+include ('conf.php');
+//define('TYPO3_MOD_PATH', '../typo3conf/ext/doc_db/wizard/');
+//$BACK_PATH='../../../../typo3/';
 
-define('TYPO3_MOD_PATH', '../typo3conf/ext/doc_db/wizard/');
-$BACK_PATH='../../../../typo3/';
-$MCONF['name']='xMOD_tx_doc_db_cm1';
+
+
 require_once($GLOBALS[ 'BACK_PATH' ].'init.php');
 require_once($GLOBALS[ 'BACK_PATH' ].'template.php');
-require_once ( t3lib_extMgm::extPath( 'doc_db' ) . 'classes/class.tx_docdb_div.php' );
-require_once ( t3lib_extMgm::extPath( 'ta_xajaxwrapper' ) . 'class.tx_taxajaxwrapper.php' );
+
+require_once( t3lib_extMgm::extPath( 'doc_db' ) . 'classes/class.tx_docdb_div.php' );
+require_once( t3lib_extMgm::extPath( 'ta_xajaxwrapper' ) . 'class.tx_taxajaxwrapper.php' );
 $GLOBALS[ 'LANG' ]->includeLLFile('EXT:lang/locallang_wizards.xml');
 
 /**
