@@ -3,41 +3,38 @@
 	<meta type="array">
 		<type>plugin</type>
 		<description>Language labels for extjs docdb search app</description>
+		<labelContext type="array">
+		</labelContext>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="form.title">Advanced search</label>
-            <label index="form.searchRun">Searching ...</label>
-			
+			<label index="form.searchRun">Searching ...</label>
 			<label index="owner.legend">Owner</label>
 			<label index="owner.loading">Loading Owners ...</label>
 			<label index="owner.all">All Owners</label>
-			
 			<label index="type.legend">Type</label>
 			<label index="type.loading">Loading Types ...</label>
 			<label index="type.all">All Types ...</label>
-			
 			<label index="status.legend">Status</label>
 			<label index="status.loading">Loading Status ...</label>
 			<label index="status.all">All Status ...</label>
-			
-			<label index="dscrtree.search">Search</label>
-            <label index="dscrtree.searchTip">Search from selected criteria</label>
-            <label index="dscrtree.reset">Reset</label>
-            <label index="dscrtree.resetTip">Reset form</label>
-			<label index="dscrtree.legend">Descriptors</label>
-            <label index="dscrtree.all">All</label>
+			<label index="dscrtree.search">Search now!</label>
+			<label index="dscrtree.searchTip">Search from selected criteria</label>
+			<label index="dscrtree.reset">Reset</label>
+			<label index="dscrtree.resetTip">Reset form</label>
+			<label index="dscrtree.legend">Descriptor tags</label>
+			<label index="dscrtree.all">All</label>
 			<label index="dscrtree.and">and</label>
 			<label index="dscrtree.or">or</label>
-            <label index="dscrtree.clpseAll">Collapse all</label>
-			<label index="dscrtree.filter">Filter:</label>
-            <label index="dscrtree.filterEmpTxt">by descriptors</label>
+			<label index="dscrtree.clpseAll">Collapse all</label>
+			<label index="dscrtree.filter">Quick find a tag/keyword:</label>
+			<label index="dscrtree.filterEmpTxt">type the first letters</label>
 			<label index="dscrtree.loading">Loading Descriptors ...</label>
-            <label index="dscrtree.noResult">No result</label>
-            <label index="dscrtree.allDscrSelected">All descriptors selected</label>
-
-            <label index="grid.resPanel.title">Result</label>
-            <label index="grid.resPanel.searchAgain">Search</label>
+			<label index="dscrtree.noResult">No result</label>
+			<label index="dscrtree.allDscrSelected">All descriptors selected</label>
+			<label index="grid.resPanel.title">Result</label>
+			<label index="grid.resPanel.searchAgain">Advanced search</label>
 			<label index="grid.header.title">Title</label>
 			<label index="grid.header.date">Date</label>
 			<label index="grid.header.owner">Owner</label>
@@ -45,56 +42,50 @@
 			<label index="grid.header.type">Type</label>
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Loading documents...</label>
-            
-            <label index="docDetail.relatedDscr">Related descriptor</label>
-            <label index="docDetail.relatedDscr_pl">Related descriptors</label>
-            <label index="docDetail.relatedPage">Related page</label>
-            <label index="docDetail.relatedPage_pl">Related pages</label>
-            <label index="docDetail.title">Title:</label>
-            <label index="docDetail.owner">Owner:</label>
-            <label index="docDetail.type">Type:</label>
-            <label index="docDetail.status">Status:</label>
-            <label index="docDetail.key">Key:</label>
-            <label index="docDetail.date">Last updated:</label>
-            <label index="docDetail.prevDoc">Previous doc.</label>
-            <label index="docDetail.nextDoc">Next doc.</label>
-            <label index="docDetail.link2page">View this document as a separate page</label>
-            <label index="docDetail.link2pageTooltip">Exit the grid result.</label>
-            <label index="docDetail.link2preview">View the document in a popup window (and stay on this page).</label>
+			<label index="docDetail.relatedDscr">Related descriptor</label>
+			<label index="docDetail.relatedDscr_pl">Related descriptors</label>
+			<label index="docDetail.relatedPage">Related page</label>
+			<label index="docDetail.relatedPage_pl">Related pages</label>
+			<label index="docDetail.title">Title:</label>
+			<label index="docDetail.owner">Owner:</label>
+			<label index="docDetail.type">Type:</label>
+			<label index="docDetail.status">Status:</label>
+			<label index="docDetail.key">Key:</label>
+			<label index="docDetail.date">Last updated:</label>
+			<label index="docDetail.prevDoc">Previous doc.</label>
+			<label index="docDetail.nextDoc">Next doc.</label>
+			<label index="docDetail.link2page">View this document as a separate page</label>
+			<label index="docDetail.link2pageTooltip">Exit the grid result.</label>
+			<label index="docDetail.link2preview">View the document in a popup window (and stay on this page).</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="form.title">Erweiterte Suche</label>
-            <label index="form.searchRun">Suche ...</label>
-			
+			<label index="form.searchRun">Suche ...</label>
 			<label index="owner.legend">Eigentümer</label>
 			<label index="owner.loading">Loading Eigentümer ...</label>
 			<label index="owner.all">Alles Eigentümer</label>
-			
 			<label index="type.legend">Typ</label>
 			<label index="type.loading">Loading Types ...</label>
 			<label index="type.all">Alles types ...</label>
-			
 			<label index="status.legend">Status</label>
 			<label index="status.loading">Loading Status ...</label>
 			<label index="status.all">Alles Status ...</label>
-			
 			<label index="dscrtree.search">Suche</label>
-            <label index="dscrtree.searchTip">Suche</label>
-            <label index="dscrtree.reset">Reset</label>
-            <label index="dscrtree.resetTip">Reset form</label>
+			<label index="dscrtree.searchTip">Suche</label>
+			<label index="dscrtree.reset">Reset</label>
+			<label index="dscrtree.resetTip">Reset form</label>
 			<label index="dscrtree.legend">Descriptors</label>
-            <label index="dscrtree.all">Alles</label>
+			<label index="dscrtree.all">Alles</label>
 			<label index="dscrtree.and">und</label>
 			<label index="dscrtree.or">oder</label>
-            <label index="dscrtree.clpseAll">Collapse all</label>
+			<label index="dscrtree.clpseAll">Collapse all</label>
 			<label index="dscrtree.filter">Filter:</label>
-            <label index="dscrtree.filterEmpTxt">bei descriptors:</label>
+			<label index="dscrtree.filterEmpTxt">bei descriptors:</label>
 			<label index="dscrtree.loading">Loading Descriptors ...</label>
-            <label index="dscrtree.noResult">Nichts</label>
-            <label index="dscrtree.allDscrSelected">Alles descriptors</label>
-
-            <label index="grid.resPanel.title">Result</label>
-            <label index="grid.resPanel.searchAgain">Suche</label>,
+			<label index="dscrtree.noResult">Nichts</label>
+			<label index="dscrtree.allDscrSelected">Alles descriptors</label>
+			<label index="grid.resPanel.title">Result</label>
+			<label index="grid.resPanel.searchAgain">Suche</label>
 			<label index="grid.header.title">Titel</label>
 			<label index="grid.header.date">Datum</label>
 			<label index="grid.header.owner">Eigentümer</label>
@@ -102,56 +93,50 @@
 			<label index="grid.header.type">Sorte</label>
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Loading Dokumente ...</label>
-            
-            <label index="docDetail.relatedDscr">Related descriptor</label>
-            <label index="docDetail.relatedDscr_pl">Related descriptors</label>
-            <label index="docDetail.relatedPage">Related page</label>
-            <label index="docDetail.relatedPage_pl">Related pages</label>
-            <label index="docDetail.title">Titel:</label>
-            <label index="docDetail.owner">Eigentümer:</label>
-            <label index="docDetail.type">Sorte:</label>
-            <label index="docDetail.status">Status:</label>
-            <label index="docDetail.key">Schlüssel:</label>
-            <label index="docDetail.date">Last updated:</label>
-            <label index="docDetail.prevDoc">Previous doc.</label>
-            <label index="docDetail.nextDoc">Next doc.</label>
-            <label index="docDetail.link2page">Verlassen Sie die Suche und gehen Sie zu der Zielseite:</label>
-            <label index="docDetail.link2pageTooltip">>Verlassen Sie die Suche</label>
-            <label index="docDetail.link2preview">Sehen Sie das Dokument in einem Popup-Fenster (und auf dieser Seite bleiben).</label>
+			<label index="docDetail.relatedDscr">Related descriptor</label>
+			<label index="docDetail.relatedDscr_pl">Related descriptors</label>
+			<label index="docDetail.relatedPage">Related page</label>
+			<label index="docDetail.relatedPage_pl">Related pages</label>
+			<label index="docDetail.title">Titel:</label>
+			<label index="docDetail.owner">Eigentümer:</label>
+			<label index="docDetail.type">Sorte:</label>
+			<label index="docDetail.status">Status:</label>
+			<label index="docDetail.key">Schlüssel:</label>
+			<label index="docDetail.date">Last updated:</label>
+			<label index="docDetail.prevDoc">Previous doc.</label>
+			<label index="docDetail.nextDoc">Next doc.</label>
+			<label index="docDetail.link2page">Verlassen Sie die Suche und gehen Sie zu der Zielseite:</label>
+			<label index="docDetail.link2pageTooltip">&gt;Verlassen Sie die Suche</label>
+			<label index="docDetail.link2preview">Sehen Sie das Dokument in einem Popup-Fenster (und auf dieser Seite bleiben).</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="form.title">Recherche avancée</label>
-            <label index="form.searchRun">Recherche en cours</label>
-            
+			<label index="form.searchRun">Recherche en cours</label>
 			<label index="owner.legend">Propriétaire</label>
 			<label index="owner.loading">Chargement des Propriétaires ...</label>
 			<label index="owner.all">Tous les propriétaires ...</label>
-			
 			<label index="type.legend">Type</label>
 			<label index="type.loading">Chargement des Types ...</label>
 			<label index="type.all">Tous les types ...</label>
-			
 			<label index="status.legend">Status</label>
 			<label index="status.loading">Chargement des Status ...</label>
 			<label index="status.all">Tous les status ...</label>
-
-            <label index="dscrtree.search">Rechercher</label>
-            <label index="dscrtree.searchTip">Rechercher en fonction des critères de selection.</label>
-            <label index="dscrtree.reset">Réinitialiser</label>
-            <label index="dscrtree.resetTip">Réinitialiser les champs du formulaire</label>
+			<label index="dscrtree.search">Rechercher</label>
+			<label index="dscrtree.searchTip">Rechercher en fonction des critères de selection.</label>
+			<label index="dscrtree.reset">Réinitialiser</label>
+			<label index="dscrtree.resetTip">Réinitialiser les champs du formulaire</label>
 			<label index="dscrtree.legend">Déscripteurs</label>
-            <label index="dscrtree.all">Tous</label>
+			<label index="dscrtree.all">Tous</label>
 			<label index="dscrtree.and">et</label>
 			<label index="dscrtree.or">ou</label>
-            <label index="dscrtree.clpseAll">Replier tous les déscripteurs</label>
+			<label index="dscrtree.clpseAll">Replier tous les déscripteurs</label>
 			<label index="dscrtree.filter">Filtre:</label>
-            <label index="dscrtree.filterEmpTxt">de déscripteurs</label>
+			<label index="dscrtree.filterEmpTxt">de déscripteurs</label>
 			<label index="dscrtree.loading">Chargement des Déscripteurs ...</label>
-            <label index="dscrtree.noResult">Aucun résultat</label>
-            <label index="dscrtree.allDscrSelected">Tous les déscripteurs sélectionnés</label>
-
-            <label index="grid.resPanel.title">Résultat</label>
-            <label index="grid.resPanel.searchAgain">Recherche</label>
+			<label index="dscrtree.noResult">Aucun résultat</label>
+			<label index="dscrtree.allDscrSelected">Tous les déscripteurs sélectionnés</label>
+			<label index="grid.resPanel.title">Résultat</label>
+			<label index="grid.resPanel.searchAgain">Recherche</label>
 			<label index="grid.header.title">Titre</label>
 			<label index="grid.header.date">Date</label>
 			<label index="grid.header.owner">Propriétaire</label>
@@ -159,56 +144,50 @@
 			<label index="grid.header.type">Type</label>
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Chargement des documents ...</label>
-            
-            <label index="docDetail.relatedDscr">Déscripteur relatif</label>
-            <label index="docDetail.relatedDscr_pl">Déscripteurs relatifs</label>
-            <label index="docDetail.relatedPage">Page relative</label>
-            <label index="docDetail.relatedPage_pl">Pages relatives</label>
-            <label index="docDetail.title">Titre:</label>
-            <label index="docDetail.owner">Propriétaire:</label>
-            <label index="docDetail.type">Type:</label>
-            <label index="docDetail.status">Status:</label>
-            <label index="docDetail.key">Clé:</label>
-            <label index="docDetail.date">Mis à jour le:</label>
-            <label index="docDetail.prevDoc">Document précédent</label>
-            <label index="docDetail.nextDoc">Document suivant</label>
-            <label index="docDetail.link2page">Voir la page d'origine du document</label>
-            <label index="docDetail.link2pageTooltip">Quitter la recherche</label>
-            <label index="docDetail.link2preview">Afficher le document dans une fenêtre contextuelle (et conserver les paramètres de recherche).</label>
+			<label index="docDetail.relatedDscr">Déscripteur relatif</label>
+			<label index="docDetail.relatedDscr_pl">Déscripteurs relatifs</label>
+			<label index="docDetail.relatedPage">Page relative</label>
+			<label index="docDetail.relatedPage_pl">Pages relatives</label>
+			<label index="docDetail.title">Titre:</label>
+			<label index="docDetail.owner">Propriétaire:</label>
+			<label index="docDetail.type">Type:</label>
+			<label index="docDetail.status">Status:</label>
+			<label index="docDetail.key">Clé:</label>
+			<label index="docDetail.date">Mis à jour le:</label>
+			<label index="docDetail.prevDoc">Document précédent</label>
+			<label index="docDetail.nextDoc">Document suivant</label>
+			<label index="docDetail.link2page">Voir la page d'origine du document</label>
+			<label index="docDetail.link2pageTooltip">Quitter la recherche</label>
+			<label index="docDetail.link2preview">Afficher le document dans une fenêtre contextuelle (et conserver les paramètres de recherche).</label>
 		</languageKey>
-        <languageKey index="es" type="array">
+		<languageKey index="es" type="array">
 			<label index="form.title">Búsqueda avanzada</label>
-            <label index="form.searchRun">Buscando ...</label>
-
+			<label index="form.searchRun">Buscando ...</label>
 			<label index="owner.legend">Propietario</label>
 			<label index="owner.loading">Cargando ...</label>
 			<label index="owner.all">Todos los propietarios ...</label>
-
 			<label index="type.legend">Typo</label>
 			<label index="type.loading">Cargando...</label>
 			<label index="type.all">Todos los tipos ...</label>
-
 			<label index="status.legend">Estatus</label>
 			<label index="status.loading">Cargando...</label>
 			<label index="status.all">Toda los estatus ...</label>
-
-            <label index="dscrtree.search">Investigación</label>
-            <label index="dscrtree.searchTip">Búsqueda basada en criterios de selección.</label>
-            <label index="dscrtree.reset">Perdí</label>
-            <label index="dscrtree.resetTip">Perdí los campos de formulario</label>
+			<label index="dscrtree.search">Investigación</label>
+			<label index="dscrtree.searchTip">Búsqueda basada en criterios de selección.</label>
+			<label index="dscrtree.reset">Perdí</label>
+			<label index="dscrtree.resetTip">Perdí los campos de formulario</label>
 			<label index="dscrtree.legend">Descriptores</label>
-            <label index="dscrtree.all">Todo</label>
+			<label index="dscrtree.all">Todo</label>
 			<label index="dscrtree.and">y</label>
 			<label index="dscrtree.or">o</label>
-            <label index="dscrtree.clpseAll">Plegar todos los descriptores</label>
+			<label index="dscrtree.clpseAll">Plegar todos los descriptores</label>
 			<label index="dscrtree.filter">Filtro:</label>
-            <label index="dscrtree.filterEmpTxt">descriptores</label>
+			<label index="dscrtree.filterEmpTxt">descriptores</label>
 			<label index="dscrtree.loading">Cargando...</label>
-            <label index="dscrtree.noResult">No hay resultados</label>
-            <label index="dscrtree.allDscrSelected">Todos los descriptores seleccionados</label>
-
-            <label index="grid.resPanel.title">Resultados</label>
-            <label index="grid.resPanel.searchAgain">Búsqueda</label>
+			<label index="dscrtree.noResult">No hay resultados</label>
+			<label index="dscrtree.allDscrSelected">Todos los descriptores seleccionados</label>
+			<label index="grid.resPanel.title">Resultados</label>
+			<label index="grid.resPanel.searchAgain">Búsqueda</label>
 			<label index="grid.header.title">Título</label>
 			<label index="grid.header.date">Fecha</label>
 			<label index="grid.header.owner">Propietario</label>
@@ -216,22 +195,21 @@
 			<label index="grid.header.type">Tipo</label>
 			<label index="grid.header.status">Estatus</label>
 			<label index="grid.loading">Cargando...</label>
-
-            <label index="docDetail.relatedDscr">Relacionado descriptor</label>
-            <label index="docDetail.relatedDscr_pl">Descriptores relacionados</label>
-            <label index="docDetail.relatedPage">Página relacionados</label>
-            <label index="docDetail.relatedPage_pl">Páginas relacionadas</label>
-            <label index="docDetail.title">Título:</label>
-            <label index="docDetail.owner">Propietario:</label>
-            <label index="docDetail.type">Typo:</label>
-            <label index="docDetail.status">Estatus:</label>
-            <label index="docDetail.key">Llave:</label>
-            <label index="docDetail.date">Actualizado:</label>
-            <label index="docDetail.prevDoc">documento anterior</label>
-            <label index="docDetail.nextDoc">próximo documento</label>
-            <label index="docDetail.link2page">Deja la búsqueda y ver la página de destino:</label>
-            <label index="docDetail.link2pageTooltip">Salir Page</label>
-            <label index="docDetail.link2preview">Ver el documento en una ventana emergente (y mantener los parámetros de búsqueda).</label>
+			<label index="docDetail.relatedDscr">Relacionado descriptor</label>
+			<label index="docDetail.relatedDscr_pl">Descriptores relacionados</label>
+			<label index="docDetail.relatedPage">Página relacionados</label>
+			<label index="docDetail.relatedPage_pl">Páginas relacionadas</label>
+			<label index="docDetail.title">Título:</label>
+			<label index="docDetail.owner">Propietario:</label>
+			<label index="docDetail.type">Typo:</label>
+			<label index="docDetail.status">Estatus:</label>
+			<label index="docDetail.key">Llave:</label>
+			<label index="docDetail.date">Actualizado:</label>
+			<label index="docDetail.prevDoc">documento anterior</label>
+			<label index="docDetail.nextDoc">próximo documento</label>
+			<label index="docDetail.link2page">Deja la búsqueda y ver la página de destino:</label>
+			<label index="docDetail.link2pageTooltip">Salir Page</label>
+			<label index="docDetail.link2preview">Ver el documento en una ventana emergente (y mantener los parámetros de búsqueda).</label>
 		</languageKey>
 	</data>
 </T3locallang>
