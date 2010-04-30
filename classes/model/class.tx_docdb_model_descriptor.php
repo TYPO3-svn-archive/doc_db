@@ -25,9 +25,9 @@
  /**
  * Class/Function
  * 
- * $Id: class.tx_docdb_model_descriptor.php 200 2010-01-18 17:28:01Z lcherpit $
+ * $Id: class.tx_docdb_model_descriptor.php 207 2010-03-12 21:37:26Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-01-18 18:28:01 +0100 (lun 18 jan 2010) $
+ * $Date: 2010-03-12 22:37:26 +0100 (ven 12 mar 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0

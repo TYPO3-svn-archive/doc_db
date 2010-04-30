@@ -29,9 +29,9 @@
  *
  * @author Olivier Schopfer <ops@wcc-coe.org>
  * 
- * $Id: class.tx_docdb_wizardSearchDescriptor.php 159 2009-12-07 14:57:41Z lcherpit $
+ * $Id: class.tx_docdb_wizardSearchDescriptor.php 208 2010-03-13 04:52:54Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2009-12-07 15:57:41 +0100 (lun 07 déc 2009) $
+ * $Date: 2010-03-13 05:52:54 +0100 (sam 13 mar 2010) $
  * 
  * Rewrite to make it more friendly
  * @author     Laurent Cherpit  <laurent@eosgarden.com>

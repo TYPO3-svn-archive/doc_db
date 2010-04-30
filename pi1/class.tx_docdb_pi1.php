@@ -25,9 +25,9 @@
 /**
  * Class/Function frontend plugin
  *
- * $Id: class.tx_docdb_pi1.php 205 2010-02-06 17:30:07Z lcherpit $
+ * $Id: class.tx_docdb_pi1.php 207 2010-03-12 21:37:26Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-02-06 18:30:07 +0100 (sam 06 fév 2010) $
+ * $Date: 2010-03-12 22:37:26 +0100 (ven 12 mar 2010) $
  *
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0

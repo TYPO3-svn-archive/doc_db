@@ -1,6 +1,6 @@
 /*
  * @author  : Laurent Cherpit
- * @version : $Id: DocDb.searchMainApp.js 204 2010-02-06 02:05:23Z lcherpit $
+ * @version : $Id: DocDb.searchMainApp.js 208 2010-03-13 04:52:54Z lcherpit $
  */
 /**
  * Global app
