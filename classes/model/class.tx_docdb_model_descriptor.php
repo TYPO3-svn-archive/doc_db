@@ -25,9 +25,9 @@
  /**
  * Class/Function
  * 
- * $Id: class.tx_docdb_model_descriptor.php 207 2010-03-12 21:37:26Z lcherpit $
+ * $Id: class.tx_docdb_model_descriptor.php 210 2010-05-04 11:00:03Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-03-12 22:37:26 +0100 (ven 12 mar 2010) $
+ * $Date: 2010-05-04 13:00:03 +0200 (mar 04 mai 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -289,10 +289,11 @@ class tx_docdb_model_descriptor
 		
 		
 		$select  = 'd.uid';
-		$from    = 'tx_docdb_descriptor d,pages p,tx_docdb_pages_doc_descriptor_mm mm';
-		
-		$where   = '(mm.uid_local=p.uid AND mm.uid_foreign=d.uid)';
-		$where  .= ' AND (d.deleted=0 AND d.hidden=0) AND ((p.deleted=0 AND p.hidden=0) and p.doktype=198)';
+		$from    = 'pages p ';
+        $from   .= 'INNER JOIN tx_docdb_pages_doc_descriptor_mm mm ON p.uid = mm.uid_local ';
+        $from   .= 'INNER JOIN tx_docdb_descriptor d ON d.uid = mm.uid_foreign ';
+
+		$where  .= '(d.deleted=0 AND d.hidden=0) AND ((p.deleted=0 AND p.hidden=0) and p.doktype=198)';
 		$where  .= ' AND d.uid NOT IN(SELECT dscr_pid FROM tx_docdb_descriptor)' . $addWhere;
 		$where  .= $searchNeedle;
 		

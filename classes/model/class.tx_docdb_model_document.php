@@ -25,9 +25,9 @@
  /**
  * Class/Function
  * 
- * $Id: class.tx_docdb_model_document.php 205 2010-02-06 17:30:07Z lcherpit $
+ * $Id: class.tx_docdb_model_document.php 209 2010-05-04 10:49:23Z lcherpit $
  * $Author: lcherpit $
- * $Date: 2010-02-06 18:30:07 +0100 (sam 06 fév 2010) $
+ * $Date: 2010-05-04 12:49:23 +0200 (mar 04 mai 2010) $
  * 
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -118,11 +118,6 @@ class tx_docdb_model_document
 
         //  p.tx_templavoila_flex AS flex,
 
-        if( $this->_debug ) {
-
-			t3lib_div::devLog( 'class model_document sql clause', 'doc_db', 0, array($select, $this->_sqlClause ) );
-		}
-
 		$from    = $this->_sqlClause['from'];
 		
 		$where   = '(p.doktype=198 AND (p.deleted=0 AND p.hidden=0))';
@@ -133,7 +128,11 @@ class tx_docdb_model_document
 		$orderBy = $this->_sqlClause['order'];
 
 		$limit = $this->_sqlClause['limit'];
-		
+
+        if( $this->_debug ) {
+
+			t3lib_div::devLog( 'class model_document sql clause', 'doc_db', 0, array($select, $from, $where, $groupBy, $orderBy, $limit ) );
+		}
 		
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			$select,
@@ -182,7 +181,7 @@ class tx_docdb_model_document
 		$GLOBALS['TYPO3_DB']->sql_free_result( $res );
 		
 		$totalCount = tx_docdb_div::exec_SELECTcountRows( 'DISTINCT(p.uid)', $from, $where );
-		
+
 		$out = array(
 			'success'    => TRUE,
 			'totalCount' => $totalCount,
@@ -198,7 +197,7 @@ class tx_docdb_model_document
      */
 	protected function _setSqlClause( $params )
 	{
-		
+
 		// store query
 		$from  = '';
 		$where = '';
@@ -217,7 +216,7 @@ class tx_docdb_model_document
 		$typeIds   = isset( $params->type ) && $params->type !== '0' ? $params->type : '';
 		$statusIds = isset( $params->status ) && $params->status !== '0' ? $params->status : '';
 		// decriptors selection
-		$dscrIds     = isset( $params->selNodes ) ? $params->selNodes : '';
+		$dscrIds     = isset( $params->selNodes ) && !empty($params->selNodes) ? t3lib_div::intExplode(',', $params->selNodes) : '';
 		$dscrSelType = isset( $params->selType ) ? $params->selType : 'AND';
 		
 		// substitution
@@ -282,40 +281,28 @@ class tx_docdb_model_document
                 }
             }
         } // eo isset filter
-		
-		
-		$from  .= 'pages p, tx_docdb_owner o, tx_docdb_type t, tx_docdb_status s';
-		$where .= 'AND ((p.tx_docdb_doc_owner=o.uid) AND (p.tx_docdb_doc_type=t.uid) AND ( p.tx_docdb_doc_status=s.uid))';
-		
-		if( $dscrIds ) {
+
+        
+        $from  .= 'pages p';
+
+		if( isset($dscrIds) && is_array($dscrIds) ) {
 			
-			$from  .= ',tx_docdb_pages_doc_descriptor_mm mm, tx_docdb_descriptor d';
-			$where .= ' AND ((mm.uid_local=p.uid AND mm.uid_foreign=d.uid)';
-			
+			if( $dscrSelType === 'AND' && count($dscrIds) > 1 ) {
 
-			if( $dscrSelType === 'AND' ) {
-				
-//				$dscrIds = explode( ',', $dscrIds );
-//				$dscrIds = implode( ' AND mm.uid_foreign=', $dscrIds );
-//				$where  .= ' AND (mm.uid_foreign=' . $dscrIds .'))';
-
-//                $dscrIds = explode( ',', $dscrIds );
-
-                $nbRel = count( explode( ',', $dscrIds ) );
-
-				//$dscrIds = implode( ' OR d.uid=', $dscrIds );
-				$where  .= ' AND mm.uid_local IN (
-                    SELECT m.uid_local FROM tx_docdb_pages_doc_descriptor_mm m
-                    WHERE m.uid_foreign IN(' . $dscrIds . ')
-                    GROUP BY m.uid_local
-                    HAVING COUNT(m.uid_local)>' . ($nbRel-1) .')
-                )';
+				$where  .= ' AND p.uid IN (' . $this->_getDocIdWithAtLeast2Descr( $dscrIds ) . ')';
 
 			} else {
+                $from  .= ' INNER JOIN tx_docdb_pages_doc_descriptor_mm mm ON p.uid = mm.uid_local';
+                $from  .= ' INNER JOIN tx_docdb_descriptor d ON d.uid = mm.uid_foreign';
                 
-                $where .= ' AND mm.uid_foreign IN(' . $dscrIds . '))';
+                $where .= ' AND mm.uid_foreign IN(' . implode(',', $dscrIds) . ')';
             }
 		}
+
+        // add JOIN
+        $from  .= ' INNER JOIN tx_docdb_owner o ON p.tx_docdb_doc_owner = o.uid';
+        $from  .= ' INNER JOIN tx_docdb_type t ON p.tx_docdb_doc_type = t.uid';
+        $from  .= ' INNER JOIN tx_docdb_status s ON p.tx_docdb_doc_status = s.uid';
 		
 		if( $ownerIds && $typeIds && $statusIds ) {
 			
@@ -369,9 +356,36 @@ class tx_docdb_model_document
 		$this->_sqlClause['limit'] = $start . ',' . $count;
 		
 		unset( $from, $where, $gSort, $gDir, $sort, $dir, $start, $count );
-			//       var_dump( $this->_sqlClause ); exit;
 	}
 
+
+    protected function _getDocIdWithAtLeast2Descr( array $dscrIds ) {
+
+        $rows = array();
+        
+        // make independent subQuery
+        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+            'm.uid_local pageId',
+            'tx_docdb_pages_doc_descriptor_mm m',
+            'm.uid_foreign IN(' . implode(',', $dscrIds) . ')',
+            'm.uid_local ' .
+            'HAVING COUNT(m.uid_local)> 1 '
+        );
+
+        while( ( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) ) ) {
+
+            $rows[] = $row['pageId'];
+        }
+        $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+        if( count($rows) ) {
+
+            return implode(',', $rows);
+        }
+        // will return no results, but no sql error
+        return 0;
+    }
+    
 
     protected function _getRelatedDescriptors( $pageId ) {
 
@@ -397,7 +411,8 @@ class tx_docdb_model_document
 
             $rows[] = $dscrObj;
         }
-
+        $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        
         //print_r( $rows ); exit;
         return $rows;
     }
@@ -426,7 +441,8 @@ class tx_docdb_model_document
 
             $rows[] = $dscrObj;
         }
-
+        $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        
         //print_r( $rows ); exit;
         return $rows;
     }
