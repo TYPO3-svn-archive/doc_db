@@ -265,12 +265,15 @@ DocDb.initMain = function( ) {
     // within the enableBuffer delay period (in milliseconds).
     // Slow the buffering down from the default of 10ms to 100ms
     Ext.app.REMOTING_API.namespace = DocDb;
-    Ext.app.REMOTING_API.enableBuffer = 100;
+    Ext.app.REMOTING_API.enableBuffer = 60;
     Ext.app.REMOTING_API.id = 'docdb-direct';
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
-    
+
+    var sApp;
     // create and show main app Panel
-    var sApp = new DocDb.mainPanel( );
+    ( function( ) { sApp = new DocDb.mainPanel( ); }.defer( 50 ) );
+    
+    
 
     ( function( ) { Ext.get( 'loading-mask' ).setHeight( sApp.getHeight( ) ); }.defer( 1 ) );
 
