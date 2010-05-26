@@ -269,15 +269,13 @@ DocDb.initMain = function( ) {
     Ext.app.REMOTING_API.id = 'docdb-direct';
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
 
-    var sApp;
+    
     // create and show main app Panel
-    ( function( ) { sApp = new DocDb.mainPanel( ); }.defer( 50 ) );
-    
-    
+    var sApp = new DocDb.mainPanel( );
 
-    ( function( ) { Ext.get( 'loading-mask' ).setHeight( sApp.getHeight( ) ); }.defer( 1 ) );
+    ( function( ) { Ext.get( 'loading-mask' ).setHeight( sApp.getHeight( ) ); }.defer( 60 ) );
 
-    ( function( ) { sApp.setBaseParams(); }.defer( 10 ) );
+    ( function( ) { sApp.setBaseParams(); }.defer( 75 ) );
 }
 
 // eof

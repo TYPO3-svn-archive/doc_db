@@ -224,8 +224,9 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
 
         // finally put header
 		$GLOBALS[ 'TSFE' ]->additionalHeaderData[ ( $extKey ? $extKey : $this->extKey ) . 'useradd_inc' ] = $includes . "\n" .
-            $conf[ 'js.' ] . "\n" .
+//            $conf[ 'js.' ] . "\n" .
             "\t" .'<script type="text/javascript"' . $deferTag . ' src="' . $conf[ 'url' ] . '"></script>' . "\n" .
+            $conf[ 'js.' ] . "\n" .
             "\t" . $scriptLL . "\n" .
             $includesJsLL . "\n";
 	}
@@ -322,7 +323,7 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
             switch( $type ) {
 
                 case 'VAR':
-                    $script =  ( $params[ 'namespace' ] ? 'Ext.namespace("' . $params[ 'namespace' ] . '");' . $params[ 'namespace' ] . '.' : 'var ') . $assign . ' =' . json_encode( $res ) . ';';
+                    $script =  ( $params[ 'namespace' ] ? 'Ext.ns("' . $params[ 'namespace' ] . '");' . $params[ 'namespace' ] . '.' : 'var ') . $assign . ' =' . json_encode( $res ) . ';';
                 break;
 
                 case 'APPLY_TO':
@@ -330,7 +331,7 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
                 break;
 
                 case 'ASSIGN':
-                    $script =  $params[ 'namespace' ] ? 'Ext.namespace("' . $params[ 'namespace' ] . '");' : '';
+                    $script =  $params[ 'namespace' ] ? 'Ext.ns("' . $params[ 'namespace' ] . '");' : '';
 
                     if( $res[ 'lang' ] ) {
 
@@ -348,7 +349,7 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
         $ExtOnReady  = 'Ext.onReady( function( ) {' . "\n\t";
         $ExtOnReady .= $blankImg;
         $ExtOnReady .= $script . "\n\t";
-        $ExtOnReady .= 'DocDb.initMain();' . "\n\t";
+        $ExtOnReady .= '(function() {DocDb.initMain();}.defer(50))' . "\n\t";
         $ExtOnReady .= '});';
 
         unset( $script );
