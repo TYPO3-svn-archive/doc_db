@@ -25,9 +25,9 @@
 /**
  * Class/Function frontend plugin
  *
- * $Id: class.tx_docdb_pi1.php 207 2010-03-12 21:37:26Z lcherpit $
- * $Author: lcherpit $
- * $Date: 2010-03-12 22:37:26 +0100 (ven 12 mar 2010) $
+ * $Id$
+ * $Author$
+ * $Date$
  *
  * @author  laurent cherpit <laurent@eosgarden.com>
  * @version     1.0
@@ -36,8 +36,8 @@
  */
 
 
-require_once( PATH_tslib . 'class.tslib_pibase.php' );
-require_once( t3lib_extMgm::extPath( 'doc_db' ) . 'classes/class.tx_docdb_div.php' );
+require_once(PATH_tslib . 'class.tslib_pibase.php');
+require_once(t3lib_extMgm::extPath('doc_db') . 'classes/class.tx_docdb_div.php');
 
 class tx_docdb_pi1 extends tslib_pibase
 {
@@ -91,7 +91,7 @@ class tx_docdb_pi1 extends tslib_pibase
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The		content that is displayed on the website
 	 */
-	public function main( $content, &$conf ) {
+	public function main($content, &$conf) {
 
 		// Local extjs conf array
 		$_extjsConf = array();
@@ -113,19 +113,19 @@ class tx_docdb_pi1 extends tslib_pibase
         
         $this->_setConfig();
 
-        if( ! $this->_conf['extJS.']['confInc'] ) {
+        if(! $this->_conf['extJS.']['confInc']) {
 
             return $this->pi_wrapInBaseClass(
-                '<b>' . $this->pi_getLL( 'errorMsgTsNotInc', 'Static TypoScript Template not included or if it is, try to clear cache' ) . '</b>'
-            );
+                '<b>' . $this->pi_getLL('errorMsgTsNotInc', 'Static TypoScript Template not included or if it is, try to clear cache') . '</b>'
+           );
         }
 
         // resolv resources path
-        tx_docdb_div::subExtPrefixPath( $this->_conf['extJS.']['resourcesPath'] );
+        tx_docdb_div::subExtPrefixPath($this->_conf['extJS.']['resourcesPath']);
 
-		$this->_siteRelPath = t3lib_extMgm::siteRelPath( $this->extKey );
+		$this->_siteRelPath = t3lib_extMgm::siteRelPath($this->extKey);
 
-		if( is_object( $_extjs = t3lib_div::makeInstanceService( 'extjsDirect' ) ) ) {
+		if(is_object($_extjs = t3lib_div::makeInstanceService('extjsDirect'))) {
 
 			$this->_conf['extjs-ct'] = $this->_conf['extjs-ct'] ? $this->_conf['extjs-ct'] :'extjs-ct';
 
@@ -137,16 +137,16 @@ class tx_docdb_pi1 extends tslib_pibase
                 'eID'         => 'docdb',
                 'extensionId' => $this->cObj->data['uid'],
                 'prefixId'    => $this->prefixId,
-                //'themes.'     => array( 'wcc' )
-            );
+                //'themes.'     => array('wcc')
+           );
 
-            if( $this->_conf['extJS.']['production'] ) {
+            if($this->_conf['extJS.']['production']) {
 
                 $_extjsConf['js.'] = array(
 
                     // all js files needed for app, cat and minified
                     $this->_siteRelPath . 'resources/js/DocDb-lib-min.js'
-                );
+               );
 
             } else {
 
@@ -170,50 +170,50 @@ class tx_docdb_pi1 extends tslib_pibase
                     $this->_siteRelPath . 'resources/js/DocDb.Descriptors.js',
 
                     $this->_siteRelPath . 'resources/js/DocDb.GridResults.js',
-                );
+               );
             }
 
-            if( $this->_getViewMode() === 'FE' ) {
+            if($this->_getViewMode() === 'FE') {
 
-                $loadingText = $this->pi_getLL( 'searchLoadingText', 'Loading ...' );
+                $loadingText = $this->pi_getLL('searchLoadingText', 'Loading ...');
 
                 $nodes ='';
-                require_once( t3lib_extMgm::extPath( $this->extKey ) . 'classes/model/class.tx_docdb_model_descriptor.php' );
-                $dscr = t3lib_div::makeInstance( 'tx_docdb_model_descriptor' );
-                $nodes = $dscr->getSessionNodes( '0' );
+                require_once(t3lib_extMgm::extPath($this->extKey) . 'classes/model/class.tx_docdb_model_descriptor.php');
+                $dscr = t3lib_div::makeInstance('tx_docdb_model_descriptor');
+                $nodes = $dscr->getSessionNodes('0');
 
-                if( $this->_conf['extJS.']['production'] ) {
+                if($this->_conf['extJS.']['production']) {
 
                     $_extjsConf += array(
                         'adapter' => 'merged',
                         'css.'    => array(
                                 $this->_siteRelPath . 'resources/css/default-min.css'
-                        )
-                    );
+                       )
+                   );
 
                     // add global js DoDb.app minidied contain  DocDb.SearchForm.js and DocDb.searchMainApp.js
-                    array_push( $_extjsConf['js.'],
+                    array_push($_extjsConf['js.'],
                         $this->_siteRelPath . 'resources/js/DocDb.searchMainApp-prod-min.js'
-                    );
+                   );
 
                 } else {
 
                     $_extjsConf['css.'] = array(
                         $this->_siteRelPath . 'resources/css/default.css'
-                    );
+                   );
 
                     // add global js DoDb.app
-                    array_push( $_extjsConf['js.'],
+                    array_push($_extjsConf['js.'],
                         $this->_siteRelPath . 'resources/js/DocDb.SearchForm.js',
                         $this->_siteRelPath . 'resources/js/DocDb.searchMainApp.js'
-                    );
+                   );
                 } // eo else production
 
                 // get only grouping properties from gridParams
-                $this->_deleteNotWantedProp( $this->_conf['ff']->gridParam, array( 'grouping', 'groupBy', 'field', 'direction', 'dF', 'colsW', 'selNodes', 'lang' ) );
+                $this->_deleteNotWantedProp($this->_conf['ff']->gridParam, array('grouping', 'groupBy', 'field', 'direction', 'dF', 'colsW', 'selNodes', 'lang'));
                 
-                $this->_setToInt( $this->_conf['ff']->treeHeight, array() );
-                $this->_setToInt( $this->_conf['ff']->docDetail, array( 'divContIdWinP' ) );
+                $this->_setToInt($this->_conf['ff']->treeHeight, array());
+                $this->_setToInt($this->_conf['ff']->docDetail, array('divContIdWinP'));
 
                 $_extjsConf['statvar.'] = array(
                     array(
@@ -223,7 +223,7 @@ class tx_docdb_pi1 extends tslib_pibase
                         'lang.'     => array('sort',
                             'prefix' => '',
                             'LLfile' => $this->_siteRelPath . 'resources/lang/locallang_extjs.docdb.xml',
-                        ),
+                       ),
                         'statvar.' => array(
                             'RENDER_TO'      => $this->_conf['extjs-ct'],
                             'PAGESIZE'       => (int)$this->_conf['ff']->pageSize,
@@ -235,50 +235,50 @@ class tx_docdb_pi1 extends tslib_pibase
                             'mSelHeight'     => (int)$this->_conf['ff']->mSelHeight,
                             'treeHeight'     => $this->_conf['ff']->treeHeight,
                             'formHeight'     => (
-                                (int)$this->_conf[ 'ff' ]->mSelHeight + (int)$this->_conf[ 'ff' ]->treeHeight->min
-                            )
-                        )
-                    )
-                ); // eo $_extjsConf['statvar.']
+                                (int)$this->_conf['ff']->mSelHeight + (int)$this->_conf['ff']->treeHeight->min
+                           )
+                       )
+                   )
+               ); // eo $_extjsConf['statvar.']
 
-                $divMaskH = (int)$this->_conf[ 'ff' ]->mSelHeight + (int)$this->_conf[ 'ff' ]->treeHeight->min;
+                $divMaskH = (int)$this->_conf['ff']->mSelHeight + (int)$this->_conf['ff']->treeHeight->min;
                 //$divMaskH = $this->_conf['ff']->gridHeight;
 
             /**
              * pi BE config search result in flexform
              */
-            } else if( $this->_getViewMode() === 'PI' ) {
+            } else if($this->_getViewMode() === 'PI') {
 
-                $loadingText = $this->pi_getLL( 'gridLoadingText', 'Loading ...' );
+                $loadingText = $this->pi_getLL('gridLoadingText', 'Loading ...');
 
-                if( $this->_conf['extJS.']['production'] ) {
+                if($this->_conf['extJS.']['production']) {
 
                     $_extjsConf += array(
                         'adapter' => 'merged',
                         'css.'    => array(
                                 $this->_siteRelPath . 'resources/css/default-min.css'
-                        )
-                    );
+                       )
+                   );
 
                     // add global js DoDb.app minidied contain DocDb.gridMainApp
-                    array_push( $_extjsConf['js.'],
+                    array_push($_extjsConf['js.'],
                         $this->_siteRelPath . 'resources/js/DocDb.gridMainApp-prod-min.js'
-                    );
+                   );
 
                 } else {
 
                     $_extjsConf['css.'] = array(
                         $this->_siteRelPath . 'resources/css/default.css'
-                    );
+                   );
 
                     // add global js DoDb.app
-                    array_push( $_extjsConf['js.'],
+                    array_push($_extjsConf['js.'],
                         $this->_siteRelPath . 'resources/js/DocDb.gridMainApp.js'
-                    );
+                   );
                 }
 
-                $this->_setToInt( $this->_conf['ff']->gridParam, array( 'groupBy', 'groupDir', 'field', 'direction', 'selType', 'owner', 'type', 'status', 'selNodes','dF', 'colsW' ) );
-                $this->_setToInt( $this->_conf['ff']->docDetail, array( 'divContIdWinP' ) );
+                $this->_setToInt($this->_conf['ff']->gridParam, array('groupBy', 'groupDir', 'field', 'direction', 'selType', 'owner', 'type', 'status', 'selNodes','dF', 'colsW'));
+                $this->_setToInt($this->_conf['ff']->docDetail, array('divContIdWinP'));
 
                 $_extjsConf['statvar.'] = array(
 
@@ -289,7 +289,7 @@ class tx_docdb_pi1 extends tslib_pibase
                         'lang.'     => array(
                             'prefix' => '',
                             'LLfile' => $this->_siteRelPath . 'resources/lang/locallang_extjs.docdb.gridStandalone.xml',
-                        ),
+                       ),
                         'statvar.' => array(
                             'RENDER_TO'      => $this->_conf['extjs-ct'],
                             'PAGESIZE'       => (int)$this->_conf['ff']->pageSize,
@@ -297,16 +297,16 @@ class tx_docdb_pi1 extends tslib_pibase
                             'mainPWidth'     => (int)$this->_conf['ff']->mainPWidth,
                             'gridHeight'     => (int)$this->_conf['ff']->gridHeight,
                             'docDetail'      => $this->_conf['ff']->docDetail,
-                        )
-                    )
-                ); // eo $_extjsConf['statvar.']
+                       )
+                   )
+               ); // eo $_extjsConf['statvar.']
 
                 $divMaskH = $this->_conf['ff']->gridHeight;
 
             } // eo if PI
 
 
-			$_extjs->process( $_extjsConf, $this->_conf['extJS.'] );
+			$_extjs->process($_extjsConf, $this->_conf['extJS.']);
 
 		} else {
 
@@ -329,7 +329,7 @@ class tx_docdb_pi1 extends tslib_pibase
 		$content .= '<div id="' . $this->_conf['extjs-ct'] . '"></div>';
 
 
-		return $this->pi_wrapInBaseClass( $content );
+		return $this->pi_wrapInBaseClass($content);
 	}
 
 	/**
@@ -337,7 +337,7 @@ class tx_docdb_pi1 extends tslib_pibase
 	 * view mode:
 	 *   - FE : query defined in frontend with select form
 	 *   - PI : query defined in flexform to display table list of selected documents
-	 * @return view mode defined in FF ( FE or PI )
+	 * @return view mode defined in FF (FE or PI)
 	 */
 	protected function _getViewMode() {
 
@@ -348,31 +348,31 @@ class tx_docdb_pi1 extends tslib_pibase
     /**
      * build plugin TS configuration from flexform configuration.
      */
-    protected function _mergeConfFlex( $mapObj, $flexRes ) {
+    protected function _mergeConfFlex($mapObj, $flexRes) {
 
         // Process each entry of the mapping array
-        foreach( $mapObj as $key => $value ) {
+        foreach($mapObj as $key => $value) {
 
             // Check if current TS object has sub objects
-            if( is_object( $value ) ) {
+            if(is_object($value)) {
 
                 // Item has sub objects - Process the array
                 $tempConfig->$key = $this->_mergeConfFlex(
                     $value,
                     $flexRes
-                );
+               );
 
             } else {
 
                 // No sub objects - Get informations about the flexform value to get
-                $flexInfo = explode( ':', $value );
+                $flexInfo = explode(':', $value);
 
                 // Try to get the requested flexform value
                 $tempConfig->$key = $this->pi_getFFvalue(
                     $flexRes,
-                    $flexInfo[ 1 ],
-                    $flexInfo[ 0 ]
-                );
+                    $flexInfo[1],
+                    $flexInfo[0]
+               );
             }
         }
 
@@ -421,23 +421,23 @@ class tx_docdb_pi1 extends tslib_pibase
         $this->_conf['ff'] = $this->_mergeConfFlex(
             $flexConf,
             $this->_piFform
-        );
+       );
 
-        if( ! $this->_conf['ff']->gridParam->grouping ) {
+        if(! $this->_conf['ff']->gridParam->grouping) {
 
             $this->_conf['ff']->gridParam->groupBy = '';
         }
 
         // set values of columns width to array of int from string
-        $this->_conf['ff']->gridParam->colsW = explode( ',', $this->_conf[ 'extJS.' ][ 'gridColsWidth' ] );
+        $this->_conf['ff']->gridParam->colsW = explode(',', $this->_conf['extJS.']['gridColsWidth']);
 
-        array_walk( $this->_conf['ff']->gridParam->colsW, create_function( '&$a,$k', '$a = (int)$a;' ) );
+        array_walk($this->_conf['ff']->gridParam->colsW, create_function('&$a,$k', '$a = (int)$a;'));
 
-        $dForm     = $this->_conf[ 'extJS.' ][ 'dateF.' ];
-        $dFormCust = $this->_conf[ 'extJS.' ][ 'dateFCustom.' ];
+        $dForm     = $this->_conf['extJS.']['dateF.'];
+        $dFormCust = $this->_conf['extJS.']['dateFCustom.'];
         $dF        = new stdClass();
         
-        if( $dFormCust['row'] !== '' ) {
+        if($dFormCust['row'] !== '') {
 
             $dF->row = $dFormCust['row'];
 
@@ -446,7 +446,7 @@ class tx_docdb_pi1 extends tslib_pibase
             $dF->row = $dForm['row'];
         }
 
-        if( $dFormCust['detail'] !== '' ) {
+        if($dFormCust['detail'] !== '') {
 
             $dF->detail = $dFormCust['detail'];
             
@@ -458,10 +458,10 @@ class tx_docdb_pi1 extends tslib_pibase
         $this->_conf['ff']->gridParam->dF = $dF;
 
         // remove prepend # if any
-        $this->_conf[ 'ff' ]->docDetail->divContIdWinP = str_replace( '#', '', $this->_conf[ 'ff' ]->docDetail->divContIdWinP );
+        $this->_conf['ff']->docDetail->divContIdWinP = str_replace('#', '', $this->_conf['ff']->docDetail->divContIdWinP);
 
         // if any pivars for descriptor
-        $this->_setDscrFromPiVars( $this->_conf['ff']->gridParam->selNodes );
+        $this->_setDscrFromPiVars($this->_conf['ff']->gridParam->selNodes);
 
         $this->_setGridVarLang();
     }
@@ -470,9 +470,9 @@ class tx_docdb_pi1 extends tslib_pibase
      *
      * @return void : uid of selected descriptor or false if piVars not set
      */
-    protected function _setDscrFromPiVars( &$selNodeProp ) {
+    protected function _setDscrFromPiVars(&$selNodeProp) {
 
-        if( isset( $this->piVars['descriptors'] ) ) {
+        if(isset($this->piVars['descriptors'])) {
 
             $selNodeProp = (int)$this->piVars['descriptors'];
         }
@@ -484,20 +484,20 @@ class tx_docdb_pi1 extends tslib_pibase
      */
     protected function _setGridVarLang() {
 
-        $lang = t3lib_div::GPvar( 'L' );
-        if( isset( $lang ) ) {
+        $lang = t3lib_div::GPvar('L');
+        if(isset($lang)) {
             
             $this->_conf['ff']->gridParam->lang = (int)$lang;
         }
     }
 
 
-    private function _setToInt( &$obj, array $excludeProp ) {
+    private function _setToInt(&$obj, array $excludeProp) {
 
         //
-        foreach( $obj as $p => $v ) {
+        foreach($obj as $p => $v) {
 
-            if( ! in_array( $p, $excludeProp ) ) {
+            if(! in_array($p, $excludeProp)) {
 
                 $obj->$p = (int)$v;
             }
@@ -505,14 +505,14 @@ class tx_docdb_pi1 extends tslib_pibase
     }
 
 
-    private function _deleteNotWantedProp( &$obj, array $excludeProp ) {
+    private function _deleteNotWantedProp(&$obj, array $excludeProp) {
 
         //
-        foreach( $obj as $p => $v ) {
+        foreach($obj as $p => $v) {
 
-            if( ! in_array( $p, $excludeProp ) ) {
+            if(! in_array($p, $excludeProp)) {
 
-                unset( $obj->$p );
+                unset($obj->$p);
             }
         }
     }
@@ -520,7 +520,7 @@ class tx_docdb_pi1 extends tslib_pibase
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/pi1/class.tx_docdb_pi1.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/pi1/class.tx_docdb_pi1.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/pi1/class.tx_docdb_pi1.php']) {
