@@ -44,28 +44,28 @@ class tx_docdb_itemsProcFunc
 	 * @param array $PA
 	 * @return 
 	 */
-	public function sortItems( &$PA ) {
+	public function sortItems(&$PA) {
 		
-		$items = $PA[ 'items' ];
+		$items = $PA['items'];
 		$item2unShift = Array();
 		
-		foreach( $PA[ 'items' ] as $k => $item ) {
+		foreach($PA['items'] as $k => $item) {
 			
-			if( $item[ 0 ] === 'zzz_none' ) {
+			if($item[0] === 'zzz_none') {
 				
-				$item2unShift = array_splice  ( $PA[ 'items' ] , $k, 1 );
+				$item2unShift = array_splice  ($PA['items'] , $k, 1);
 			}
 		}
 		
-		$item2unShift[ 0 ][ 0 ] = 'None';
+		$item2unShift[0][0] = 'None';
 		
-		array_unshift( $PA[ 'items' ], $item2unShift[ 0 ] );
+		array_unshift($PA['items'], $item2unShift[0]);
 	}
 }
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_itemsProcFunc.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_itemsProcFunc.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_itemsProcFunc.php']) {

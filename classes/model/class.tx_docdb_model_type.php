@@ -45,10 +45,10 @@ class tx_docdb_model_type
 	 * @remotable
 	 * @return array to by encoded in JSON format
 	 */
-	public function get( $params ) {
+	public function get($params) {
 		
 		// not needed processed by router
-		if( !isset($params ) ) {
+		if(!isset($params)) {
 			
 			$out = array(
 				'success'    => false,
@@ -66,30 +66,30 @@ class tx_docdb_model_type
 		$where   = '((t.type != \'zzz_none\' AND (t.deleted=0 AND t.hidden=0)) AND (p.doktype=198 AND (p.deleted=0 AND p.hidden=0)))';
 		$groupBy = 't.uid';
 		
-		if( isset( $params->ownerfk ) && $params->ownerfk !== '0' ) {
+		if(isset($params->ownerfk) && $params->ownerfk !== '0') {
 			
 			$from .= ' AND (p.tx_docdb_doc_owner IN(' . $params->ownerfk . '))';
 		}
 		
-		if( $params->sort !== 'type' || ( $params->dir !== 'ASC' || $params->dir !== 'DESC' ) ) {
+		if($params->sort !== 'type' || ($params->dir !== 'ASC' || $params->dir !== 'DESC')) {
 			
 			$orderBy = 't.type ASC';
 			
 		} else {
 			
-			$orderBy = trim( 't.type '. $params->dir );
+			$orderBy = trim('t.type '. $params->dir);
 		}
 //		
 		$limit = $params->limit;
 		
-		$rows = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTgetRows(
+		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			$select,
 			$from,
 			$where, $groupBy, $orderBy, $limit
 		);
 		
 		// add all in first
-		array_unshift( $rows, array( 'id' => 0, 'type' => 'All' ) );
+		array_unshift($rows, array('id' => 0, 'type' => 'All'));
 		
 		$out = array(
 			'success'    => true,
@@ -103,7 +103,7 @@ class tx_docdb_model_type
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_type.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_type.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_type.php']) {

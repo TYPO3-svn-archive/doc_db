@@ -44,9 +44,9 @@ class tx_docdb_div
 	 * @param int $id: related descriptor uid list
 	 * @return String: html tooltip
 	 */
-	public static function _getCssTooltip( $rows, $backPath='' ) {
+	public static function _getCssTooltip($rows, $backPath='') {
 		
-		$_backPath = isset( $backPath ) ? t3lib_div::resolveBackPath( $backPath ) : '';
+		$_backPath = isset($backPath) ? t3lib_div::resolveBackPath($backPath) : '';
 		// store
 		$_tt = array();
 		
@@ -58,17 +58,17 @@ class tx_docdb_div
 		$_tt[] = '<span class="header">See related</span><br/>';
 		$_tt[] = '<span class="paragraph">';
 		
-		foreach( $rows as $k => $row ) {
+		foreach($rows as $k => $row) {
 			
 			$_hr = ($cpt++ > 0) ? '<hr style="border:none" />' : '';
-			$_tt[] = $_hr . 'Id[' . $row[ "uid" ] . '] :<br /><i>(' . $row[ 'title' ] . ')</i>';
+			$_tt[] = $_hr . 'Id[' . $row["uid"] . '] :<br /><i>(' . $row['title'] . ')</i>';
 			
 		}
 		
 		$_tt[] = '</span></span>';
 		$_tt[] = '</a></div></div>';
 		
-		return implode( "\n", $_tt );
+		return implode("\n", $_tt);
 	}
 	
 	
@@ -84,9 +84,9 @@ class tx_docdb_div
 	 * @param	string		Optional LIMIT value ([begin,]max), if none, supply blank string.
 	 * @return	array		The array with the category records in.
 	 */
-	public static function _sqlGetRows( $table, $fields='*', $whereClause='', $groupBy='', $orderBy='', $limit='' ) {
+	public static function _sqlGetRows($table, $fields='*', $whereClause='', $groupBy='', $orderBy='', $limit='') {
 		
-		$rows = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTgetRows(
+		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			$fields,
 			$table,
 			$whereClause,
@@ -96,12 +96,12 @@ class tx_docdb_div
 		);
 		
 //		$outArr = array();
-//		while( ( $row = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_assoc( $res ) ) ) {
+//		while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 //			
 //			$outArr[] = $row;
 //		}
 		
-//		$GLOBALS[ 'TYPO3_DB' ]->sql_free_result($res);
+//		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 		
 		return $rows;
 	}
@@ -117,37 +117,37 @@ class tx_docdb_div
 	public static function exec_SELECTcountRows($field, $table, $where = '') {
 		$count = false;
 		
-		$resultSet = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTquery('COUNT(' . $field . ')', $table, $where);
+		$resultSet = $GLOBALS['TYPO3_DB']->exec_SELECTquery('COUNT(' . $field . ')', $table, $where);
 		
 		if ($resultSet !== false) {
 		
-			list($count) = $GLOBALS[ 'TYPO3_DB' ]->sql_fetch_row($resultSet);
+			list($count) = $GLOBALS['TYPO3_DB']->sql_fetch_row($resultSet);
 			
-			$GLOBALS[ 'TYPO3_DB' ]->sql_free_result($resultSet);
+			$GLOBALS['TYPO3_DB']->sql_free_result($resultSet);
 		}
 		
 		return $count;
 	}
 
 
-    public static function subExtPrefixPath( &$path ) {
+    public static function subExtPrefixPath(&$path) {
 
-        if( strcmp( substr( $path, 0, 4 ), 'EXT:' ) === 0 ) {
+        if(strcmp(substr($path, 0, 4), 'EXT:') === 0) {
 
-			list( $extKey, $script ) = explode( '/', substr( $path, 4 ), 2 );
+			list($extKey, $script) = explode('/', substr($path, 4), 2);
 
-			if( $extKey && t3lib_extMgm::isLoaded( $extKey ) ) {
-				$extPath = t3lib_extMgm::siteRelPath( $extKey );
+			if($extKey && t3lib_extMgm::isLoaded($extKey)) {
+				$extPath = t3lib_extMgm::siteRelPath($extKey);
 				$path = $extPath . $script;
 			}
 		}
     }
 
-    public static function checkFileExist( $filePath ) {
+    public static function checkFileExist($filePath) {
 
-        $filePath = t3lib_div::getFileAbsFileName( $filePath, FALSE );
+        $filePath = t3lib_div::getFileAbsFileName($filePath, FALSE);
 
-        if( file_exists( $filePath ) ) {
+        if(file_exists($filePath)) {
             return TRUE;
         }
 
@@ -159,7 +159,7 @@ class tx_docdb_div
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_div.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_div.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_div.php']) {

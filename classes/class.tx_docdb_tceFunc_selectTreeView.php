@@ -36,8 +36,8 @@
  * @subpackage doc_db
  */
 
-require_once ( t3lib_extMgm::extPath( 'doc_db' ) . 'classes/class.tx_docdb_div.php' );
-require_once ( PATH_t3lib . 'class.t3lib_treeview.php' );
+require_once (t3lib_extMgm::extPath('doc_db') . 'classes/class.tx_docdb_div.php');
+require_once (PATH_t3lib . 'class.t3lib_treeview.php');
 
 /**
  * extend class t3lib_treeview to change function wrapTitle().
@@ -63,41 +63,41 @@ class tx_docdb_tceFunc_selectTreeView extends t3lib_treeview
 	 * @param    array    $v: an array with uid and title of the current item.
 	 * @return   string   the wrapped title
 	 */
-	public function wrapTitle( $title, $row, $bank=0 ) {
+	public function wrapTitle($title, $row, $bank=0) {
 
-		$_style = $this->_getTitleStyles( $row );
-		$_id    = $row[ 'uid' ];
+		$_style = $this->_getTitleStyles($row);
+		$_id    = $row['uid'];
 		
-		if( $_id > 0 ) {
+		if($_id > 0) {
 			
 			$_aStyle      = '';
 			$_related     = '';
 			
 			// ** OS 28.4.2006 Add related info
 			// ** LC 30.10.2009
-			if( $row[ 'dscr_related' ] > 0 ) {
+			if($row['dscr_related'] > 0) {
 				
 				// get related descriptors
 				$relRows = tx_docdb_div::_sqlGetRows(
 					'tx_docdb_descriptor',
 					'uid,title',
-					'tx_docdb_descriptor.uid IN (' . $row[ 'dscr_related' ] .')',
+					'tx_docdb_descriptor.uid IN (' . $row['dscr_related'] .')',
 					'',
 					'title ASC',
 					''
 				);
 				
 				// tooltip
-				$_related = tx_docdb_div::_getCssTooltip( $relRows );
+				$_related = tx_docdb_div::_getCssTooltip($relRows);
 				
 				$_aStyle  = ' style="padding-left:13px;"';
 				
 			}
 			
-			$_hrefTitle = htmlentities( '[id=' . $_id . '] ' . $title );
+			$_hrefTitle = htmlentities('[id=' . $_id . '] ' . $title);
 			
 			// Children of descriptor or in page they are not leaf
-			if( in_array( $_id, $this->TCEforms_nonSelectableItemsArray ) ) {
+			if(in_array($_id, $this->TCEforms_nonSelectableItemsArray)) {
 				
 				return $_related . '<a href="#" title="' . $_hrefTitle . '"' . $_aStyle . '>
 								<span style="color:#999;cursor:default;'
@@ -107,9 +107,9 @@ class tx_docdb_tceFunc_selectTreeView extends t3lib_treeview
 				
 				// Is selectable
 				$aOnClick = 'setFormValueFromBrowseWin(\'' . $this->TCEforms_itemFormElName
-									. '\',' . $_id . ',\'' . t3lib_div::slashJS( $title ) . '\'); return false;';
+									. '\',' . $_id . ',\'' . t3lib_div::slashJS($title) . '\'); return false;';
 				
-				return $_related . '<a href="#" onclick="' . htmlspecialchars( $aOnClick )
+				return $_related . '<a href="#" onclick="' . htmlspecialchars($aOnClick)
 						. '" title="' . $_hrefTitle . '"' . $_aStyle . '><span style="' . $_style . '">'
 						. $title . '</span></a>';
 			}
@@ -133,12 +133,12 @@ class tx_docdb_tceFunc_selectTreeView extends t3lib_treeview
 	 * @return	string		Link-wrapped input string
 	 * @access define as private in parent, in fact no and should be protected
 	 */
-	public function PM_ATagWrap( $icon, $cmd, $bMark = '' ) {
+	public function PM_ATagWrap($icon, $cmd, $bMark = '') {
 		
-		$_cmdParts = explode( '_', $cmd );
+		$_cmdParts = explode('_', $cmd);
 		$_title    = 'collapse';
 		
-		if( $_cmdParts[ 1 ] === '1' ) {
+		if($_cmdParts[1] === '1') {
 			
 			$_title = 'expand';
 		}
@@ -153,18 +153,18 @@ class tx_docdb_tceFunc_selectTreeView extends t3lib_treeview
 	 * @param array    $v: an array with uid and title of the current item.
 	 * @return 
 	 */
-	protected function _getTitleStyles( $v ) {
+	protected function _getTitleStyles($v) {
 	
 		$_style = '';
 		
 		// current selected descriptor
-		if( in_array( $v[ 'uid' ], $this->TCEforms_selectedItemsArray ) ) {
+		if(in_array($v['uid'], $this->TCEforms_selectedItemsArray)) {
 			
 			$_style .= 'font-weight:bold;';
 		}
 		
 		// descriptor in the rootline
-		if( is_array( $this->selectedItemsArrayParents ) && in_array( $v[ 'uid' ], $this->selectedItemsArrayParents ) ) {
+		if(is_array($this->selectedItemsArrayParents) && in_array($v['uid'], $this->selectedItemsArrayParents)) {
 				
 			$_style .= 'text-decoration:underline;';
 		}
@@ -178,7 +178,7 @@ class tx_docdb_tceFunc_selectTreeView extends t3lib_treeview
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tceFunc_selectTreeView.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tceFunc_selectTreeView.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tceFunc_selectTreeView.php']) {

@@ -44,7 +44,7 @@ class tx_docdb_model_owner
 	 * @remotable
 	 * @return array to by encoded in JSON format
 	 */
-	public function get( $params ) {
+	public function get($params) {
 		
 		$rows = array();
 		
@@ -54,25 +54,25 @@ class tx_docdb_model_owner
 		$groupBy = 'o.uid';
 		
 		
-		if( $params->sort !== 'owner' || ( $params->dir !== 'ASC' || $params->dir !== 'DESC' ) ) {
+		if($params->sort !== 'owner' || ($params->dir !== 'ASC' || $params->dir !== 'DESC')) {
 			
 			$orderBy = 'o.owner ASC';
 			
 		} else {
 			
-			$orderBy = trim( 'o.owner '. $params->dir );
+			$orderBy = trim('o.owner '. $params->dir);
 		}
 //		
 		$limit = $params->limit;
 		
-		$rows = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTgetRows(
+		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			$select,
 			$from,
 			$where, $groupBy, $orderBy, $limit
 		);
 		
 		// add all in first
-		array_unshift( $rows, array( 'id' => 0, 'owner' => 'All' ) );
+		array_unshift($rows, array('id' => 0, 'owner' => 'All'));
 		
 		$out = array(
 			'success' => true,
@@ -86,7 +86,7 @@ class tx_docdb_model_owner
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_owner.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_owner.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_owner.php']) {

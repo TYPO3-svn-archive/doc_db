@@ -52,43 +52,43 @@ class tx_docdb_tceMain
 	* @return  void
 	* @access public
 	*/
-	public function processDatamap_preProcessFieldArray( array &$fieldArray, $table, $id, t3lib_tceMain $pObj ) {
+	public function processDatamap_preProcessFieldArray(array &$fieldArray, $table, $id, t3lib_tceMain $pObj) {
 		
-		if( $table === 'pages' && $fieldArray[ 'doktype' ] === '198' ) {
+		if($table === 'pages' && $fieldArray['doktype'] === '198') {
 			
 			$required  = FALSE;
 			$fieldName = array();
 			$s         = '';
 			$reqText   = 'is';
 			
-			if( $fieldArray[ 'tx_docdb_doc_owner' ] === '0' ) {
+			if($fieldArray['tx_docdb_doc_owner'] === '0') {
 			
 				$fieldName[] = 'Owner';
 				$required    = TRUE;
 			}
 			
-			if( $fieldArray[ 'tx_docdb_doc_type' ] === '0' ) {
+			if($fieldArray['tx_docdb_doc_type'] === '0') {
 			
 				$fieldName[] = 'Type';
 				$required    = TRUE;
 			}
 			
-			if( $fieldArray[ 'tx_docdb_doc_status' ] === '0' ) {
+			if($fieldArray['tx_docdb_doc_status'] === '0') {
 			
 				$fieldName[] = 'Status';
 				$required    = TRUE;
 			}
 			
-			if( $required ) {
+			if($required) {
 			
 				// plurial
-				if( count( $fieldName ) > 1 ) {
+				if(count($fieldName) > 1) {
 				
 					$s       = 's';
 					$reqText = 'are';
 				}
 				
-				$pObj->log( $table,
+				$pObj->log($table,
 					$id,
 					2,
 					0,
@@ -96,8 +96,8 @@ class tx_docdb_tceMain
 					"Attempt to save or update page '%s' (%s):" .
 					"but field". $s . " %s " . $reqText . " required.",
 					1,
-					array( $fieldArray[ 'title' ], $id, implode( ' and ' , $fieldName ) ),
-					$fieldArray[ 'pid' ]
+					array($fieldArray['title'], $id, implode(' and ' , $fieldName)),
+					$fieldArray['pid']
 				);
 				
 				//unset fieldArray to prevent saving of the record
@@ -124,21 +124,21 @@ class tx_docdb_tceMain_cmdMap
 	* @param   [type]      $pObj: ...
 	* @return  [type]      ...
 	*/
-	public function processCmdmap_preProcess( &$command, $table, $srcId, $destId, t3lib_tceMain $pObj ) {
+	public function processCmdmap_preProcess(&$command, $table, $srcId, $destId, t3lib_tceMain $pObj) {
 		
 		// 
-		if( $command === 'delete' ) {
+		if($command === 'delete') {
 			
-			if( $table === 'tx_docdb_owner' || $table === 'tx_docdb_type' || $table === 'tx_docdb_status' ) {
+			if($table === 'tx_docdb_owner' || $table === 'tx_docdb_type' || $table === 'tx_docdb_status') {
 				
-				$field = substr( $table, 9, strlen( $table ) );
+				$field = substr($table, 9, strlen($table));
 				
 				// get parent uid
-				$rec  = t3lib_BEfunc::getRecord( $table, $srcId, $field );
+				$rec  = t3lib_BEfunc::getRecord($table, $srcId, $field);
 				
-				if( trim( $rec[ $field ] ) === 'zzz_none' ) {
+				if(trim($rec[$field]) === 'zzz_none') {
 					
-					$pObj->log( $table,
+					$pObj->log($table,
 						'',
 						3,
 						0,
@@ -146,7 +146,7 @@ class tx_docdb_tceMain_cmdMap
 						"Attempt to delete record '%s' (field:%s:%s) from table %s, " .
 						"but it's not allowed, this value is required by doc_db extension.",
 						1,
-						array( $rec[ $field ], $field, $srcId, $table )
+						array($rec[$field], $field, $srcId, $table)
 					);
 					// 'unset' delete cmd
 					$command = '';
@@ -159,7 +159,7 @@ class tx_docdb_tceMain_cmdMap
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tcemain.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tcemain.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tcemain.php']) {

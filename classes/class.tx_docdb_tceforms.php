@@ -48,7 +48,7 @@ class tx_docdb_tceforms
 
 	function __construct() {
 
-		$this->_TAB = chr( 9 );
+		$this->_TAB = chr(9);
 	}
 
 	/**
@@ -57,7 +57,7 @@ class tx_docdb_tceforms
     * @param array $PA
     * @return
     */
-	public function inputRo( array &$PA, t3lib_TCEforms $fobj ) {
+	public function inputRo(array &$PA, t3lib_TCEforms $fobj) {
 
 		// storage
 		$html = array();
@@ -65,10 +65,10 @@ class tx_docdb_tceforms
 		$readonly   = '';
 		$roText     = '';
 		$fieldStyle	= '';
-		if( $PA[ 'row' ][ $PA[ 'field' ] ] === 'zzz_none' ) {
+		if($PA['row'][$PA['field']] === 'zzz_none') {
 
 			$readonly    = ' readonly="readonly"';
-			$roText      = '<div style="margin: 5px 0;padding: 5px 0;font-weight:bold;">' . $GLOBALS[ 'LANG' ]->sL( 'LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tx_docdb_readonly_field' ) . '</div>';
+			$roText      = '<div style="margin: 5px 0;padding: 5px 0;font-weight:bold;">' . $GLOBALS['LANG']->sL('LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tx_docdb_readonly_field') . '</div>';
 			$fieldStyle  = ' style="background-color:#aaa;"';
 		}
 		$html[] = '<div style="';
@@ -83,19 +83,19 @@ class tx_docdb_tceforms
 
 		$html[] = $this->_TAB . '<strong>';
 
-		$html[] = $GLOBALS[ 'LANG' ]->sL( $PA[ 'fieldConf' ][ 'label' ] ) . '</strong><br />';
+		$html[] = $GLOBALS['LANG']->sL($PA['fieldConf']['label']) . '</strong><br />';
 
 		$html[] = $this->_TAB . '<input ';
 
-		$html[] = $this->_TAB . $this->_TAB . 'size="'. $PA[ 'fieldConf' ][ 'config' ][ 'size' ] .'" ';
+		$html[] = $this->_TAB . $this->_TAB . 'size="'. $PA['fieldConf']['config']['size'] .'" ';
 
-		$html[] = $this->_TAB . $this->_TAB . 'name="' . $PA[ 'itemFormElName' ] . '" ';
+		$html[] = $this->_TAB . $this->_TAB . 'name="' . $PA['itemFormElName'] . '" ';
 
-		$html[] = $this->_TAB . $this->_TAB . 'value="' .  htmlspecialchars( $PA[ 'itemFormElValue' ] ) . '" ';
+		$html[] = $this->_TAB . $this->_TAB . 'value="' .  htmlspecialchars($PA['itemFormElValue']) . '" ';
 
-		$html[] = $this->_TAB . $this->_TAB . 'onchange="' . htmlspecialchars( implode( '', $PA[ 'fieldChangeFunc' ] ) ) . '" ';
+		$html[] = $this->_TAB . $this->_TAB . 'onchange="' . htmlspecialchars(implode('', $PA['fieldChangeFunc'])) . '" ';
 
-		$html[] = $this->_TAB . $this->_TAB . $PA[ 'onFocus' ];
+		$html[] = $this->_TAB . $this->_TAB . $PA['onFocus'];
 
 		$html[] = $this->_TAB . $readonly . $fieldStyle . ' />';
 
@@ -103,13 +103,13 @@ class tx_docdb_tceforms
 
 		$html[] = $roText;
 
-		return implode( chr(10), $html );
+		return implode(chr(10), $html);
 	}
 }
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tceforms.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tceforms.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tceforms.php']) {

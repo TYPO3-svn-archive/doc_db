@@ -46,24 +46,24 @@ class tx_docdb_tsparserext {
     private $_ll       = 'LLL:EXT:doc_db/configuration/llang/locallang.xml:extmng.';
     
 
-	public function displayMessage( &$params, &$tsObj ) {
+	public function displayMessage(&$params, &$tsObj) {
 
 		$out = '';
 
-		if( t3lib_div::int_from_ver(TYPO3_version) < 4003000 ) {
+		if(t3lib_div::int_from_ver(TYPO3_version) < 4003000) {
             
-			$cssPath = $GLOBALS[ 'BACK_PATH' ] . t3lib_extMgm::extRelPath( 'doc_db' );
+			$cssPath = $GLOBALS['BACK_PATH'] . t3lib_extMgm::extRelPath('doc_db');
 			$out     = '<link rel="stylesheet" type="text/css" href="' . $cssPath . 'res/compat/flashmessages.css" media="screen" />';
 		}
 
 		$out .= '
 		<div style="position:absolute;top:10px;right:10px; width:300px;">
 			<div class="typo3-message message-information">
-   				<div class="message-header">' . $GLOBALS[ 'LANG' ]->sL( $this->_ll . 'updatermsgHeader' ) . '</div>
+   				<div class="message-header">' . $GLOBALS['LANG']->sL($this->_ll . 'updatermsgHeader') . '</div>
   				<div class="message-body">
-  					' . $GLOBALS[ 'LANG' ]->sL( $this->_ll . 'updatermsg' ) . '<br />
+  					' . $GLOBALS['LANG']->sL($this->_ll . 'updatermsg') . '<br />
   					<a style="text-decoration:underline;" href="index.php?&amp;id=0&amp;CMD[showExt]=doc_db&amp;SET[singleDetails]=updateModule">
-  					' . $GLOBALS[ 'LANG' ]->sL( $this->_ll . 'updatermsgLink' ) . '</a>
+  					' . $GLOBALS['LANG']->sL($this->_ll . 'updatermsgLink') . '</a>
   				</div>
   			</div>
   		</div>
@@ -75,7 +75,7 @@ class tx_docdb_tsparserext {
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tsparserext.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tsparserext.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/class.tx_docdb_tsparserext.php']) {

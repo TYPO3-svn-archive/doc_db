@@ -42,7 +42,7 @@ class tx_docdb_model_status
 //	public $conf=null;
 //	public $cObj=null;
 //	
-//	public function init( &$conf, $cObj ) {
+//	public function init(&$conf, $cObj) {
 //		
 //		$this->conf = $conf;
 //		$this->cObj = $cObj;
@@ -54,7 +54,7 @@ class tx_docdb_model_status
 	 * @remotable
 	 * @return array to by encoded in JSON format
 	 */
-	public function get( $params ) {
+	public function get($params) {
 		
 		$rows = array();
 		
@@ -63,35 +63,35 @@ class tx_docdb_model_status
 		$where   = '((s.status!=\'zzz_none\' AND (s.deleted=0 AND s.hidden=0)) AND (p.doktype=198 AND (p.deleted=0 AND p.hidden=0)))';
 		$groupBy = 's.uid';
 		
-		if( isset( $params->ownerfk ) && $params->ownerfk !== '0' ) {
+		if(isset($params->ownerfk) && $params->ownerfk !== '0') {
 			
 			$from .= ' AND (p.tx_docdb_doc_owner IN(' . $params->ownerfk . '))';
 		}
 		
-		if( isset( $params->typefk ) && $params->typefk !== '0' ) {
+		if(isset($params->typefk) && $params->typefk !== '0') {
 			
 			$from .= ' AND (p.tx_docdb_doc_type IN(' . $params->typefk . '))';
 		}
 		
-		if( $params->sort !== 'status' || ( $params->dir !== 'ASC' || $params->dir !== 'DESC' ) ) {
+		if($params->sort !== 'status' || ($params->dir !== 'ASC' || $params->dir !== 'DESC')) {
 			
 			$orderBy = 's.status ASC';
 			
 		} else {
 			
-			$orderBy = trim( 's.status '. $params->dir );
+			$orderBy = trim('s.status '. $params->dir);
 		}
 		
 		$limit = $params->limit;
 		
-		$rows = $GLOBALS[ 'TYPO3_DB' ]->exec_SELECTgetRows(
+		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			$select,
 			$from,
 			$where, $groupBy, $orderBy, $limit
 		);
 		
 		// add all in first
-		array_unshift( $rows, array( 'id' => 0, 'status' => 'All' ) );
+		array_unshift($rows, array('id' => 0, 'status' => 'All'));
 		
 		$out = array(
 			'success'    => true,
@@ -105,7 +105,7 @@ class tx_docdb_model_status
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_status.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_status.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_status.php']) {
