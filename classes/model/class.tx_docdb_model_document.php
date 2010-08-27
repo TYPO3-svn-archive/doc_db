@@ -37,21 +37,20 @@
 
 
 // tslib_cObj
-require_once( PATH_tslib . 'class.tslib_content.php' );
+require_once(PATH_tslib . 'class.tslib_content.php');
 
 // helpers
-require_once( t3lib_extMgm::extPath( 'doc_db' ) . 'classes/class.tx_docdb_div.php' );
+require_once(t3lib_extMgm::extPath('doc_db') . 'classes/class.tx_docdb_div.php');
 
 
-class tx_docdb_model_document
-{
+class tx_docdb_model_document {
 	
 	/**
 	 * Local cObj for typolink,parseFuncRTE, ...
 	 * 
 	 * @var object
 	 */ 
-	public $cObj     = NULL;
+	protected $cObj     = NULL;
 	
 	/**
 	 * devLog debug
@@ -80,19 +79,19 @@ class tx_docdb_model_document
 		/**
 		 * @todo: enable debug from ext_template.txt and noot manualy 
 		 */
-		if( TYPO3_DLOG && $this->_debug ) {
+		if(TYPO3_DLOG && $this->_debug) {
 			
 			$this->_debug = TRUE;
 		}
 
-		if( isset( $GLOBALS['TSFE']->cObj ) && is_object( $GLOBALS['TSFE']->cObj ) ) {
+		if(isset($GLOBALS['TSFE']->cObj) && is_object($GLOBALS['TSFE']->cObj)) {
 		
 			$this->cObj = $GLOBALS['TSFE']->cObj;
 		
-		} elseif( !is_object( $this->cObj ) ) {
+		} elseif(!is_object($this->cObj)) {
 		
 			// Creates a new instance of tslib_cObj
-			$this->cObj = t3lib_div::makeInstance( 'tslib_cObj' );
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 		}
 	}
 	
@@ -103,12 +102,12 @@ class tx_docdb_model_document
 	 * @remotable
 	 * @return array to by encoded in JSON format
 	 */
-	public function get( $params ) {
+	public function get($params) {
 		
 		// build clause of query
-		$this->_setSqlClause( $params );
+		$this->_setSqlClause($params);
 
-        $this->_setAddLangParam( $params );
+        $this->_setAddLangParam($params);
         
 		// store
 		$rows = array();
@@ -129,9 +128,9 @@ class tx_docdb_model_document
 
 		$limit = $this->_sqlClause['limit'];
 
-        if( $this->_debug ) {
+        if($this->_debug) {
 
-			t3lib_div::devLog( 'class model_document sql clause', 'doc_db', 0, array($select, $from, $where, $groupBy, $orderBy, $limit ) );
+			t3lib_div::devLog('class model_document sql clause', 'doc_db', 0, array($select, $from, $where, $groupBy, $orderBy, $limit));
 		}
 		
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
@@ -145,32 +144,32 @@ class tx_docdb_model_document
 		
 		$rows = array();
 		///$k = 0;
-		while( ( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) ) ) {
+		while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 			
-			if( $row['owner'] === 'zzz_none' ) { $row['owner'] = ''; }
-			if( $row['type'] === 'zzz_none' ) { $row['type'] = ''; }
-			if( $row['status'] === 'zzz_none' ) { $row['status'] = ''; }
+			if($row['owner'] === 'zzz_none') { $row['owner'] = ''; }
+			if($row['type'] === 'zzz_none') { $row['type'] = ''; }
+			if($row['status'] === 'zzz_none') { $row['status'] = ''; }
 			
-			if( $row['title'] ) {
+			if($row['title']) {
 
-				$addParams = array_merge( array( 'parameter' => $row['uid'], 'returnLast' => 'url' ), $this->_langParam );
-				$row['docPageURL'] = '/' . $this->cObj->typoLink( '', $addParams );
+				$addParams = array_merge(array('parameter' => $row['uid'], 'returnLast' => 'url'), $this->_langParam);
+				$row['docPageURL'] = '/' . $this->cObj->typoLink('', $addParams);
 			}
 
             // related descriptors if any
-            $row['dscr'] = $row['dscr'] ? $this->_getRelatedDescriptors( $row['uid'] ) : array();
+            $row['dscr'] = $row['dscr'] ? $this->_getRelatedDescriptors($row['uid']) : array();
             
             // related pages if any
-            $row['pages'] = $row['pages'] ? $this->_getRelatedPages( $row['uid'] ) : array();
+            $row['pages'] = $row['pages'] ? $this->_getRelatedPages($row['uid']) : array();
             
             /*
-			if( $row['flex'] ) {
+			if($row['flex']) {
 				
-				$ttC = $this->_getContentPreview( $row['flex'], 'field_content' );
+				$ttC = $this->_getContentPreview($row['flex'], 'field_content');
 				
-				unset( $row['flex'] );
+				unset($row['flex']);
 				$row['prevH'] = $ttC['header'];
-				$row['prevC'] = $this->_RTEcssText( $ttC['bodytext'] );
+				$row['prevC'] = $this->_RTEcssText($ttC['bodytext']);
 				
 			}
 			*/
@@ -178,9 +177,9 @@ class tx_docdb_model_document
 			$rows[] = $row;
 		}
 		
-		$GLOBALS['TYPO3_DB']->sql_free_result( $res );
+		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 		
-		$totalCount = tx_docdb_div::exec_SELECTcountRows( 'DISTINCT(p.uid)', $from, $where );
+		$totalCount = tx_docdb_div::exec_SELECTcountRows('DISTINCT(p.uid)', $from, $where);
 
 		$out = array(
 			'success'    => TRUE,
@@ -195,7 +194,7 @@ class tx_docdb_model_document
      * Set the sql clause from, where, sort, order, limit
      * @param object $params
      */
-	protected function _setSqlClause( $params )
+	protected function _setSqlClause($params)
 	{
 
 		// store query
@@ -203,39 +202,39 @@ class tx_docdb_model_document
 		$where = '';
 		
 		// paging
-		$start     = isset( $params->start ) ? (int)$params->start : 0;
-		$count     = isset( $params->limit ) ? (int)$params->limit : 10;
+		$start     = isset($params->start) ? (int)$params->start : 0;
+		$count     = isset($params->limit) ? (int)$params->limit : 10;
 		// group sorting order
-		$gSort     = isset( $params->groupBy ) ? $params->groupBy : '';
-		$gDir      = isset( $params->groupDir ) ? $params->groupDir : 'ASC';
+		$gSort     = isset($params->groupBy) ? $params->groupBy : '';
+		$gDir      = isset($params->groupDir) ? $params->groupDir : 'ASC';
 		// rows sorting order
-		$sort      = isset( $params->sort ) ? $params->sort : 'date';
-		$dir       = isset( $params->dir ) ? $params->dir : 'DESC';
+		$sort      = isset($params->sort) ? $params->sort : 'date';
+		$dir       = isset($params->dir) ? $params->dir : 'DESC';
 		// doc def selection
-		$ownerIds  = isset( $params->owner ) && $params->owner !== '0' ? $params->owner : '';
-		$typeIds   = isset( $params->type ) && $params->type !== '0' ? $params->type : '';
-		$statusIds = isset( $params->status ) && $params->status !== '0' ? $params->status : '';
+		$ownerIds  = isset($params->owner) && $params->owner !== '0' ? $params->owner : '';
+		$typeIds   = isset($params->type) && $params->type !== '0' ? $params->type : '';
+		$statusIds = isset($params->status) && $params->status !== '0' ? $params->status : '';
 		// decriptors selection
-		$dscrIds     = isset( $params->selNodes ) && !empty($params->selNodes) ? t3lib_div::intExplode(',', $params->selNodes) : '';
-		$dscrSelType = isset( $params->selType ) ? $params->selType : 'AND';
+		$dscrIds     = isset($params->selNodes) && !empty($params->selNodes) ? t3lib_div::intExplode(',', $params->selNodes) : '';
+		$dscrSelType = isset($params->selType) ? $params->selType : 'AND';
 		
 		// substitution
-        if( $sort === 'date' ) {
+        if($sort === 'date') {
 
             $sort = 'p.lastUpdated';
 
-        } else if( $sort === 'dkey' ) {
+        } else if($sort === 'dkey') {
 
             $sort = 'tx_docdb_doc_key';
         }
 
-        if( $gSort === 'date') {
+        if($gSort === 'date') {
 
             $gSort = 'p.lastUpdated';
         }
 
 
-		if( isset( $params->filter ) ) {
+		if(isset($params->filter)) {
             
             // map search field
             $fieldMap = array(
@@ -244,36 +243,36 @@ class tx_docdb_model_document
                 'type'   => 't.type',
                 'status' => 's.status',
                 'date'   => 'p.lastUpdated'
-            );
+           );
 
 
-        $filters = json_decode( $params->filter );
+        $filters = json_decode($params->filter);
             
             // buid query from grid filter field -> value
-            if( is_array( $filters ) ) {
+            if(is_array($filters)) {
 
-                foreach( $filters as $filter ) {
+                foreach($filters as $filter) {
 
-                    switch( $filter->type ) {
+                    switch($filter->type) {
 
                         case 'string' :
-                            $where .= ' AND ' . $fieldMap[ $filter->field ] . ' LIKE \'%' . $filter->value .'%\'';
+                            $where .= ' AND ' . $fieldMap[$filter->field] . ' LIKE \'%' . $filter->value .'%\'';
                             break;
 
                         case 'date' :
                             // buid tstamp
-                            $sDate = preg_split( '/\//', $filter->value );
-                            $sTime = mktime( 0, 0, 0 , $sDate[ 0 ], $sDate[ 1 ], $sDate[ 2 ] );
+                            $sDate = preg_split('/\//', $filter->value);
+                            $sTime = mktime(0, 0, 0 , $sDate[0], $sDate[1], $sDate[2]);
 
-                            switch( $filter->comparison ) {
+                            switch($filter->comparison) {
 
-                                case 'eq' : $where .= ' AND ' . $fieldMap[ $filter->field ] .' > \'' . $sTime . '\' AND ' . $fieldMap[ $filter->field ] .' < \'' . ( $sTime + 86400 ) . '\'';
+                                case 'eq' : $where .= ' AND ' . $fieldMap[$filter->field] .' > \'' . $sTime . '\' AND ' . $fieldMap[$filter->field] .' < \'' . ($sTime + 86400) . '\'';
                                 break;
 
-                                case 'lt' : $where .= ' AND ' . $fieldMap[ $filter->field ] . ' < \''. ( $sTime + 86400 ) .'\'';
+                                case 'lt' : $where .= ' AND ' . $fieldMap[$filter->field] . ' < \''. ($sTime + 86400) .'\'';
                                 break;
 
-                                case 'gt' : $where .= ' AND ' . $fieldMap[ $filter->field ] . ' > \''. $sTime .'\'';
+                                case 'gt' : $where .= ' AND ' . $fieldMap[$filter->field] . ' > \''. $sTime .'\'';
                                 break;
                             }
                         break;
@@ -285,11 +284,11 @@ class tx_docdb_model_document
         
         $from  .= 'pages p';
 
-		if( isset($dscrIds) && is_array($dscrIds) ) {
+		if(isset($dscrIds) && is_array($dscrIds)) {
 			
-			if( $dscrSelType === 'AND' && count($dscrIds) > 1 ) {
+			if($dscrSelType === 'AND' && count($dscrIds) > 1) {
 
-				$where  .= ' AND p.uid IN (' . $this->_getDocIdWithAtLeast2Descr( $dscrIds ) . ')';
+				$where  .= ' AND p.uid IN (' . $this->_getDocIdWithAtLeast2Descr($dscrIds) . ')';
 
 			} else {
                 $from  .= ' INNER JOIN tx_docdb_pages_doc_descriptor_mm mm ON p.uid = mm.uid_local';
@@ -304,36 +303,36 @@ class tx_docdb_model_document
         $from  .= ' INNER JOIN tx_docdb_type t ON p.tx_docdb_doc_type = t.uid';
         $from  .= ' INNER JOIN tx_docdb_status s ON p.tx_docdb_doc_status = s.uid';
 		
-		if( $ownerIds && $typeIds && $statusIds ) {
+		if($ownerIds && $typeIds && $statusIds) {
 			
 			$where .= ' AND (p.tx_docdb_doc_owner IN(' . $ownerIds . ')';
 			$where .= ' AND p.tx_docdb_doc_type IN(' . $typeIds . ')';
 			$where .= ' AND p.tx_docdb_doc_status IN(' . $statusIds . '))';
 			
-		} else if( $ownerIds && $typeIds ) {
+		} else if($ownerIds && $typeIds) {
 			
 			$where .= ' AND (p.tx_docdb_doc_owner IN(' . $ownerIds . ')';
 			$where .= ' AND p.tx_docdb_doc_type IN(' . $typeIds . '))';
 			
-		} else if( $typeIds && $statusIds ) {
+		} else if($typeIds && $statusIds) {
 			
 			$where .= ' AND (p.tx_docdb_doc_type IN(' . $typeIds . ')';
 			$where .= ' AND p.tx_docdb_doc_status IN(' . $statusIds . '))';
 			
-		} else if( $ownerIds && $statusIds ) {
+		} else if($ownerIds && $statusIds) {
 			
 			$where .= ' AND (p.tx_docdb_doc_owner IN(' . $ownerIds . ')';
 			$where .= ' AND p.tx_docdb_doc_status IN(' . $statusIds . '))';
 			
-		} else if( $ownerIds ) {
+		} else if($ownerIds) {
 			
 			$where .= ' AND (p.tx_docdb_doc_owner IN(' . $ownerIds . '))';
 			
-		} else if( $typeIds ) {
+		} else if($typeIds) {
 			
 			$where .= ' AND (p.tx_docdb_doc_type IN(' . $typeIds . '))';
 			
-		} else if( $statusIds ) {
+		} else if($statusIds) {
 			
 			$where .= ' AND (p.tx_docdb_doc_status IN(' . $statusIds . '))';
 		}
@@ -344,7 +343,7 @@ class tx_docdb_model_document
 		
 		$this->_sqlClause['where'] = $where;
 		
-		if( $gSort ) {
+		if($gSort) {
 			
 			$this->_sqlClause['order'] = $gSort . ' ' . $gDir . ',' . $sort . ' ' . $dir;
 		
@@ -355,11 +354,11 @@ class tx_docdb_model_document
 		
 		$this->_sqlClause['limit'] = $start . ',' . $count;
 		
-		unset( $from, $where, $gSort, $gDir, $sort, $dir, $start, $count );
+		unset($from, $where, $gSort, $gDir, $sort, $dir, $start, $count);
 	}
 
 
-    protected function _getDocIdWithAtLeast2Descr( array $dscrIds ) {
+    protected function _getDocIdWithAtLeast2Descr(array $dscrIds) {
 
         $rows = array();
         
@@ -370,15 +369,15 @@ class tx_docdb_model_document
             'm.uid_foreign IN(' . implode(',', $dscrIds) . ')',
             'm.uid_local ' .
             'HAVING COUNT(m.uid_local)> 1 '
-        );
+       );
 
-        while( ( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) ) ) {
+        while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 
             $rows[] = $row['pageId'];
         }
-        $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        $GLOBALS['TYPO3_DB']->sql_free_result($res);
 
-        if( count($rows) ) {
+        if(count($rows)) {
 
             return implode(',', $rows);
         }
@@ -387,7 +386,7 @@ class tx_docdb_model_document
     }
     
 
-    protected function _getRelatedDescriptors( $pageId ) {
+    protected function _getRelatedDescriptors($pageId) {
 
         // store result array
         $rows = array();
@@ -397,13 +396,13 @@ class tx_docdb_model_document
             'pages',
             'tx_docdb_pages_doc_descriptor_mm',
             'tx_docdb_descriptor',
-            'AND pages.uid=' . $pageId . ' ' . $this->cObj->enableFields( 'tx_docdb_descriptor' ),
+            'AND pages.uid=' . $pageId . ' ' . $this->cObj->enableFields('tx_docdb_descriptor'),
             'uid',
             'title',
             '20'
-        );
+       );
 
-        while( ( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) ) ) {
+        while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 
             $dscrObj = new stdClass();
             $dscrObj->did    = $row['uid'];
@@ -411,14 +410,14 @@ class tx_docdb_model_document
 
             $rows[] = $dscrObj;
         }
-        $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        $GLOBALS['TYPO3_DB']->sql_free_result($res);
         
-        //print_r( $rows ); exit;
+        //print_r($rows); exit;
         return $rows;
     }
 
 
-    protected function _getCurrentDescritors( $dscrId ) {
+    protected function _getCurrentDescritors($dscrId) {
 
         // store result array
         $rows = array();
@@ -426,14 +425,14 @@ class tx_docdb_model_document
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
             'uid,title',
             'tx_docdb_descriptor',
-            'uid IN( SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
-            $this->cObj->enableFields( 'pages' ),
+            'uid IN(SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
+            $this->cObj->enableFields('pages'),
             'uid',
             'title',
             '20'
-        );
+       );
 
-        while( ( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) ) ) {
+        while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 
             $dscrObj = new stdClass();
             $dscrObj->did    = $row['uid'];
@@ -441,14 +440,14 @@ class tx_docdb_model_document
 
             $rows[] = $dscrObj;
         }
-        $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        $GLOBALS['TYPO3_DB']->sql_free_result($res);
         
-        //print_r( $rows ); exit;
+        //print_r($rows); exit;
         return $rows;
     }
 
 
-    protected function _getRelatedPages( $pageId ) {
+    protected function _getRelatedPages($pageId) {
 
         // store result array
         $rows = array();
@@ -456,27 +455,27 @@ class tx_docdb_model_document
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
             'uid,title,subtitle,abstract',
             'pages',
-            'uid IN( SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
-            $this->cObj->enableFields( 'pages' ),
+            'uid IN(SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
+            $this->cObj->enableFields('pages'),
             'uid',
             'title',
             '20'
-        );
+       );
 
-        while( ( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) ) ) {
+        while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 
-            $addParams = array_merge( array( 'parameter' => $row['uid'], 'returnLast' => 'url' ), $this->_langParam );
+            $addParams = array_merge(array('parameter' => $row['uid'], 'returnLast' => 'url'), $this->_langParam);
 
             $relPageObj = new stdClass();
-            $relPageObj->pUrl   = '/' . $this->cObj->typoLink( '', $addParams );
+            $relPageObj->pUrl   = '/' . $this->cObj->typoLink('', $addParams);
             $relPageObj->pTitle = $row['title'];
-            $relPageObj->aTitle = $row['abstract'] ? $row['abstract'] : ( $row['subtitle'] ? $row['subtitle'] :  $row['title'] );
+            $relPageObj->aTitle = $row['abstract'] ? $row['abstract'] : ($row['subtitle'] ? $row['subtitle'] :  $row['title']);
 
             $rows[] = $relPageObj;
         }
 
-        $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        unset( $row );
+        $GLOBALS['TYPO3_DB']->sql_free_result($res);
+        unset($row);
         
         return $rows;
     }
@@ -489,13 +488,13 @@ class tx_docdb_model_document
      * @param <type> $contentDsFielName
      * @return <type>
      */
-	private function _getContentPreview( $tvFlex, $contentDsFielName='' ) {
+	private function _getContentPreview($tvFlex, $contentDsFielName='') {
 		
 		
-		$tvDS = t3lib_div::xml2array( $tvFlex );
-//		return print_r( $tvDS, TRUE );
+		$tvDS = t3lib_div::xml2array($tvFlex);
+//		return print_r($tvDS, TRUE);
 		
-		if( isset( $tvDS['data']['sDEF']['lDEF'][$contentDsFielName] ) ) {
+		if(isset($tvDS['data']['sDEF']['lDEF'][$contentDsFielName])) {
 			
 			$ttContentUids = $tvDS['data']['sDEF']['lDEF'][$contentDsFielName]['vDEF'];
 			
@@ -510,16 +509,16 @@ class tx_docdb_model_document
 			'1'
 		);
 		
-		return $row[ 0 ]; //print_r( $row[ 0 ], TRUE );;
+		return $row[0]; //print_r($row[0], TRUE);;
 		
 	}
 	
 	/**
      *
      */
-    private function _setAddLangParam( $params ) {
+    private function _setAddLangParam($params) {
 
-        if( isset( $params->lang ) ) {
+        if(isset($params->lang)) {
 
             $this->_langParam['additionalParams'] = '&L=' . $params->lang;
         }
@@ -531,14 +530,14 @@ class tx_docdb_model_document
 	* @param string $str
 	* @return RTE parsed string
 	*/
-	private function _RTEcssText( $str ) {
+	private function _RTEcssText($str) {
 	
 		// use default config
 		$parseFunc =& $GLOBALS['TSFE']->tmpl->setup['lib.']['parseFunc_RTE.'];
 		
-		if( is_array( $parseFunc ) ) {
+		if(is_array($parseFunc)) {
 		
-			$str = $this->cObj->parseFunc( $str, $parseFunc );
+			$str = $this->cObj->parseFunc($str, $parseFunc);
 		
 		}
 		
@@ -552,7 +551,7 @@ class tx_docdb_model_document
 
 
 // avoid notice
-if( defined( 'TYPO3_MODE' ) && isset( $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_document.php'] ) ) {
+if(defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_document.php'])) {
 
 // XCLASS inclusion, please do not modify the 3 lines below, otherwise the extmanager will not be happy 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/doc_db/classes/model/class.tx_docdb_model_document.php']) {
