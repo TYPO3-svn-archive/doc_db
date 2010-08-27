@@ -1,12 +1,12 @@
 <?php
 if (!defined ('TYPO3_MODE')) die ('Access denied.');
 
-$TCA[ 'tx_docdb_type' ]  = array(
-	'ctrl' => $TCA[ 'tx_docdb_type' ][ 'ctrl' ],
+$TCA['tx_docdb_type']  = array(
+	'ctrl' => $TCA['tx_docdb_type']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => 'hidden,type'
 	),
-	'feInterface' => $TCA[ 'tx_docdb_type' ][ 'feInterface' ],
+	'feInterface' => $TCA['tx_docdb_type']['feInterface'],
 	'columns' => array(
 		'hidden' => array(
 			'exclude' => 1,
@@ -28,21 +28,21 @@ $TCA[ 'tx_docdb_type' ]  = array(
 		),
 	),
 	'types' => array(
-		'0' => array('showitem' => 'type;;;;1-1-1' )
+		'0' => array('showitem' => 'type;;;;1-1-1')
 	),
 	'palettes' => array(
-		'1' => array( 'showitem' => 'hidden' )
+		'1' => array('showitem' => 'hidden')
 	)
 );
 
 
 
-$TCA[ 'tx_docdb_status' ] = array(
-	'ctrl' => $TCA[ 'tx_docdb_status' ][ 'ctrl' ],
+$TCA['tx_docdb_status'] = array(
+	'ctrl' => $TCA['tx_docdb_status']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => "hidden,status"
 	),
-	'feInterface' => $TCA[ 'tx_docdb_status' ][ 'feInterface' ],
+	'feInterface' => $TCA['tx_docdb_status']['feInterface'],
 	'columns' => array(
 		'hidden' => array(
 			'exclude' => 1,
@@ -71,12 +71,12 @@ $TCA[ 'tx_docdb_status' ] = array(
 	)
 );
 
-$TCA[ 'tx_docdb_owner' ] = array(
-	'ctrl' => $TCA[ 'tx_docdb_owner' ][ 'ctrl' ],
+$TCA['tx_docdb_owner'] = array(
+	'ctrl' => $TCA['tx_docdb_owner']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => "hidden,owner"
 	),
-	'feInterface' => $TCA[ 'tx_docdb_owner' ][ 'feInterface' ],
+	'feInterface' => $TCA['tx_docdb_owner']['feInterface'],
 	'columns' => array(
 		'hidden' => array(
 			'exclude' => 1,
@@ -98,19 +98,19 @@ $TCA[ 'tx_docdb_owner' ] = array(
 		),
 	),
 	'types' => array(
-		'0' => array( 'showitem' => 'owner;;;;1-1-1' )
+		'0' => array('showitem' => 'owner;;;;1-1-1')
 	),
 	'palettes' => array(
-		'1' => array( 'showitem' => 'hidden' )
+		'1' => array('showitem' => 'hidden')
 	)
 );
 
-$TCA[ 'tx_docdb_descriptor' ] = array(
-	'ctrl' => $TCA[ 'tx_docdb_descriptor' ][ 'ctrl' ],
+$TCA['tx_docdb_descriptor'] = array(
+	'ctrl' => $TCA['tx_docdb_descriptor']['ctrl'],
 	'interface' => array(
 		'showRecordFieldList' => "hidden,title,dscr_pid,dscr_related"
 	),
-	'feInterface' => $TCA[ 'tx_docdb_descriptor' ][ 'feInterface' ],
+	'feInterface' => $TCA['tx_docdb_descriptor']['feInterface'],
 	'columns' => array(
 		'hidden' => array(
 			'exclude' => 1,
@@ -205,7 +205,7 @@ $TCA[ 'tx_docdb_descriptor' ] = array(
 		)
 	),
 	'palettes' => array(
-		'1' => array( 'showitem' => 'hidden' )
+		'1' => array('showitem' => 'hidden')
 	)
 );
 ?>

@@ -39,8 +39,8 @@
 require_once(PATH_tslib . 'class.tslib_pibase.php');
 require_once(t3lib_extMgm::extPath('doc_db') . 'classes/class.tx_docdb_div.php');
 
-class tx_docdb_pi1 extends tslib_pibase
-{
+class tx_docdb_pi1 extends tslib_pibase {
+    
 	/**
 	 * local : site relative path to ext rootDir
 	 *
@@ -91,7 +91,7 @@ class tx_docdb_pi1 extends tslib_pibase
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The		content that is displayed on the website
 	 */
-	public function main($content, &$conf) {
+	public function main($content, $conf) {
 
 		// Local extjs conf array
 		$_extjsConf = array();
@@ -117,7 +117,7 @@ class tx_docdb_pi1 extends tslib_pibase
 
             return $this->pi_wrapInBaseClass(
                 '<b>' . $this->pi_getLL('errorMsgTsNotInc', 'Static TypoScript Template not included or if it is, try to clear cache') . '</b>'
-           );
+            );
         }
 
         // resolv resources path
@@ -138,7 +138,7 @@ class tx_docdb_pi1 extends tslib_pibase
                 'extensionId' => $this->cObj->data['uid'],
                 'prefixId'    => $this->prefixId,
                 //'themes.'     => array('wcc')
-           );
+        );
 
             if($this->_conf['extJS.']['production']) {
 
@@ -146,7 +146,7 @@ class tx_docdb_pi1 extends tslib_pibase
 
                     // all js files needed for app, cat and minified
                     $this->_siteRelPath . 'resources/js/DocDb-lib-min.js'
-               );
+                );
 
             } else {
 
@@ -170,7 +170,7 @@ class tx_docdb_pi1 extends tslib_pibase
                     $this->_siteRelPath . 'resources/js/DocDb.Descriptors.js',
 
                     $this->_siteRelPath . 'resources/js/DocDb.GridResults.js',
-               );
+                );
             }
 
             if($this->_getViewMode() === 'FE') {
@@ -187,9 +187,9 @@ class tx_docdb_pi1 extends tslib_pibase
                     $_extjsConf += array(
                         'adapter' => 'merged',
                         'css.'    => array(
-                                $this->_siteRelPath . 'resources/css/default-min.css'
-                       )
-                   );
+                            $this->_siteRelPath . 'resources/css/default-min.css'
+                        )
+                    );
 
                     // add global js DoDb.app minidied contain  DocDb.SearchForm.js and DocDb.searchMainApp.js
                     array_push($_extjsConf['js.'],
@@ -200,13 +200,13 @@ class tx_docdb_pi1 extends tslib_pibase
 
                     $_extjsConf['css.'] = array(
                         $this->_siteRelPath . 'resources/css/default.css'
-                   );
+                    );
 
                     // add global js DoDb.app
                     array_push($_extjsConf['js.'],
                         $this->_siteRelPath . 'resources/js/DocDb.SearchForm.js',
                         $this->_siteRelPath . 'resources/js/DocDb.searchMainApp.js'
-                   );
+                    );
                 } // eo else production
 
                 // get only grouping properties from gridParams
@@ -223,7 +223,7 @@ class tx_docdb_pi1 extends tslib_pibase
                         'lang.'     => array('sort',
                             'prefix' => '',
                             'LLfile' => $this->_siteRelPath . 'resources/lang/locallang_extjs.docdb.xml',
-                       ),
+                        ),
                         'statvar.' => array(
                             'RENDER_TO'      => $this->_conf['extjs-ct'],
                             'PAGESIZE'       => (int)$this->_conf['ff']->pageSize,
@@ -236,10 +236,10 @@ class tx_docdb_pi1 extends tslib_pibase
                             'treeHeight'     => $this->_conf['ff']->treeHeight,
                             'formHeight'     => (
                                 (int)$this->_conf['ff']->mSelHeight + (int)$this->_conf['ff']->treeHeight->min
-                           )
-                       )
-                   )
-               ); // eo $_extjsConf['statvar.']
+                            )
+                        )
+                    )
+                ); // eo $_extjsConf['statvar.']
 
                 $divMaskH = (int)$this->_conf['ff']->mSelHeight + (int)$this->_conf['ff']->treeHeight->min;
                 //$divMaskH = $this->_conf['ff']->gridHeight;
@@ -256,25 +256,25 @@ class tx_docdb_pi1 extends tslib_pibase
                     $_extjsConf += array(
                         'adapter' => 'merged',
                         'css.'    => array(
-                                $this->_siteRelPath . 'resources/css/default-min.css'
-                       )
-                   );
+                            $this->_siteRelPath . 'resources/css/default-min.css'
+                        )
+                    );
 
                     // add global js DoDb.app minidied contain DocDb.gridMainApp
                     array_push($_extjsConf['js.'],
                         $this->_siteRelPath . 'resources/js/DocDb.gridMainApp-prod-min.js'
-                   );
+                    );
 
                 } else {
 
                     $_extjsConf['css.'] = array(
                         $this->_siteRelPath . 'resources/css/default.css'
-                   );
+                    );
 
                     // add global js DoDb.app
                     array_push($_extjsConf['js.'],
                         $this->_siteRelPath . 'resources/js/DocDb.gridMainApp.js'
-                   );
+                    );
                 }
 
                 $this->_setToInt($this->_conf['ff']->gridParam, array('groupBy', 'groupDir', 'field', 'direction', 'selType', 'owner', 'type', 'status', 'selNodes','dF', 'colsW'));
@@ -289,7 +289,7 @@ class tx_docdb_pi1 extends tslib_pibase
                         'lang.'     => array(
                             'prefix' => '',
                             'LLfile' => $this->_siteRelPath . 'resources/lang/locallang_extjs.docdb.gridStandalone.xml',
-                       ),
+                        ),
                         'statvar.' => array(
                             'RENDER_TO'      => $this->_conf['extjs-ct'],
                             'PAGESIZE'       => (int)$this->_conf['ff']->pageSize,
@@ -297,9 +297,9 @@ class tx_docdb_pi1 extends tslib_pibase
                             'mainPWidth'     => (int)$this->_conf['ff']->mainPWidth,
                             'gridHeight'     => (int)$this->_conf['ff']->gridHeight,
                             'docDetail'      => $this->_conf['ff']->docDetail,
-                       )
-                   )
-               ); // eo $_extjsConf['statvar.']
+                        )
+                    )
+                ); // eo $_extjsConf['statvar.']
 
                 $divMaskH = $this->_conf['ff']->gridHeight;
 
@@ -360,7 +360,7 @@ class tx_docdb_pi1 extends tslib_pibase
                 $tempConfig->$key = $this->_mergeConfFlex(
                     $value,
                     $flexRes
-               );
+                );
 
             } else {
 
@@ -372,7 +372,7 @@ class tx_docdb_pi1 extends tslib_pibase
                     $flexRes,
                     $flexInfo[1],
                     $flexInfo[0]
-               );
+                );
             }
         }
 
@@ -421,7 +421,7 @@ class tx_docdb_pi1 extends tslib_pibase
         $this->_conf['ff'] = $this->_mergeConfFlex(
             $flexConf,
             $this->_piFform
-       );
+        );
 
         if(! $this->_conf['ff']->gridParam->grouping) {
 
