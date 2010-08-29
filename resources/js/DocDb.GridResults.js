@@ -61,6 +61,13 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 														'<p>- <a href="{pUrl}" title="{aTitle}">{pTitle}</a></p>',
 												'</tpl></div><hr class="hr4tmpl" />',
 										'</tpl>',
+                                        '<tpl if="dAbs.length &gt;1">',
+												'<div><b>' + dll.dAbstract + ':</b>',
+														'<p>{dAbs}</p>',
+												'</div><hr class="hr4tmpl" />',
+										'</tpl>',
+
+
 								'</div>',
 								{
 										cAr : function( array ) {
@@ -154,7 +161,9 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 												{name:'type', type:'string'},
 												{name:'status',type:'string'},
 												{name:'dscr'},
-												{name:'pages'}
+												{name:'pages'},
+                                                // abstract
+                                                {name: 'dAbs', type: 'string'}
 												//           ,{name:'prevH',type:'string'}
 												//           ,{name:'prevC',type:'string'}
 										]

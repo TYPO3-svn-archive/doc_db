@@ -111,7 +111,7 @@ class tx_docdb_model_document {
 		// store
 		$rows = array();
 		
-		$select  = 'p.uid, p.title, p.lastUpdated AS date, p.tx_docdb_doc_descriptor AS dscr,p.tx_docdb_doc_related_pages pages,';
+		$select  = 'p.uid, p.title, p.lastUpdated AS date, p.abstract AS dAbs, p.tx_docdb_doc_descriptor AS dscr,p.tx_docdb_doc_related_pages pages,';
 		$select .= 'p.tx_docdb_doc_key AS dkey, o.owner, t.type, s.status';
 
         //  p.tx_templavoila_flex AS flex,

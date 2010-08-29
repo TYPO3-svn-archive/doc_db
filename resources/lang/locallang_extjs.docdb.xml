@@ -46,6 +46,7 @@
 			<label index="docDetail.relatedDscr_pl">Related descriptors</label>
 			<label index="docDetail.relatedPage">Related page</label>
 			<label index="docDetail.relatedPage_pl">Related pages</label>
+            <label index="docDetail.dAbstract">Abstract</label>
 			<label index="docDetail.title">Title:</label>
 			<label index="docDetail.owner">Owner:</label>
 			<label index="docDetail.type">Type:</label>
@@ -97,6 +98,7 @@
 			<label index="docDetail.relatedDscr_pl">Related descriptors</label>
 			<label index="docDetail.relatedPage">Related page</label>
 			<label index="docDetail.relatedPage_pl">Related pages</label>
+            <label index="docDetail.dAbstract">Zusammenfassung</label>
 			<label index="docDetail.title">Titel:</label>
 			<label index="docDetail.owner">Eigentümer:</label>
 			<label index="docDetail.type">Sorte:</label>
@@ -148,6 +150,7 @@
 			<label index="docDetail.relatedDscr_pl">Déscripteurs relatifs</label>
 			<label index="docDetail.relatedPage">Page relative</label>
 			<label index="docDetail.relatedPage_pl">Pages relatives</label>
+            <label index="docDetail.dAbstract">Résumé</label>
 			<label index="docDetail.title">Titre:</label>
 			<label index="docDetail.owner">Propriétaire:</label>
 			<label index="docDetail.type">Type:</label>
@@ -199,6 +202,7 @@
 			<label index="docDetail.relatedDscr_pl">Descriptores relacionados</label>
 			<label index="docDetail.relatedPage">Página relacionados</label>
 			<label index="docDetail.relatedPage_pl">Páginas relacionadas</label>
+            <label index="docDetail.dAbstract">Extracto</label>
 			<label index="docDetail.title">Título:</label>
 			<label index="docDetail.owner">Propietario:</label>
 			<label index="docDetail.type">Typo:</label>
