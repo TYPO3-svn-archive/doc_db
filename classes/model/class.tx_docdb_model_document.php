@@ -160,7 +160,7 @@ class tx_docdb_model_document {
 
 //                $row['docPageURL'] = '/' . $this->_cObj->typoLink('', $addParams);
 
-                t3lib_div::devLog('test', 'doc_db', 0, array( $row['uid'], $row['docPageURL']));
+//                t3lib_div::devLog('test', 'doc_db', 0, array( $row['uid'], $row['docPageURL']));
 
 			}
 

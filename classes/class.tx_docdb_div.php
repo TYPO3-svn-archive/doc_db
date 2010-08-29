@@ -179,7 +179,7 @@ class tx_docdb_div
                 $urlParts = parse_url($url);
                 $urlParts['delimiter'] = '://';
 
-                t3lib_div::devLog('$urlParts', 'doc_db', 0, array( $urlParts));
+//                t3lib_div::devLog('$urlParts', 'doc_db', 0, array( $urlParts));
 
 				// Set scheme and host if not yet part of the URL:
 				if (empty($urlParts['host'])) {
