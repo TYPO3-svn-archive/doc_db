@@ -36,9 +36,6 @@
  */
 
 
-// tslib_cObj
-require_once(PATH_tslib . 'class.tslib_content.php');
-
 // helpers
 require_once(t3lib_extMgm::extPath('doc_db') . 'classes/class.tx_docdb_div.php');
 
@@ -50,7 +47,7 @@ class tx_docdb_model_document {
 	 * 
 	 * @var object
 	 */ 
-	protected $cObj     = NULL;
+	protected $_cObj     = NULL;
 	
 	/**
 	 * devLog debug
@@ -86,12 +83,14 @@ class tx_docdb_model_document {
 
 		if(isset($GLOBALS['TSFE']->cObj) && is_object($GLOBALS['TSFE']->cObj)) {
 		
-			$this->cObj = $GLOBALS['TSFE']->cObj;
+			$this->_cObj = $GLOBALS['TSFE']->cObj;
 		
-		} elseif(!is_object($this->cObj)) {
-		
+		} elseif(!is_object($this->_cObj)) {
+
+            // tslib_cObj
+            require_once(PATH_tslib . 'class.tslib_content.php');
 			// Creates a new instance of tslib_cObj
-			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->_cObj = t3lib_div::makeInstance('tslib_cObj');
 		}
 	}
 	
@@ -153,7 +152,16 @@ class tx_docdb_model_document {
 			if($row['title']) {
 
 				$addParams = array_merge(array('parameter' => $row['uid'], 'returnLast' => 'url'), $this->_langParam);
-				$row['docPageURL'] = '/' . $this->cObj->typoLink('', $addParams);
+				$url = $this->_cObj->typoLink('', $addParams);
+
+                $addParams['forceAbsoluteUrl'] = '1';
+
+                $row['docPageURL'] = tx_docdb_div::forceAbsoluteUrl($url, $addParams );
+
+//                $row['docPageURL'] = '/' . $this->_cObj->typoLink('', $addParams);
+
+                t3lib_div::devLog('test', 'doc_db', 0, array( $row['uid'], $row['docPageURL']));
+
 			}
 
             // related descriptors if any
@@ -396,7 +404,7 @@ class tx_docdb_model_document {
             'pages',
             'tx_docdb_pages_doc_descriptor_mm',
             'tx_docdb_descriptor',
-            'AND pages.uid=' . $pageId . ' ' . $this->cObj->enableFields('tx_docdb_descriptor'),
+            'AND pages.uid=' . $pageId . ' ' . $this->_cObj->enableFields('tx_docdb_descriptor'),
             'uid',
             'title',
             '20'
@@ -426,7 +434,7 @@ class tx_docdb_model_document {
             'uid,title',
             'tx_docdb_descriptor',
             'uid IN(SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
-            $this->cObj->enableFields('pages'),
+            $this->_cObj->enableFields('pages'),
             'uid',
             'title',
             '20'
@@ -456,7 +464,7 @@ class tx_docdb_model_document {
             'uid,title,subtitle,abstract',
             'pages',
             'uid IN(SELECT uid_foreign FROM tx_docdb_pages_doc_related_pages_mm where tx_docdb_pages_doc_related_pages_mm.uid_local=' . $pageId . ') ' .
-            $this->cObj->enableFields('pages'),
+            $this->_cObj->enableFields('pages'),
             'uid',
             'title',
             '20'
@@ -467,7 +475,7 @@ class tx_docdb_model_document {
             $addParams = array_merge(array('parameter' => $row['uid'], 'returnLast' => 'url'), $this->_langParam);
 
             $relPageObj = new stdClass();
-            $relPageObj->pUrl   = '/' . $this->cObj->typoLink('', $addParams);
+            $relPageObj->pUrl   = '/' . $this->_cObj->typoLink('', $addParams);
             $relPageObj->pTitle = $row['title'];
             $relPageObj->aTitle = $row['abstract'] ? $row['abstract'] : ($row['subtitle'] ? $row['subtitle'] :  $row['title']);
 
@@ -537,7 +545,7 @@ class tx_docdb_model_document {
 		
 		if(is_array($parseFunc)) {
 		
-			$str = $this->cObj->parseFunc($str, $parseFunc);
+			$str = $this->_cObj->parseFunc($str, $parseFunc);
 		
 		}
 		

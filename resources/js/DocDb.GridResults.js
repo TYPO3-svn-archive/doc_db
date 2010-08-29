@@ -187,7 +187,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 										width     : this.colsW[ 0 ],
 										sortable  : true,
 										dataIndex : 'title',
-										renderer  : {fn: titleRenderer, scope: this }
+										renderer  : {fn: titleRenderer, scope: this}
 										//,css       : 'white-space:normal !important;'
 								},{
 										header    : gll.header.date,
@@ -202,7 +202,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 										width     : this.colsW[ 2 ],
 										sortable  : true,
 										dataIndex : 'owner',
-										renderer  : function( value, id, record ) { return '<div style="white-space:normal !important;">' + value + '</div>';}
+										renderer  : function( value, id, record ) {return '<div style="white-space:normal !important;">' + value + '</div>';}
 								},{
 										header    : gll.header.key,
 										width     : this.colsW[ 3 ],
@@ -215,7 +215,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 										fixed     : true,
 										sortable  : true,
 										dataIndex : 'type',
-										renderer  : function( value, id, record ) { return '<div style="white-space:normal !important;">' + value + '</div>';}
+										renderer  : function( value, id, record ) {return '<div style="white-space:normal !important;">' + value + '</div>';}
 								},{
 										header    : gll.header.status,
 										width     : this.colsW[ 5 ],
@@ -332,7 +332,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 
 		this.win.show(
 				a,
-				function( ) { this.win.center( ); },
+				function( ) {this.win.center( );},
 				this
 		);
 
@@ -345,18 +345,29 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 				if( this.win.rendered ) {
 
 						this.win.setTitle( selM.getSelected( ).data.title );
-						this.win.load( {
-								url       : selM.getSelected( ).data.docPageURL,
-								callback : function( obj, b, s ) {
 
-										var bodyC = this.win.body,
-										cont = Ext.select( '#docdb-previewWin div#' + this.docDetail.divContIdWinP +'', bodyC );
+                        var pattern = new RegExp(window.document.baseURI, 'i');
+                        if(! selM.getSelected( ).data.docPageURL.match(pattern)) {
 
-										bodyC.update( cont.elements[0].innerHTML ).fadeIn( { stopFx:true, duration:.5 } );
-										this.prevNextStatus( );
-								},
-								scope : this
-						} );
+                            // @todo open in an iframe when it come from crossdomain. but better to process server side...
+                            this.win.body.update( '<iframe width="100%" height="100%" src="'+selM.getSelected( ).data.docPageURL+'#content"></iframe>' );
+                        
+                        } else {
+
+                            this.win.load( {
+                                    url      : selM.getSelected( ).data.docPageURL,
+                                    
+                                    callback : function( obj, b, s ) {
+
+                                            var bodyC = this.win.body,
+                                            cont = Ext.select( '#docdb-previewWin div#' + this.docDetail.divContIdWinP +'', bodyC );
+
+                                            bodyC.update( cont.elements[0].innerHTML ).fadeIn( { stopFx:true, duration:.5 } );
+                                            this.prevNextStatus( );
+                                    },
+                                    scope : this
+                            } );
+                        }
 				} // eo this.win.rendered
 	},
 

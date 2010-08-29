@@ -53,7 +53,6 @@ class tx_docdb_extjsdirect_controller extends tx_jwextjsdirect_controller {
 		);
 		
 		parent::main($extjsConf);
-		
 	}
 }
 

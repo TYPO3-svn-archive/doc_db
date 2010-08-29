@@ -112,14 +112,14 @@ class tx_docdb_div
 	* @param   string      $field: Name of the field to use in the COUNT() expression (e.g. '*')
 	* @param   string      $table: Name of the table to count rows for
 	* @param   string      $where: (optional) WHERE statement of the query
-	* @return  mixed       Number of rows counter (integer) or false if something went wrong (boolean)
+	* @return  mixed       Number of rows counter (integer) or FALSE if something went wrong (boolean)
 	*/
 	public static function exec_SELECTcountRows($field, $table, $where = '') {
-		$count = false;
+		$count = FALSE;
 		
 		$resultSet = $GLOBALS['TYPO3_DB']->exec_SELECTquery('COUNT(' . $field . ')', $table, $where);
 		
-		if ($resultSet !== false) {
+		if ($resultSet !== FALSE) {
 		
 			list($count) = $GLOBALS['TYPO3_DB']->sql_fetch_row($resultSet);
 			
@@ -153,6 +153,57 @@ class tx_docdb_div
 
         return FALSE;
     }
+
+
+	/**
+	 * Forces a given URL to be absolute.
+	 *
+	 * @param string $url The URL to be forced to be absolute
+	 * @param array $configuration TypoScript configuration of typolink
+	 * @return string The absolute URL
+	 */
+	public static function forceAbsoluteUrl($url, array $configuration) {
+        
+		if (!empty($url) && isset($configuration['forceAbsoluteUrl']) && $configuration['forceAbsoluteUrl']) {
+
+//            t3lib_div::devLog('fAbsUrl', 'doc_db', 0, array( $url, $configuration));
+
+//			if (preg_match('#^(?:([a-z]+)(://))?([^/]*)(.*)$#', $url, $matches)) {
+//				$urlParts = array(
+//					'scheme' => $matches[1],
+//					'delimiter' => '://',
+//					'host' => $matches[3],
+//					'path' => $matches[4],
+//				);
+
+                $urlParts = parse_url($url);
+                $urlParts['delimiter'] = '://';
+
+                t3lib_div::devLog('$urlParts', 'doc_db', 0, array( $urlParts));
+
+				// Set scheme and host if not yet part of the URL:
+				if (empty($urlParts['host'])) {
+					$urlParts['scheme'] = 'http';
+					$urlParts['host'] = t3lib_div::getIndpEnv('HTTP_HOST') . '/';
+					$isUrlModified = TRUE;
+				}
+
+				// Override scheme:
+				$forceAbsoluteUrl =& $configuration['forceAbsoluteUrl.']['scheme'];
+				if (!empty($forceAbsoluteUrl) && $urlParts['scheme'] !== $forceAbsoluteUrl) {
+					$urlParts['scheme'] = $forceAbsoluteUrl;
+					$isUrlModified = TRUE;
+				}
+
+				// Recreate the absolute URL:
+				if ($isUrlModified) {
+					$url = $urlParts['scheme'] . $urlParts['delimiter'] . $urlParts['host'] . $urlParts['path'];
+				}
+			}
+//		}
+
+		return $url;
+	}
 
 }
 

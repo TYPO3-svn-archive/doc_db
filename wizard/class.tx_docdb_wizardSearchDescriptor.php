@@ -251,8 +251,8 @@ class tx_docdb_wizardSearchDescriptor
 				
 				var sortByTitle = function (a, b) {
 					
-					var a = a.prop.iTitle.toLowerCase();
-					var b = b.prop.iTitle.toLowerCase();
+					var a = a.prop.iTitle.toLowerCase(),
+					b = b.prop.iTitle.toLowerCase();
 					
 					return ((a < b) ? -1 : ((a > b) ? 1 : 0));
 				};
@@ -279,8 +279,7 @@ class tx_docdb_wizardSearchDescriptor
 			
 			TX_DOCDB.cleanArray = function(arr) {
 				
-				var newArray = [];
-				var el;
+				var newArray = [], el;
 				
 				for(el in arr) {
 					
@@ -320,16 +319,15 @@ class tx_docdb_wizardSearchDescriptor
 				
 				for(var i=0; i < ckBox.length; i++) {
 					
-					var id = ckBox[i].value;
-					
+					var id = ckBox[i].value,
 					// add on click to a
-					var dLink = document.getElementById(\'a_\' + id);
-					var tr    = document.getElementById(\'tr_\' + id);
-					var prop  = {
+					dLink = document.getElementById(\'a_\' + id),
+					tr   = document.getElementById(\'tr_\' + id),
+                    prop = {
 						iId    : id,
 						iName  : document.getElementById(\'i_\' + id).value,
 						iTitle : document.getElementById(\'t_\' + id).value
-					}
+					};
 					
 					// ref to properties
 					tr.prop       = prop;
@@ -371,9 +369,9 @@ class tx_docdb_wizardSearchDescriptor
 			
 			TX_DOCDB.listItemsInContainer = function(newContainer) {
 				
-				var nCont = document.getElementById(newContainer);
-				var tbody = document.createElement(\'tbody\');
-				var items = TX_DOCDB.items.get();
+				var nCont = document.getElementById(newContainer),
+				tbody = document.createElement(\'tbody\'),
+				items = TX_DOCDB.items.get();
 				
 				for(var i=0; i< items.length; i++){
 					
