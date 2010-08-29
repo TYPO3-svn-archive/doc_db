@@ -269,7 +269,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 		if (!this.win) {
 				this.win = new Ext.Window({
 						id              : 'docdb-previewWin',
-						bodyStyle       : 'padding:13px',
+						bodyStyle       : 'padding:10px',
 						layout          : 'fit',
 						preventBodyReset: true,
 						unstyled        : false,
@@ -326,13 +326,22 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 				});
 		}
 
+        this.win.setPos = function() {
+            
+            var scrollPos = Ext.getDoc().getScroll(),
+            elPos = this.getPosition();
+
+            this.setPagePosition(elPos[0], scrollPos.top + 20);
+        };
+
 		this.win.on( 'resize', function( ) {
-				this.center( );
+
+            this.setPos();
 		} );
 
 		this.win.show(
 				a,
-				function( ) {this.win.center( );},
+				function( ) { this.win.center();this.win.setPos();},
 				this
 		);
 
