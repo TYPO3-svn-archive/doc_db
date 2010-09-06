@@ -35,10 +35,10 @@
  * @subpackage  doc_db
  */
 
-
-require_once(PATH_tslib . 'class.tslib_pibase.php');
-require_once(t3lib_extMgm::extPath('doc_db') . 'classes/class.tx_docdb_div.php');
-
+if(version_compare(TYPO3_branch, '4.3', '<')) {
+    require_once(PATH_tslib . 'class.tslib_pibase.php');
+    require_once(t3lib_extMgm::extPath('doc_db') . 'classes/class.tx_docdb_div.php');
+}
 class tx_docdb_pi1 extends tslib_pibase {
     
 	/**

@@ -37,14 +37,17 @@
 
 class tx_docdb_div
 {
-	
-	/**
+
+    protected static $_siteUrl    = NULL;
+    protected static $_siteRelPath = NULL;
+
+    /**
 	 * Return related Descriptor in CSS tooltip (not usefull)
 	 * 
 	 * @param int $id: related descriptor uid list
 	 * @return String: html tooltip
 	 */
-	public static function _getCssTooltip($rows, $backPath='') {
+	public static function getCssTooltip($rows, $backPath='') {
 		
 		$_backPath = isset($backPath) ? t3lib_div::resolveBackPath($backPath) : '';
 		// store
@@ -84,7 +87,7 @@ class tx_docdb_div
 	 * @param	string		Optional LIMIT value ([begin,]max), if none, supply blank string.
 	 * @return	array		The array with the category records in.
 	 */
-	public static function _sqlGetRows($table, $fields='*', $whereClause='', $groupBy='', $orderBy='', $limit='') {
+	public static function sqlGetRows($table, $fields='*', $whereClause='', $groupBy='', $orderBy='', $limit='') {
 		
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			$fields,
@@ -94,14 +97,6 @@ class tx_docdb_div
 			$orderBy,
 			$limit
 		);
-		
-//		$outArr = array();
-//		while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
-//			
-//			$outArr[] = $row;
-//		}
-		
-//		$GLOBALS['TYPO3_DB']->sql_free_result($res);
 		
 		return $rows;
 	}
@@ -127,6 +122,35 @@ class tx_docdb_div
 		}
 		
 		return $count;
+	}
+
+
+   /**
+	* Counts the number of rows in a table.
+	*
+	* @param   string      $field: Name of the field to use in the COUNT() expression (e.g. '*')
+	* @param   string      $table: Name of the table to count rows for
+	* @param   string      $where: (optional) WHERE statement of the query
+	* @return  mixed       2 dimensional array with keys ['count'] and ['rows']
+	*/
+	public static function exec_SELECTcountAndGetRows($fieldUid, $table, $where = '') {
+		
+        $store = array();
+        $i = 0;
+
+		$resultSet = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fieldUid, $table, $where, $fieldUid);
+
+		if ($resultSet !== FALSE) {
+
+			while(($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($resultSet))) {
+                $store[] = $row[0];
+                $i++;
+            }
+
+			$GLOBALS['TYPO3_DB']->sql_free_result($resultSet);
+		}
+
+		return array('count' => $i, 'rows' => $store);
 	}
 
 
@@ -162,49 +186,161 @@ class tx_docdb_div
 	 * @param array $configuration TypoScript configuration of typolink
 	 * @return string The absolute URL
 	 */
-	public static function forceAbsoluteUrl($url, array $configuration) {
+	public static function forceAbsoluteUrl($url, array $config) {
         
-		if (!empty($url) && isset($configuration['forceAbsoluteUrl']) && $configuration['forceAbsoluteUrl']) {
+		if (!empty($url) && isset($config['forceAbsoluteUrl']) && $config['forceAbsoluteUrl']) {
 
-//            t3lib_div::devLog('fAbsUrl', 'doc_db', 0, array( $url, $configuration));
-
-//			if (preg_match('#^(?:([a-z]+)(://))?([^/]*)(.*)$#', $url, $matches)) {
-//				$urlParts = array(
-//					'scheme' => $matches[1],
-//					'delimiter' => '://',
-//					'host' => $matches[3],
-//					'path' => $matches[4],
-//				);
-
-                $urlParts = parse_url($url);
-                $urlParts['delimiter'] = '://';
+            $urlParts = parse_url($url);
+            $urlParts['delimiter'] = '://';
 
 //                t3lib_div::devLog('$urlParts', 'doc_db', 0, array( $urlParts));
+            /**
+             *  @todo make that better. more flexible scheme (http-s)
+             */
+            // Set scheme and host if not yet part of the URL:
+            if (empty($urlParts['host'])) {
 
-				// Set scheme and host if not yet part of the URL:
-				if (empty($urlParts['host'])) {
-					$urlParts['scheme'] = 'http';
-					$urlParts['host'] = t3lib_div::getIndpEnv('HTTP_HOST') . '/';
-					$isUrlModified = TRUE;
-				}
+                $urlParts1 = parse_url(self::siteUrl());
+                $urlParts['scheme'] = $urlParts1['scheme'];
+                $urlParts['host'] = $urlParts1['host'];
+                $isUrlModified = TRUE;
+            }
 
-				// Override scheme:
-				$forceAbsoluteUrl =& $configuration['forceAbsoluteUrl.']['scheme'];
-				if (!empty($forceAbsoluteUrl) && $urlParts['scheme'] !== $forceAbsoluteUrl) {
-					$urlParts['scheme'] = $forceAbsoluteUrl;
-					$isUrlModified = TRUE;
-				}
+            // Override scheme:
+            $forceAbsoluteUrl =& $config['forceAbsoluteUrl.']['scheme'];
+            if (!empty($forceAbsoluteUrl) && $urlParts['scheme'] !== $forceAbsoluteUrl) {
+                $urlParts['scheme'] = $forceAbsoluteUrl;
+                $isUrlModified = TRUE;
+            }
 
-				// Recreate the absolute URL:
-				if ($isUrlModified) {
-					$url = $urlParts['scheme'] . $urlParts['delimiter'] . $urlParts['host'] . $urlParts['path'];
-				}
-			}
-//		}
+            // Recreate the absolute URL:
+            if ($isUrlModified) {
+                $url = $urlParts['scheme'] . $urlParts['delimiter'] . $urlParts['host'] . '/' . $urlParts['path'];
+            }
+        }
 
 		return $url;
 	}
 
+    /**
+     * Funtion to store the md5 hash related to params of document query and used as params value for the xml link.
+     * But before to store it, clean the unwanted params to minimize the possibilities and avoid table overload.
+     * 
+     * @param   <integer>   $pageId
+     * @param   <stdClass>  $linkParams
+     * @param   <array>     $resultUids     list of uids returned by the document query
+     * @return  <string>    link to get XML export
+     */
+    public static function getXmlLink($pageId, $linkParams, $resultUids) {
+
+        // remove limit param
+        t3lib_div::devLog('getXmlLink', 'doc_db', 0, array( var_export($linkParams, TRUE),$resultUids));
+
+        // clean some parameters to limit numbers of possibilities
+        unset(  $linkParams->selNodes,
+                $linkParams->selType,
+                $linkParams->filter,
+                $linkParams->groupBy,
+                $linkParams->groupDir,
+                $linkParams->grouping,
+                $linkParams->field,
+                $linkParams->direction,
+                $linkParams->start,
+                $linkParams->limit
+        );
+        
+        if($linkParams->sort !== 'date' || $linkParams->sort !== 'owner') {
+            $linkParams->sort = 'date';
+        }
+        self::sortListOfInt($linkParams->owner);
+        self::sortListOfInt($linkParams->type);
+        self::sortListOfInt($linkParams->status);
+        
+
+        //t3lib_div::devLog('getXmlLink', 'doc_db', 0, array( var_export($linkParams, TRUE)));
+        
+        // sort beafore md5-ize
+        sort($resultUids);
+        // prepare to store
+        $serializedUidsResults = json_encode($resultUids);
+        $md5hashUidsResults    = md5($serializedUidsResults);
+
+        // prepare to store. serialize not required
+        $serializedParams = json_encode($linkParams);
+        $md5hashParams    = md5($serializedParams);
+
+        // store values
+        $GLOBALS['TYPO3_DB']->sql_query('
+          REPLACE INTO tx_docdb_cache_xmllink (pid, hash_params, hash_results, params)
+          VALUES (\'' . (int)$pageId . '\', \'' . $md5hashParams . '\', \'' . $md5hashUidsResults . '\', \'' . $serializedParams . '\')
+        ');
+
+        return self::siteUrl() . 'index.php?eID=docdbxml&hash=' . $md5hashParams;
+
+    }
+
+
+    public static function sortListOfInt(&$list) {
+
+        $listArray = explode(',', $list);
+        // clean int list order
+        sort($listArray, SORT_NUMERIC);
+        $list = implode(',', $listArray);
+    }
+
+    /**
+     * Get the extRelPath
+     * 
+     * @param <boolean> $abs
+     * @return <string> Relative or absolute URL path to the root extension directory
+     */
+    public static function extSiteUrl($abs=FALSE) {
+
+        if(self::$_siteRelPath === NULL) {
+
+            self::$_siteRelPath = t3lib_extMgm::siteRelPath('doc_db');
+        }
+        
+        if($abs) {
+
+            return self::siteUrl() . self::$_siteRelPath;
+        }
+
+        return self::$_siteRelPath;
+    }
+
+    /**
+     * Get the TYPO3_SITE_URL
+     * 
+     * @return <string>
+     */
+    public static function siteUrl() {
+
+        if(self::$_siteUrl === NULL) {
+
+            self::$_siteUrl = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+        }
+
+        return self::$_siteUrl;
+    }
+
+    /**
+     * Check if is TYPO3 version 4.3 or above
+     */
+    public static function isTypo3V43min() {
+
+        return version_compare(TYPO3_branch, '4.3', '>=');
+    }
+
+    /**
+     * Flush all buffer if any content
+     */
+    public static function flush() {
+
+        while (@ob_end_flush());
+        @ob_flush();
+        @flush();
+    }
 }
 
 

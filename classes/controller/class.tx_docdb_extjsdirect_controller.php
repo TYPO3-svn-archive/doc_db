@@ -35,14 +35,14 @@ class tx_docdb_extjsdirect_controller extends tx_jwextjsdirect_controller {
 		
 		$extjsConf = array(
 			'eID'    => 'docdb',
-			'cached' => 0,
+			'cached' => 1,
 			'debug'  => 0,
 			'debug.' => array(
 					'routerFile' => t3lib_extMgm::siteRelPath($this->extKey) . 'zzz_debug.html',
 			),
 			'classes.' => array(
-				'path'=>t3lib_extMgm::extPath($this->extKey).'classes/model',
-	  		'add'=>array(
+				'path' => t3lib_extMgm::extPath($this->extKey).'classes/model',
+                'add'  => array(
 					'model_owner'       => array('filePrefix'=> 'class.','prefix' => 'tx_docdb_','postfix' => ''),
 					'model_type'        => array('filePrefix'=> 'class.','prefix' => 'tx_docdb_','postfix' => ''),
 					'model_status'      => array('filePrefix'=> 'class.','prefix' => 'tx_docdb_','postfix' => ''),

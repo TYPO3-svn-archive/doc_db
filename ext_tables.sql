@@ -117,3 +117,17 @@ CREATE TABLE tx_docdb_pages_doc_related_pages_mm (
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
 );
+
+
+#
+# Table structure for table 'tx_docdb_xmllink'
+#
+CREATE TABLE tx_docdb_cache_xmllink (
+    pid int(11) DEFAULT '0' NOT NULL,
+    hash_params varchar(32) DEFAULT '' NOT NULL,
+    hash_results varchar(32) DEFAULT '' NOT NULL,
+    params text NOT NULL,
+    PRIMARY KEY (hash_params),
+    KEY hash_results (hash_results),
+    KEY pid (pid)
+) ENGINE=InnoDB;

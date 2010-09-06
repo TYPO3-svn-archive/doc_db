@@ -87,7 +87,7 @@ DocDb.SearchForm = Ext.extend(Ext.form.FormPanel, {
 										height      : colItemH
 									}]
 								}]
-								}] // end items of advSearch form
+                            }] // end items of advSearch form
 				}; // eo config object
 
 				// apply config

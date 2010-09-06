@@ -123,6 +123,8 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
 
             Ext.iterate( p, function( k, v ) {
                 if( k !== 'colsW' && k !== 'dF' ) {
+
+//                    console.info(k);
                     // set store baseParams, like that those are keep on sort change or when the store is reloaded
                     gS.setBaseParam( k, v );
                 }
@@ -225,8 +227,10 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
         p = this.statvar.gridParams;
 
         Ext.iterate( p, function( k, v ) {
-                // set store baseParams, like that those are keep on sort change or when the store is reloaded
-                gS.setBaseParam( k, v );
+                if( k !== 'colsW' && k !== 'dF' ) {
+                    // set store baseParams, like that those are keep on sort change or when the store is reloaded
+                    gS.setBaseParam( k, v );
+                }
             },
             this
         );
@@ -237,8 +241,7 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
         loadObj.callback = function( ) {
 
                 mP.toggleGrid( true );
-                //mP.body.unmask( );
-                 Ext.fly( 'loading' ).remove( );
+                Ext.fly( 'loading' ).remove( );
                 lMask.fadeOut( {duration: 1, remove:true} );
             };
         // load result in gridPanel
@@ -265,7 +268,7 @@ DocDb.initMain = function( ) {
     // within the enableBuffer delay period (in milliseconds).
     // Slow the buffering down from the default of 10ms to 100ms
     Ext.app.REMOTING_API.namespace = DocDb;
-    Ext.app.REMOTING_API.enableBuffer = 60;
+    Ext.app.REMOTING_API.enableBuffer = 100;
     Ext.app.REMOTING_API.id = 'docdb-direct';
     Ext.Direct.addProvider( Ext.app.REMOTING_API );
 

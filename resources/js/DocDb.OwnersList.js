@@ -83,10 +83,15 @@ DocDb.OwnersList = Ext.extend( Ext.ux.form.MultiSelect, {
   } // eo function initComponent
 
   ,afterRender : function() {
-    
-    this.store.load( );
- 
+
     DocDb.OwnersList.superclass.afterRender.apply( this, arguments );
+    /**
+     * @todo start loading from main app when all things are available.
+     */
+    var that = this;
+    (function(){that.store.load( );}.defer(500));
+ 
+    
   } // eo function afterRender
 
 }); // eo extend

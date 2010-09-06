@@ -1384,6 +1384,7 @@ td.x-date-mp-sep {
 
 .x-menu-list-item{
 	font:normal 11px arial,tahoma,sans-serif;
+    -moz-user-select: text;
 }
 
 .x-menu-item-arrow{

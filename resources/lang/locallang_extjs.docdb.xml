@@ -42,6 +42,8 @@
 			<label index="grid.header.type">Type</label>
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Loading documents...</label>
+            <label index="grid.xmlLinkTitle">XML export</label>
+            <label index="grid.xmlLinkTooltip">Copy that link to get the content of your selection as XML file. (The selection is only available to the owner, type and sorting by date and ower.)</label>
 			<label index="docDetail.relatedDscr">Related descriptor</label>
 			<label index="docDetail.relatedDscr_pl">Related descriptors</label>
 			<label index="docDetail.relatedPage">Related page</label>
@@ -94,6 +96,8 @@
 			<label index="grid.header.type">Sorte</label>
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Loading Dokumente ...</label>
+            <label index="grid.xmlLinkTitle">XML export</label>
+            <label index="grid.xmlLinkTooltip">Copy that link to get the content of your selection as XML file. (The selection is only available to the owner, type and sorting by date and ower.)</label>
 			<label index="docDetail.relatedDscr">Related descriptor</label>
 			<label index="docDetail.relatedDscr_pl">Related descriptors</label>
 			<label index="docDetail.relatedPage">Related page</label>
@@ -146,6 +150,8 @@
 			<label index="grid.header.type">Type</label>
 			<label index="grid.header.status">Status</label>
 			<label index="grid.loading">Chargement des documents ...</label>
+            <label index="grid.xmlLinkTitle">Export XML</label>
+            <label index="grid.xmlLinkTooltip">Copier le lien suivant pour récupérer le contenu de votre sélection en tant que fichier XML.</label>
 			<label index="docDetail.relatedDscr">Déscripteur relatif</label>
 			<label index="docDetail.relatedDscr_pl">Déscripteurs relatifs</label>
 			<label index="docDetail.relatedPage">Page relative</label>
@@ -198,6 +204,8 @@
 			<label index="grid.header.type">Tipo</label>
 			<label index="grid.header.status">Estatus</label>
 			<label index="grid.loading">Cargando...</label>
+            <label index="grid.xmlLinkTitle">XML export</label>
+            <label index="grid.xmlLinkTooltip">Copy that link to get the content of your selection as XML file. (The selection is only available to the owner, type and sorting by date and ower.)</label>
 			<label index="docDetail.relatedDscr">Relacionado descriptor</label>
 			<label index="docDetail.relatedDscr_pl">Descriptores relacionados</label>
 			<label index="docDetail.relatedPage">Página relacionados</label>

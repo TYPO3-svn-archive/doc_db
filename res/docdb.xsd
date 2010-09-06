@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <xs:element name="documents">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="doc"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="date"/>
+        <xs:element ref="title"/>
+        <xs:element ref="url"/>
+        <xs:element ref="key"/>
+        <xs:element ref="owner"/>
+        <xs:element ref="type"/>
+        <xs:element ref="status"/>
+        <xs:element ref="abstract"/>
+        <xs:element ref="descriptors"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:integer"/>
+    </xs:complexType>
+    <xs:key name="docId">
+      <xs:selector xpath="./doc"/>
+      <xs:field xpath="@id"/>
+    </xs:key>
+  </xs:element>
+  <xs:element name="date">
+    <xs:complexType mixed="true">
+      <xs:attribute name="f" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="url" type="xs:anyURI"/>
+  <xs:element name="key" type="xs:string"/>
+  <xs:element name="owner" type="xs:NCName"/>
+  <xs:element name="type" type="xs:string"/>
+  <xs:element name="status" type="xs:string"/>
+  <xs:element name="abstract" type="xs:string"/>
+  <xs:element name="descriptors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="descr"/>
+      </xs:sequence>
+      <xs:attribute name="n" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="descr" type="xs:string"/>
+</xs:schema>

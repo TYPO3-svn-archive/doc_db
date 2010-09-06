@@ -208,4 +208,40 @@ $TCA['tx_docdb_descriptor'] = array(
 		'1' => array('showitem' => 'hidden')
 	)
 );
+
+
+//$TCA['tx_docdb_xmllink']  = array(
+//	'ctrl' => $TCA['tx_docdb_xmllink']['ctrl'],
+//	'interface' => array(
+//		'showRecordFieldList' => 'type'
+//	),
+//	'feInterface' => $TCA['tx_docdb_type']['feInterface'],
+//	'columns' => array(
+//        'pId' => array(
+//			'label'   => 'page id',
+//			'config' => array(
+//					'type' => 'passthrough'
+//			)
+//		),
+//		'params' => array(
+//			'label'   => 'params',
+//			'config' => array(
+//					'type' => 'passthrough'
+//			)
+//		),
+//        'hash' => array(
+//			'exclude' => 1,
+//			'label'   => 'hash',
+//			'config'  => array(
+//				'type'    => 'passthrough'
+//			)
+//		),
+//	),
+//	'types' => array(
+//		'0' => array('showitem' => 'type;;;;1-1-1')
+//	),
+//	'palettes' => array(
+//		'1' => array('showitem' => 'pId,params,hash')
+//	)
+//);
 ?>

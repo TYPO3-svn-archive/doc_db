@@ -14,7 +14,7 @@ include_once(t3lib_extMgm::extPath($_EXTKEY) . 'classes/class.tx_docdb_itemsProc
 include_once(t3lib_extMgm::extPath($_EXTKEY) . 'classes/class.tx_docdb_treeview.php');
 
 
-$TCA['tx_docdb_type'] = array(
+$GLOBALS['TCA']['tx_docdb_type'] = array(
 	'ctrl' => array(
 		'title'     => 'LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tx_docdb_type',
 		'label'     => 'type',
@@ -34,7 +34,7 @@ $TCA['tx_docdb_type'] = array(
 	)
 );
 
-$TCA['tx_docdb_status'] = array(
+$GLOBALS['TCA']['tx_docdb_status'] = array(
 	'ctrl' => array(
 		'title'     => 'LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tx_docdb_status',
 		'label'     => 'status',
@@ -54,7 +54,7 @@ $TCA['tx_docdb_status'] = array(
 	)
 );
 
-$TCA['tx_docdb_owner'] = array(
+$GLOBALS['TCA']['tx_docdb_owner'] = array(
 	'ctrl' => array(
 		'title'     => 'LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tx_docdb_owner',
 		'label'     => 'owner',
@@ -74,7 +74,7 @@ $TCA['tx_docdb_owner'] = array(
 	)
 );
 
-$TCA['tx_docdb_descriptor'] = array(
+$GLOBALS['TCA']['tx_docdb_descriptor'] = array(
 	'ctrl' => array(
 		'title'     => 'LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tx_docdb_descriptor',
 		'label'     => 'title',
@@ -228,18 +228,22 @@ t3lib_div::loadTCA('pages');
 
 // Add the document type at 7th position in the select list for page types:
 array_splice(
-		$TCA['pages']['columns']['doktype']['config']['items'],
-		7,
-		0,
-		array(
-			array('LLL:EXT:doc_db/configuration/llang/locallang.xml:pages.doktype.I.198', '198'),
-		)
-	);
+    $GLOBALS['TCA']['pages']['columns']['doktype']['config']['items'],
+    7,
+    0,
+    array(
+        array(
+            'LLL:EXT:doc_db/configuration/llang/locallang.xml:pages.doktype.I.198',
+            '198',
+            '../' . t3lib_extMgm::siteRelPath($_EXTKEY) . 'icon_page.gif'
+        ),
+    )
+);
 
 t3lib_extMgm::addTCAcolumns('pages', $tempColumns, 1);
 
 // Add the fields for the document type
-$TCA['pages']['types']['198'] = array(
+$GLOBALS['TCA']['pages']['types']['198'] = array(
 	'showitem' => 'hidden;;;;1-1-1, doktype;;2;button, title;;3;;3-3-3, subtitle, nav_hide, abstract;;5;;3-3-3, tx_docdb_doc_owner;;;;1-1-1, tx_docdb_doc_type, tx_docdb_doc_status, tx_docdb_doc_key, tx_docdb_doc_descriptor, tx_docdb_doc_related_pages, TSconfig;;6;nowrap;5-5-5, storage_pid;;7, l18n_cfg'
 	);
 	
@@ -250,7 +254,7 @@ $GLOBALS['PAGES_TYPES']['198']['icon'] = '../' . t3lib_extMgm::siteRelPath($_EXT
 
 // Add plugin FlexForm
 t3lib_div::loadTCA('tt_content');
-//$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY . '_pi1'] = 'layout,select_key';
+//$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY . '_pi1'] = 'layout,select_key';
 
 t3lib_extMgm::addPlugin(array(
         'LLL:EXT:doc_db/configuration/llang/locallang_db.xml:tt_content.list_type_pi1',
@@ -260,10 +264,10 @@ t3lib_extMgm::addPlugin(array(
 );
 
 // flexform in doc_db
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi_flexform';
 
 t3lib_extMgm::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:doc_db/configuration/flexform/docDBflexform_ds.xml');
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY . '_pi1'] = 'layout,select_key,pages,recursive';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY . '_pi1'] = 'layout,select_key,pages,recursive';
 
 // add static TS
 t3lib_extMgm::addStaticFile($_EXTKEY, 'configuration/typoscript/', 'Document DB');

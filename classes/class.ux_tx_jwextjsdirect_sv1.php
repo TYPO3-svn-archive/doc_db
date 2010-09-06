@@ -222,13 +222,25 @@ class ux_tx_jwextjsdirect_sv1 extends tx_jwextjsdirect_sv1
         ($GLOBALS['TSFE']->config['config']['sys_language_uid'] ? $GLOBALS['TSFE']->config['config']['sys_language_uid'] : 0) .
         '&amp;ext=' . ($conf['extensionId'] ? $conf['extensionId'] : '0') . '&amp;eID=' . $conf['eID'] . '&amp;api=1';
 
-        // finally put header
-		$GLOBALS['TSFE']->additionalHeaderData[($extKey ? $extKey : $this->extKey) . 'useradd_inc'] = $includes . "\n" .
-//            $conf['js.'] . "\n" .
-            "\t" .'<script type="text/javascript"' . $deferTag . ' src="' . $conf['url'] . '"></script>' . "\n" .
-            $conf['js.'] . "\n" .
-            "\t" . $scriptLL . "\n" .
-            $includesJsLL . "\n";
+
+        $useradd_JsInc =    $includes . "\n" .
+                            $conf['js.'] . "\n" .
+                            "\t" .'<script type="text/javascript"' . $deferTag . ' src="' . $conf['url'] . '"></script>' . "\n" .
+                //            $conf['js.'] . "\n" .
+                            "\t" . $scriptLL . "\n" .
+                            $includesJsLL . "\n";
+
+        // finally put in footer
+        if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
+
+            $GLOBALS['TSFE']->additionalFooterData[($extKey ? $extKey : $this->extKey) . 'useradd_inc'] = $useradd_JsInc;
+        // or in header
+        } else {
+
+            $GLOBALS['TSFE']->additionalHeaderData[($extKey ? $extKey : $this->extKey) . 'useradd_inc'] = $useradd_JsInc;
+        }
+
+        unset($useradd_JsInc);
 	}
 
 	/**

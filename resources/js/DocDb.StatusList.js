@@ -87,7 +87,8 @@ DocDb.StatusList = Ext.extend( Ext.ux.form.MultiSelect, {
 
     DocDb.StatusList.superclass.afterRender.apply( this, arguments );
 
-    this.store.load( );
+    var that = this;
+    (function(){that.store.load( );}.defer(500));
   } // eo function afterRender
   
   ,getRelatedStatus: function( sub, msg ) {

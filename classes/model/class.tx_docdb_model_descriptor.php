@@ -36,7 +36,7 @@
  */
 
 // tslib_cObj
-require_once(PATH_tslib . 'class.tslib_content.php');
+//require_once(PATH_tslib . 'class.tslib_content.php');
 
 class tx_docdb_model_descriptor
 {
@@ -46,7 +46,7 @@ class tx_docdb_model_descriptor
 	 *
 	 * @var $cObj
 	 */
-	public $cObj      = NULL;
+//	public $cObj      = NULL;
 
 	/**
 	 * devLog debug

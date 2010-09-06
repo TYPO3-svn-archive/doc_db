@@ -506,7 +506,7 @@ class tx_docdb_wizardSearchDescriptor
 
 			$_startBy = ($arg['textStartBy'] ? '' : '%');
 			
-			$res = tx_docdb_div::_sqlGetRows(
+			$res = tx_docdb_div::sqlGetRows(
 				'tx_docdb_descriptor',
 				'*',
 				'title LIKE \'' . $_startBy . $GLOBALS['TYPO3_DB']->quoteStr(
@@ -533,7 +533,7 @@ class tx_docdb_wizardSearchDescriptor
 					// Search related descriptor-s
 					if($row['dscr_related']) {
 						
-						$relRows = tx_docdb_div::_sqlGetRows(
+						$relRows = tx_docdb_div::sqlGetRows(
 							'tx_docdb_descriptor',
 							'uid,title',
 							'uid IN (' . $row['dscr_related'] . ')' . $_addWhere,
@@ -543,7 +543,7 @@ class tx_docdb_wizardSearchDescriptor
 						);
 						
 						// tooltip
-						$related = tx_docdb_div::_getCssTooltip($relRows, $this->_backPath);
+						$related = tx_docdb_div::getCssTooltip($relRows, $this->_backPath);
 						
 					}
 					
@@ -738,7 +738,7 @@ class tx_docdb_wizardSearchDescriptor
 	 */
 	private function _addCurrentValue() {
 //		$this->_currentValue
-		$relRows = tx_docdb_div::_sqlGetRows(
+		$relRows = tx_docdb_div::sqlGetRows(
 			'tx_docdb_descriptor',
 			'uid,title',
 			'uid IN (' . $this->_currentValue . ')',

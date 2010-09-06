@@ -78,7 +78,7 @@ class tx_docdb_tceFunc_selectTreeView extends t3lib_treeview
 			if($row['dscr_related'] > 0) {
 				
 				// get related descriptors
-				$relRows = tx_docdb_div::_sqlGetRows(
+				$relRows = tx_docdb_div::sqlGetRows(
 					'tx_docdb_descriptor',
 					'uid,title',
 					'tx_docdb_descriptor.uid IN (' . $row['dscr_related'] .')',
@@ -88,7 +88,7 @@ class tx_docdb_tceFunc_selectTreeView extends t3lib_treeview
 				);
 				
 				// tooltip
-				$_related = tx_docdb_div::_getCssTooltip($relRows);
+				$_related = tx_docdb_div::getCssTooltip($relRows);
 				
 				$_aStyle  = ' style="padding-left:13px;"';
 				
