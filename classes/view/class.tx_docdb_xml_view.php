@@ -190,7 +190,6 @@ class tx_docdb_xml_view extends tx_docdb_model_document {
                 $row['pages'] = $row['pages'] ? $this->_getRelatedPages($row['uid']) : array();
                 $this->_createSequence($this->_dom, $doc, 'pages', 'page', $row['pages']);
 
-
                 $rootNode->appendChild($doc);
             }
 		}
@@ -211,7 +210,7 @@ class tx_docdb_xml_view extends tx_docdb_model_document {
         $newNode = $dom->createElement($node);
         if(!empty($text)) {
             if($cdata) {
-                $newNode->appendChild($dom->createCDATASection("\n" . $text ."\n"));
+                $newNode->appendChild($dom->createCDATASection("\n\t" . $text ."\n"));
             } else {
                 $newNode->appendChild($dom->createTextNode($text));
             }
