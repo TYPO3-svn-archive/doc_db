@@ -75,6 +75,16 @@
     background-image: url(../images/wcc/grid/loading.gif);
 }
 
+.loading-btn {
+    font-size: 11px;
+    background: url(../images/wcc/grid/loading.gif) right top no-repeat !important;
+    padding-right:18px !important;
+}
+
+.x-btn-15 .x-btn-small .x-btn-mc button {
+    height: 15px;
+}
+
 .x-spotlight
 {
 	background-color: #f3f3f2;

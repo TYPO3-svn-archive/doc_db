@@ -9,6 +9,7 @@ return array(
     'tx_docdb_model_owner' => $extensionPath . 'classes/model/class.tx_docdb_model_owner.php',
     'tx_docdb_model_status' => $extensionPath . 'classes/model/class.tx_docdb_model_status.php',
     'tx_docdb_model_type' => $extensionPath . 'classes/model/class.tx_docdb_model_type.php',
+    'tx_docdb_xmllink' => $extensionPath . 'classes/model/class.tx_docdb_xmllink.php',
     'tx_docdb_xml_view' => $extensionPath . 'classes/view/class.tx_docdb_xml_view.php',
     'tx_docdb_div' => $extensionPath . 'classes/class.tx_docdb_div.php',
     'tx_docdb_xmlcache' => $extensionPath . 'classes/class.tx_docdb_xmlcache.php',

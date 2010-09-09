@@ -228,6 +228,7 @@ class tx_docdb_pi1 extends tslib_pibase {
                             'RENDER_TO'      => $this->_conf['extjs-ct'],
                             'PAGESIZE'       => (int)$this->_conf['ff']->pageSize,
                             'gridParams'     => $this->_conf['ff']->gridParam,
+                            'xmlExportEnable'=> $this->_conf['extJS.']['xmlExportEnable'],
                             'nodes'          => $nodes,
                             'mainPWidth'     => (int)$this->_conf['ff']->mainPWidth,
                             'gridHeight'     => (int)$this->_conf['ff']->gridHeight,
@@ -294,6 +295,7 @@ class tx_docdb_pi1 extends tslib_pibase {
                             'RENDER_TO'      => $this->_conf['extjs-ct'],
                             'PAGESIZE'       => (int)$this->_conf['ff']->pageSize,
                             'gridParams'     => $this->_conf['ff']->gridParam,
+                            'xmlExportEnable'=> $this->_conf['extJS.']['xmlExportEnable'],
                             'mainPWidth'     => (int)$this->_conf['ff']->mainPWidth,
                             'gridHeight'     => (int)$this->_conf['ff']->gridHeight,
                             'docDetail'      => $this->_conf['ff']->docDetail,
@@ -484,7 +486,7 @@ class tx_docdb_pi1 extends tslib_pibase {
      */
     protected function _setGridVarLang() {
 
-        $lang = t3lib_div::GPvar('L');
+        $lang = t3lib_div::_GP('L');
         if(isset($lang)) {
             
             $this->_conf['ff']->gridParam->lang = (int)$lang;

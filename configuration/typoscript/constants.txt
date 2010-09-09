@@ -9,45 +9,48 @@ plugin.tx_docdb_pi1 {
 
 	extJS {
         
-        # cat=docdb/extJsPath/a; type=text; label=ExtJS include path: include ExtJS library. Trailing slash required.
+        # cat=docdb/base/a; type=text; label=ExtJS include path: include ExtJS library. Trailing slash required.
 		path = EXT:doc_db/resources/ExtJS/3.0.3/
 
-        # cat=docdb/resourcesPath/b; type=text; label=ExtJS Resources include path: ( 1. read below) include ExtJS resources path, Can be used to specify an alternative resources path for css theme and images. Trailing slash required.
+        # cat=docdb/base/b; type=text; label=ExtJS Resources include path: ( 1. read below) include ExtJS resources path, Can be used to specify an alternative resources path for css theme and images. Trailing slash required.
 		resourcesPath = EXT:doc_db/resources/ExtJS/3.0.3/resources/
 
 
-        # cat=docdb/themes/c; type=text; label= ExtJS theme name: xtheme-{theme name}[-min].css
+        # cat=docdb/base/c; type=text; label= ExtJS theme name: xtheme-{theme name}[-min].css
         themes.0 = wcc
 
 
-        # cat=docdb/extJsAvailable/d; type=boolean; label=Do not include ExtJS: Define to true if ext-base & ext-all.js are already available on your installation, ext-all-min.js from doc_db load only the neccessary widgets lib. (ex. if you have already include ExtJS from javascriptLibs.ExtJs = 1 , "not yet tested")
+        # cat=docdb/base/d; type=boolean; label=Do not include ExtJS: Define to true if ext-base & ext-all.js are already available on your installation, ext-all-min.js from doc_db load only the neccessary widgets lib. (ex. if you have already include ExtJS from javascriptLibs.ExtJs = 1 , "not yet tested")
         doNotLoadExtAllJS = 0
 
-        # cat=docdb/extJsAvailable/e; type=boolean; label=Do not include ext-all.css:Define to true if ext-all.css are already available on your installation
+        # cat=docdb/base/e; type=boolean; label=Do not include ext-all.css:Define to true if ext-all.css are already available on your installation
         doNotLoadExtAllCSS = 0
 
 
-        # cat=docdb/extJsProd/f; type=options[no=0,yes=1]; label=Use in production: Concat and minified CSS and JS files are used
+        # cat=docdb/base/f; type=options[no=0,yes=1]; label=Use in production: Concat and minified CSS and JS files are used
         production = 1
 
-        # cat=docdb/extJsProd/g; type=options[no=0,yes=1]; label=Use in production: Asynchronous loading of CSS and JS files. NOTE: actually disabled  - not available
+        # cat=docdb/base/g; type=options[no=0,yes=1]; label=Use in production: Asynchronous loading of CSS and JS files. NOTE: actually disabled  - not available
         asyncLoading = 1
 
 
-        # cat=docdb/grid/h; type=string; label=Grid Columns Default Width: Coma separated values in the next order: Title,Date,Owner,Key,Type,Status .(The first column(title) is defined to autoExpand [min:150,max:650]) Default: 250,60,130,35,130,60
+        # cat=docdb/base/h; type=string; label=Grid Columns Default Width: Coma separated values in the next order: Title,Date,Owner,Key,Type,Status .(The first column(title) is defined to autoExpand [min:150,max:650]) Default: 250,60,130,35,130,60
         gridColsWidth = 250,60,130,35,130,60
 
 
-        # cat=docdb/date/i0; type=options[30-12-2010=d-m-y,30-12-10=d-m-Y,2010-12-30=y-m-d,10-12-30=Y-m-d,30/12/2010=d/m/y,30/12/10=d/m/Y,2010/12/30=y/m/d,10/12/30=Y/m/d,30.12.2010=d.m.y,30.12.10=d.m.Y,2010.12.30=y.m.d,10.12.30=Y.m.d, 30 December 2010=d.F.y, 30 Dec 2010=d M y, Thu 30 Dec 2010=D d M y]; label=Date format Row: Date string format to display in the Grid result rows. DEFAULT : 30.12.10 (day.month.year short)
+        # cat=docdb/base/i0; type=options[30-12-2010=d-m-y,30-12-10=d-m-Y,2010-12-30=y-m-d,10-12-30=Y-m-d,30/12/2010=d/m/y,30/12/10=d/m/Y,2010/12/30=y/m/d,10/12/30=Y/m/d,30.12.2010=d.m.y,30.12.10=d.m.Y,2010.12.30=y.m.d,10.12.30=Y.m.d, 30 December 2010=d.F.y, 30 Dec 2010=d M y, Thu 30 Dec 2010=D d M y]; label=Date format Row: Date string format to display in the Grid result rows. DEFAULT : 30.12.10 (day.month.year short)
         dateF.row = d.m.y
 
-        # cat=docdb/date/i1; type=string; label=Custom Date format Row: Date string format to display in the Grid result rows.(see http://php.net/date for possible strings formatting the date). NOTICE: if specified the above predefined parameter will be ignored.
+        # cat=docdb/base/i1; type=string; label=Custom Date format Row: Date string format to display in the Grid result rows.(see http://php.net/date for possible strings formatting the date). NOTICE: if specified the above predefined parameter will be ignored.
         dateFCustom.row =
 
-        # cat=docdb/date/j0; type=options[30-12-2010=d-m-y,30-12-10=d-m-Y,2010-12-30=y-m-d,10-12-30=Y-m-d,30/12/2010=d/m/y,30/12/10=d/m/Y,2010/12/30=y/m/d,10/12/30=Y/m/d,30.12.2010=d.m.y,30.12.10=d.m.Y,2010.12.30=y.m.d,10.12.30=Y.m.d, 30 December 2010=d.F.y, 30 Dec 2010=d M y, Thu 30 Dec 2010=D d M y]; label=Date format Detail: Date string format to display in the detail view in expanded row. DEFAULT : 30 december 2010 (day month year long)
+        # cat=docdb/base/j0; type=options[30-12-2010=d-m-y,30-12-10=d-m-Y,2010-12-30=y-m-d,10-12-30=Y-m-d,30/12/2010=d/m/y,30/12/10=d/m/Y,2010/12/30=y/m/d,10/12/30=Y/m/d,30.12.2010=d.m.y,30.12.10=d.m.Y,2010.12.30=y.m.d,10.12.30=Y.m.d, 30 December 2010=d.F.y, 30 Dec 2010=d M y, Thu 30 Dec 2010=D d M y]; label=Date format Detail: Date string format to display in the detail view in expanded row. DEFAULT : 30 december 2010 (day month year long)
         dateF.detail = d F Y
 
-        # cat=docdb/date/j1; type=string; label=Custom Date format Detail: Date string format to display in the detail view in expanded row.(see http://php.net/date for possible strings formatting the date). NOTICE: if specified the above predefined parameter will be ignored.
+        # cat=docdb/base/j1; type=string; label=Custom Date format Detail: Date string format to display in the detail view in expanded row.(see http://php.net/date for possible strings formatting the date). NOTICE: if specified the above predefined parameter will be ignored.
         dateFCustom.detail =
+
+        # cat=docdb/base/d0; type=boolean; label=XML export: Enable xml export button.
+        xmlExportEnable = 1
 	}
 }

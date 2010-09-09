@@ -43,6 +43,7 @@ class tx_docdb_extjsdirect_controller extends tx_jwextjsdirect_controller {
 			'classes.' => array(
 				'path' => t3lib_extMgm::extPath($this->extKey).'classes/model',
                 'add'  => array(
+                    'xmllink'           => array('filePrefix'=> 'class.','prefix' => 'tx_docdb_','postfix' => ''),
 					'model_owner'       => array('filePrefix'=> 'class.','prefix' => 'tx_docdb_','postfix' => ''),
 					'model_type'        => array('filePrefix'=> 'class.','prefix' => 'tx_docdb_','postfix' => ''),
 					'model_status'      => array('filePrefix'=> 'class.','prefix' => 'tx_docdb_','postfix' => ''),

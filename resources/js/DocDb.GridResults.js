@@ -21,7 +21,11 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
             dll = this.lang.docDetail,
             // date format
             dF = this.dF,
-
+            /**
+             * @todo add config option to disable XML link export
+             */
+            xmlExport = this.xmlExport,
+            
             // row expander
             rowExpander = new Ext.ux.grid.RowExpander({
                 tpl : new Ext.XTemplate(
@@ -128,6 +132,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                         msg : gll.loading
                     },
                     store : new Ext.data.GroupingStore({
+                        storeId: 'gridStore',
                         baseParams : {
                             start : 0,
                             limit : this.pageSize
@@ -255,7 +260,6 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                     {
                         text: 'XML',
                         tooltip: {text:  gll.xmlLinkTooltip, title: gll.xmlLinkTitle},
-//                        iconCls: 'bmenu',  // <-- icon
                         menu: new Ext.menu.Menu({
                             id: 'xmlLinkMenu',
                             style: {
@@ -264,22 +268,31 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                             },
                             items: [
                                 {
+                                    id: 'queryBtnXmlLink',
+                                    xtype: 'button',
+                                    text: gll.xmlLinkBtn,
+                                    listeners : {
+                                        // this grid result
+                                        scope: this,
+                                        render : function(el) {
+                                            el.addClass('x-btn-15');
+                                            el.on({
+                                                scope: this,
+                                                click: this.onClickGetXmlLink,
+                                                stopEvent: true
+                                            });
+                                        }
+                                    }
+                                },
+                                {
                                     id: 'xmlLink',
                                     xtype: 'textfield',
                                     grow: true,
                                     selectOnFocus: true,
                                     validateOnBlur: false,
                                     readOnly: true,
+                                    hidden: true,
                                     value: 'xml link'
-            //                        checkHandler: onItemCheck
-//                                    listeners : {
-//                                        render: function(el) {
-//                                            //console.info(el);
-//                                        },
-//                                        focus : function(el) {
-//                                            console.info(el);
-//                                        }
-//                                    }
                                 }
                             ]
                         })
@@ -288,9 +301,16 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                 ]
             });
 
+            
             this.on( {
                 scope  : this,
                 render : function( ) {
+                    var bbarItems = Ext.getCmp('g-p-bbar').items;
+                    if(!xmlExport) {
+                        bbarItems.itemAt(0).disable().hide();
+                        bbarItems.itemAt(1).hide();
+                    }
+
                     this.body.on( {
                         scope     : this,
                         click     : this.onClickLink,
@@ -302,14 +322,31 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 
             this.store.on({
                 load : function( s, r, options ) {
-                    Ext.getCmp('xmlLink').setValue( s.reader.jsonData.xmlLink );
-//                    console.info(s.reader.jsonData.test);
+                    Ext.getCmp('xmlLink').hide();
                 }
             });
 
             DocDb.GridResults.superclass.initComponent.apply( this, arguments );
 
 	}, // eo function initComponent
+
+    onClickGetXmlLink : function( el, e ) {
+
+//        // this gridresult
+//        console.info(Ext.StoreMgr.lookup('gridStore').baseParams);
+
+        // el button
+        el.setIconClass('loading-btn');
+        // e browser event
+        // send server request
+        DocDb.xmllink.getLink(this.store.baseParams, function(res, e) {
+            el.setIconClass('');
+            if(res.success) {
+                    Ext.getCmp('xmlLink').setValue( res.xmlLink ).show();
+                    Ext.getCmp('xmlLinkMenu').doLayout();
+            }
+        });
+    },
 
 	onClickLink : function( el, a, e ) {
 
@@ -392,7 +429,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 
 		this.win.show(
 				a,
-				function( ) { this.win.center();this.win.setPos();},
+				function( ) {this.win.center();this.win.setPos();},
 				this
 		);
 
@@ -422,7 +459,7 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
                                             var bodyC = this.win.body,
                                             cont = Ext.select( '#docdb-previewWin div#' + this.docDetail.divContIdWinP +'', bodyC );
 
-                                            bodyC.update( cont.elements[0].innerHTML ).fadeIn( { stopFx:true, duration:.5 } );
+                                            bodyC.update( cont.elements[0].innerHTML ).fadeIn( {stopFx:true, duration:.5} );
                                             this.prevNextStatus( );
                                     },
                                     scope : this
@@ -464,7 +501,6 @@ DocDb.GridResults = Ext.extend( Ext.grid.GridPanel, {
 
 		DocDb.GridResults.superclass.afterRender.apply( this, arguments );
 	} // eo function afterRender
-
 });
 
 Ext.reg( 'gridresults', DocDb.GridResults );

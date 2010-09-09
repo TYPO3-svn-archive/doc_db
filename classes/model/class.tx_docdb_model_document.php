@@ -109,16 +109,14 @@ class tx_docdb_model_document {
 
         $this->_setAddLangParam($params);
 
-        $totalCountAndUids = tx_docdb_div::exec_SELECTcountAndGetRows('p.uid', $this->_sqlClause['from'], $this->_sqlClause['where']);
-
+        $totalCount = tx_docdb_div::exec_SELECTcountRows('p.uid', $this->_sqlClause['from'], $this->_sqlClause['where']);
 		$out = array(
 			'success'    => TRUE,
-			'totalCount' => $totalCountAndUids['count'],
-			'rows'       => $this->_execGetDocumentQuery(),
-            'xmlLink'    => tx_docdb_div::getXmlLink($GLOBALS['TSFE']->id, $params, $totalCountAndUids['rows'])
+			'totalCount' => $totalCount,
+			'rows'       => $this->_execGetDocumentQuery()
 		);
 
-        unset($rows, $totalCountAndUids);
+        unset($totalCount);
 		return $out;
 	}
 

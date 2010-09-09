@@ -88,7 +88,7 @@ DocDb.TypesList = Ext.extend( Ext.ux.form.MultiSelect, {
     DocDb.TypesList.superclass.afterRender.apply( this, arguments );
     
     var that = this;
-    (function(){that.store.load( );}.defer(500));
+    (function(){that.store.load( );}.defer(200));
   } // eo function afterRender
   
   ,getRelatedTypes: function( sub, msg ) {

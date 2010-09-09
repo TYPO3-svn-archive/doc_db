@@ -42,7 +42,8 @@ DocDb.mainGrid = Ext.extend( Ext.Panel, {
                 gF             : sVar.gridParams.groupBy,
                 width          : sVar.mainPWidth,
                 height         : sVar.gridHeight,
-                standaloneGrid : true
+                standaloneGrid : true,
+                xmlExport      : sVar.xmlExportEnable
             }] // end items of mainPanel
         };
   

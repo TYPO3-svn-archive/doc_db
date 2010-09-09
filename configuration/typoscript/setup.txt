@@ -49,6 +49,6 @@ plugin.tx_docdb_pi1 {
             detail ={$plugin.tx_docdb_pi1.extJS.dateFCustom.detail}
         }
 
-
+        xmlExportEnable = {$plugin.tx_docdb_pi1.extJS.xmlExportEnable}
 	}
 }

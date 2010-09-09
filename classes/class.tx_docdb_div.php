@@ -222,63 +222,6 @@ class tx_docdb_div
 		return $url;
 	}
 
-    /**
-     * Funtion to store the md5 hash related to params of document query and used as params value for the xml link.
-     * But before to store it, clean the unwanted params to minimize the possibilities and avoid table overload.
-     * 
-     * @param   <integer>   $pageId
-     * @param   <stdClass>  $linkParams
-     * @param   <array>     $resultUids     list of uids returned by the document query
-     * @return  <string>    link to get XML export
-     */
-    public static function getXmlLink($pageId, $linkParams, $resultUids) {
-
-        // remove limit param
-        t3lib_div::devLog('getXmlLink', 'doc_db', 0, array( var_export($linkParams, TRUE),$resultUids));
-
-        // clean some parameters to limit numbers of possibilities
-        unset(  $linkParams->selNodes,
-                $linkParams->selType,
-                $linkParams->filter,
-                $linkParams->groupBy,
-                $linkParams->groupDir,
-                $linkParams->grouping,
-                $linkParams->field,
-                $linkParams->direction,
-                $linkParams->start,
-                $linkParams->limit
-        );
-        
-        if($linkParams->sort !== 'date' || $linkParams->sort !== 'owner') {
-            $linkParams->sort = 'date';
-        }
-        self::sortListOfInt($linkParams->owner);
-        self::sortListOfInt($linkParams->type);
-        self::sortListOfInt($linkParams->status);
-        
-
-        //t3lib_div::devLog('getXmlLink', 'doc_db', 0, array( var_export($linkParams, TRUE)));
-        
-        // sort beafore md5-ize
-        sort($resultUids);
-        // prepare to store
-        $serializedUidsResults = json_encode($resultUids);
-        $md5hashUidsResults    = md5($serializedUidsResults);
-
-        // prepare to store. serialize not required
-        $serializedParams = json_encode($linkParams);
-        $md5hashParams    = md5($serializedParams);
-
-        // store values
-        $GLOBALS['TYPO3_DB']->sql_query('
-          REPLACE INTO tx_docdb_cache_xmllink (pid, hash_params, hash_results, params)
-          VALUES (\'' . (int)$pageId . '\', \'' . $md5hashParams . '\', \'' . $md5hashUidsResults . '\', \'' . $serializedParams . '\')
-        ');
-
-        return self::siteUrl() . 'index.php?eID=docdbxml&hash=' . $md5hashParams;
-
-    }
-
 
     public static function sortListOfInt(&$list) {
 

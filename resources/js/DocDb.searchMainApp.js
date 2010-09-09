@@ -45,6 +45,7 @@ DocDb.mainPanel = Ext.extend( Ext.Panel, {
                 width          : sVar.mainPWidth,
                 height         : 0,
                 standaloneGrid : false,
+                xmlExport      : sVar.xmlExportEnable,
                 hidden         : true
             },{
                 xtype         : 'searchform',
